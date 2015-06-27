@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<h1>Search by room</h1>
+
+<form method="POST">
+    <input type="text" name="room_id" placeholder="Enter room id">
+    <input type="submit" value="Search">
+</form>
+
+
+{% for lesson in lessons %}
+    <div class="row">{{ lesson.teacher }}</div>
+{% endfor %}
+
+</html>
