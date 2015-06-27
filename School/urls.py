@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from .views import search
+from .views import index  # , search_room, search_teacher
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^search/$', search, name="search"),
+    url(r'^$', index, name="index"),
+    # url(r'^search/room/$', search_room, name="search_room"),
+    # url(r'^search/teacher/$', search_teacher, name="search_teacher"),
 ]

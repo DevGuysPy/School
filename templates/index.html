@@ -4,16 +4,33 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
           rel="stylesheet">
 </head>
-<h1>Search by room</h1>
+<body>
+<div class="container">
+<h1>Главная</h1>
 
 <form method="POST">
-    <input type="text" name="room_id" placeholder="Enter room id">
+    {% csrf_token %}
+    <input type="text" name="query" placeholder="Enter search query">
+
+    <label for="rooms">Rooms</label>
+    <input id="rooms" type="checkbox" name="rooms" checked>
+
+    <label for="teachers">Teachers</label>
+    <input id="teachers" type="checkbox" name="teachers" checked>
+
+    <label for="students">Students</label>
+    <input id="students" type="checkbox" name="students" checked>
+
+    <label for="groups">Groups</label>
+    <input id="groups" type="checkbox" name="groups" checked>
+
     <input type="submit" value="Search">
 </form>
 
+    {{ rooms }}
+    {{ teachers }}
+    {{ groups }}
+</div>
 
-{% for lesson in lessons %}
-    <div class="row">{{ lesson.teacher }}</div>
-{% endfor %}
-
+</body>
 </html>

@@ -1,3 +1,6 @@
+import pytz
+from datetime import timedelta, datetime as dtime
+
 from django.db import models
 
 
@@ -10,6 +13,7 @@ class Discipline(models.Model):
 class Teacher(models.Model):
     # room = models.ForeignKey(Room)
     name = models.CharField(max_length=50)
+    surname = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -19,12 +23,14 @@ class Group(models.Model):
     name = models.CharField(max_length=50)
     teacher = models.ForeignKey(Teacher)
 
+
     def __str__(self):
         return self.name
 
 
 class Student(models.Model):
     name = models.CharField(max_length=50)
+    surname = models.CharField(max_length=50)
     birthdate = models.DateTimeField()
     SEX = (
         ('m', "Male"),
@@ -37,7 +43,7 @@ class Student(models.Model):
 
 
 class Room(models.Model):
-    # id
+    seats = models.IntegerField()
     def __str__(self):
         return str(self.id)
 
@@ -51,6 +57,13 @@ class Lesson(models.Model):
 
     def __str__(self):
         return "{} в {}".format(self.discipline.name, self.start)
+
+    def end(self):
+        return self.start + timedelta(minutes=45)
+
+    def is_now(self):
+        # datetime.now(pytz.utc)
+        return self.start < dtime.now(pytz.utc) < self.end()
 
 
 
