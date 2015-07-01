@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Teacher</title>
+	 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body>
+<div class='container'>
+ 
+ <div  class= 'row '>
+  <div class='col-xs-3'>	
+
+ 	<img   src=" http://www.salesmanago.pl/libs/unify/assets/img/testimonials/user.jpg;jsessionid=0E5F9F48BF3B7231C26C68CF7AD678EC">
+ 	</div>
+ 	<div class='col-xs-3'>
+ 	<h1>{{ teacher.name}} {{ teacher.surname}} </h1>
+ 	</div>
+ </div>
+ <hr>
+ <h2>Info</h2>
+ <hr>
+ <div class= 'row'>
+ 	<h3>Discipline:</h3>
+ 		<p>{{teacher.discipline}}</p>
+ </div>
+ <div class= 'row'>
+ 	<h3>Birthdate:</h3>
+ 		<p>{{ teacher.birthdate}}</p>
+ </div>
+ <div class= 'row'>
+ 	<h3>More about person</h3>
+ 		<p>{{ teacher.info}}</p>
+ </div>
+ </div>
+
+
+</body>
+</html>
