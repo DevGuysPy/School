@@ -1,8 +1,6 @@
 import datetime
-
-from django.shortcuts import render
-
-from .models import Teacher, Lesson, Room, Group
+from django.shortcuts import render, redirect
+from .models import Teacher, Lesson, Room, Group, Comments
 
 
 def result(request):
@@ -51,6 +49,9 @@ def search_groups(name):
     return Group.objects.filter(name__icontains=name)
 
 def index(request):
+    rooms = []
+    teachers = []
+    groups = []
     if request.method == 'POST':
         query = request.POST['query']
         if 'rooms' in request.POST:
@@ -78,10 +79,7 @@ def index(request):
 
         if 'groups' in request.POST:
             groups = search_groups(query)
-    else:
-        rooms = []
-        teachers = []
-        groups = []
+        
 
     ctx = {
         'rooms': rooms,
@@ -95,6 +93,7 @@ def index(request):
 def teacher_detail(request, teacher_id=1):
     ctx = {
         'teacher': Teacher.objects.get(id=teacher_id),
+        'comments': Comments.objects.filter(comment_teacher_id=teacher_id),
     }
     return render(request, 'teacherprofile.html', ctx)
 def group_detail(request, group_id=1):
@@ -102,3 +101,12 @@ def group_detail(request, group_id=1):
         'group': Group.objects.get(id=group_id),
     }
     return render(request, 'groupprofile.html', ctx)
+
+def add_comment(request, teacher_id):
+    teacher = Teacher.objects.get(id=teacher_id)
+    if request.method == "POST":
+        new_comment_text = request.POST['comment_text']
+        Comments.objects.create(comment_text=new_comment_text, comment_teacher_id=teacher_id)
+        return redirect('teacher_detail', teacher_id=teacher.id) 
+
+    return render(request, 'teacherprofile.html') 

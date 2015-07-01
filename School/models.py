@@ -52,6 +52,7 @@ class Student(models.Model):
 
 class Room(models.Model):
     seats = models.IntegerField()
+    number = models.IntegerField()
     def __str__(self):
         return str(self.id)
 
@@ -74,7 +75,14 @@ class Lesson(models.Model):
         return self.start < dtime.now(pytz.utc) < self.end()
 
 
+class Comments(models.Model):
+    comment_text = models.TextField()
+    comment_teacher = models.ForeignKey(Teacher)
 
+    class Meta():
+        db_table = 'comments'
+
+        
 # class MyGroup1(models.Model):
 #     name =
 #     student = models.ForeignKey(MyStudent1)
