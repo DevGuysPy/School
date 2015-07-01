@@ -16,7 +16,7 @@
 {% for lesson in lessons %}
     <hr/>
     {% if lesson.is_now %}
-    <div class="alert alert-info" role="alert">
+        <div class="alert alert-info" role="alert">
     {% else %}
         <div class="alert alert-warning">
     {% endif %}
@@ -24,7 +24,6 @@
             <div class="row"><div class="col-xs-12">{{ lesson.group }}</div></div>
             <div class="row"><div class="col-xs-12">{{ lesson.start }}-{{ lesson.end }}</div></div>
         </div>
-    </div>
 {% endfor %}
 
 </html>
