@@ -12,9 +12,10 @@
 </form>
 
 
-{% for day in lesson_days %}
+{% for day in week %}
+    <h1>Day {{ forloop.counter }}</h1>
     {% for lesson in day %}
-        <span>Write here</span>
+        <span>{{ lesson }}</span><br/>
     {% endfor %}
 {% endfor %}
 

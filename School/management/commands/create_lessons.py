@@ -8,8 +8,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         today = date.today()
         monday = today - timedelta(days=today.weekday())
-        for i in range(7):
-            cur_day = today + timedelta(days=i)
+        for i in range(5):
+            cur_day = monday + timedelta(days=i)
             start = time(hour=8)
             teachers = Teacher.objects.all()
             if not teachers:
@@ -19,9 +19,9 @@ class Command(BaseCommand):
             if not disciplines:
                 self.stdout.write("No disciplines")
                 return
-            for l in range(5):
+            for l in range(7):
                 Lesson.objects.create(
-                    start=dtime.combine(today, start) + timedelta(hours=l),
+                    start=dtime.combine(cur_day, start) + timedelta(hours=l),
                     # group=Group.objects.get(pk=1),  # also `id=1`
                     group_id=1,
                     # room=Room.objects.get(pk=1),
