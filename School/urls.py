@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 
 from .views import index, teacher_detail, group_detail, add_comment, search_room  # , search_teacher
 
@@ -26,4 +28,4 @@ urlpatterns = [
     url(r'^teacher/(?P<teacher_id>\d+)/addcomment/$', add_comment, name='add_comment'),
     url(r'^room/search/$', search_room, name="search_room"),
     # url(r'^search/teacher/$', search_teacher, name="search_teacher"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

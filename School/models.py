@@ -14,9 +14,10 @@ class Teacher(models.Model):
     # room = models.ForeignKey(Room)
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    birthdate = models.IntegerField(default=0)
+    birthdate = models.DateField()
     info = models.TextField()
     discipline = models.ForeignKey(Discipline)
+    photo = models.ImageField(blank=True, null=True)
 
     class Meta():
         db_table = 'teacher'
@@ -24,11 +25,13 @@ class Teacher(models.Model):
     def __str__(self):
         return self.name 
 
+
 class Group(models.Model):
     name = models.CharField(max_length=50)
     member = models.IntegerField(default=0)
     info = models.TextField()
     teacher = models.ForeignKey(Teacher)
+
     class Meta():
         db_table = 'group'
 

@@ -1,0 +1,57 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+<div class='container'>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div  class= 'row'>
+            <div class='col-xs-3'>
+                {% if form.photo.value %}
+                    <img class="img-responsive" src="/media/{{ form.photo.value }}">Image</img>
+                {% else %}
+                    <img src=" http://www.salesmanago.pl/libs/unify/assets/img/testimonials/user.jpg;jsessionid=0E5F9F48BF3B7231C26C68CF7AD678EC">
+                {% endif %}
+                {{ form.photo }}
+            </div>
+            <div class='col-xs-9'>
+                <h1>{{ teacher.name}} {{ teacher.surname}} </h1>
+            </div>
+        </div>
+        <hr>
+        <h2>Info</h2>
+        <hr>
+        <div class= 'row'>
+            <label>Discipline</label>
+            {{ form.discipline }}
+{#            <select name="discipline">#}
+{#                {%  for d in disciplines %}#}
+{#                    <option value="{{ d.id}}"#}
+{#                            {% if d.id == form.discipline.value.id %}selected="selected"{% endif %}>#}
+{#                        {{d.name|capfirst}}#}
+{#                    </option>#}
+{#                {% endfor %}#}
+{#.            </select>#}
+        </div>
+        <div class= 'row'>
+            <label>Birthdate</label>
+            {{ form.birthdate }}
+        </div>
+        <div class= 'row'>
+            <label>About</label>
+            {{ form.info }}
+        </div>
+        <div class= 'row'>
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>

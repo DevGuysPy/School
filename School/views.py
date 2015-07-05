@@ -1,8 +1,11 @@
 import datetime
 from datetime import timedelta
-from django.shortcuts import render, redirect
-from .models import Teacher, Lesson, Room, Group, Comments
 
+from django.shortcuts import render, redirect
+
+from .models import (Teacher, Lesson, Room, Group, Comments,
+                     Discipline)
+from .forms import TeacherForm
 
 def result(request):
     ctx = {
@@ -86,12 +89,22 @@ def index(request):
     }
     return render(request, 'index.html', ctx)
 
-def teacher_detail(request, teacher_id=1):
+def teacher_detail(request, teacher_id):
+    teacher = Teacher.objects.get(id=teacher_id)
+    form = TeacherForm(request.POST or None, request.FILES or None,
+                        instance=teacher)
+    disciplines = Discipline.objects.all()
     ctx = {
-        'teacher': Teacher.objects.get(id=teacher_id),
+        'teacher': teacher,
         'comments': Comments.objects.filter(comment_teacher_id=teacher_id),
+        'form': form,
+        'disciplines': disciplines,
     }
-    return render(request, 'teacherprofile.html', ctx)
+    if form.is_valid():
+        form.save()
+
+    return render(request, 'teacher/edit.html', ctx)
+
 def group_detail(request, group_id=1):
     ctx = {
         'group': Group.objects.get(id=group_id),
