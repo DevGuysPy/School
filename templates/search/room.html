@@ -12,6 +12,13 @@
 </form>
 
 
+{% for day in lesson_days %}
+    {% for lesson in day %}
+        <span>Write here</span>
+    {% endfor %}
+{% endfor %}
+
+
 {% for lesson in lessons %}
     <hr/>
     {% if lesson.is_now %}
