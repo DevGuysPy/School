@@ -66,6 +66,7 @@ class Lesson(models.Model):
     room = models.ForeignKey(Room)
     teacher = models.ForeignKey(Teacher)
     discipline = models.ForeignKey(Discipline)
+    info = models.TextField()
 
     def __str__(self):
         return "{} в {}".format(self.discipline.name, self.start)

@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline)
-from .forms import TeacherForm
+from .forms import TeacherForm, LessonForm
 
 def result(request):
     ctx = {
@@ -119,3 +119,19 @@ def add_comment(request, teacher_id):
         return redirect('teacher_detail', teacher_id=teacher.id) 
 
     return render(request, 'teacherprofile.html') 
+
+
+def lesson_detail(request, lesson_id):
+    lesson = Lesson.objects.get(id=lesson_id)
+    form = LessonForm(request.POST or None, request.FILES or None,
+                        instance=lesson)
+    disciplines = Discipline.objects.all()
+    ctx = {
+    'lesson': lesson,
+    'form': form,
+    'disciplines': disciplines
+    }
+    if form.is_valid():
+        form.save()
+
+    return render(request, 'lesson/edit.html', ctx)

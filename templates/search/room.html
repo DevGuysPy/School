@@ -15,7 +15,7 @@
 {% for day in week %}
     <h1>Day {{ forloop.counter }}</h1>
     {% for lesson in day %}
-        <span>{{ lesson }}</span><br/>
+        <a href="{% url 'lesson_detail' lesson_id=lesson.id %}"><span>{{ lesson }}</span></a><br/>
     {% endfor %}
 {% endfor %}
 
