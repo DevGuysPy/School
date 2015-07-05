@@ -1,4 +1,5 @@
 import datetime
+from datetime import timedelta
 from django.shortcuts import render, redirect
 from .models import Teacher, Lesson, Room, Group, Comments
 
@@ -12,27 +13,22 @@ def result(request):
 
 def search_room(request):
     if request.method == 'POST':
-        # days_w_lessons = []
-        # for i in range(7):
-        #     # monday = ... # 29.06.2015 00:00
-        #     date_to_select = monday + timedelta(days=i)
-        #     next_day = monday + timedelta(days=i+1)
-        #     lessons = Lesson.objects.filter(
-        #         room_id=room_id,
-        #         start__range=[start_week, end_week])
-        #     days_w_lessons.append(lessons)
-
-        room_id = int(request.POST['room_id'])
+        days_w_lessons = []
         date = datetime.date.today()
-        start_week = date - datetime.timedelta(date.weekday())
-        end_week = start_week + datetime.timedelta(7)
-        lessons = Lesson.objects.filter(room_id=room_id,
-                                       start__range=[start_week, end_week])
-        # entries = Entry.objects.filter(created_at__range=[start_week, end_week])
+        monday = date - datetime.timedelta(days=date.weekday())
+        room_id = int(request.POST['room_id'])
+        for i in range(7):
+            date_to_select = monday + timedelta(days=i)
+            next_day = monday + timedelta(days=i+1)
+            lessons = Lesson.objects.filter(
+                room_id=room_id,
+                start__range=[date_to_select, next_day])
+            days_w_lessons.append(lessons)
+
     else:
-        lessons = []
+        days_w_lessons = []
     ctx = {
-        'lessons': lessons
+        'week': days_w_lessons
     }
     return render(request, 'search/room.html', ctx)
 
