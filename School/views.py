@@ -158,7 +158,7 @@ def lesson_detail_edit(request, lesson_id):
     if form.is_valid():
         form.save()
 
-<<<<<<< Updated upstream
+
     return render(request, 'lesson/edit.html', ctx)
 
 def student_detail(request, student_id=1):
@@ -174,6 +174,4 @@ def student_detail(request, student_id=1):
     if form.is_valid():
         form.save()
     return render(request, 'student/edit.html', ctx)
-=======
-    return render(request, 'lesson\edit.html', ctx)
->>>>>>> Stashed changes
+
