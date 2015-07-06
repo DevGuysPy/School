@@ -20,7 +20,7 @@ def search_room(request):
         date = datetime.date.today()
         monday = date - datetime.timedelta(days=date.weekday())
         room_id = int(request.POST['room_id'])
-        for i in range(7):
+        for i in range(5):
             date_to_select = monday + timedelta(days=i)
             next_day = monday + timedelta(days=i+1)
             lessons = Lesson.objects.filter(
@@ -136,6 +136,17 @@ def add_comment(request, teacher_id):
 
 def lesson_detail(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
+    disciplines = Discipline.objects.all()
+    ctx = {
+    'lesson': lesson,
+    'disciplines': disciplines
+    }
+
+
+    return render(request, 'lesson.html', ctx)
+
+def lesson_detail_edit(request, lesson_id):
+    lesson = Lesson.objects.get(id=lesson_id)
     form = LessonForm(request.POST or None, request.FILES or None,
                         instance=lesson)
     disciplines = Discipline.objects.all()
@@ -147,6 +158,7 @@ def lesson_detail(request, lesson_id):
     if form.is_valid():
         form.save()
 
+<<<<<<< Updated upstream
     return render(request, 'lesson/edit.html', ctx)
 
 def student_detail(request, student_id=1):
@@ -162,3 +174,6 @@ def student_detail(request, student_id=1):
     if form.is_valid():
         form.save()
     return render(request, 'student/edit.html', ctx)
+=======
+    return render(request, 'lesson\edit.html', ctx)
+>>>>>>> Stashed changes

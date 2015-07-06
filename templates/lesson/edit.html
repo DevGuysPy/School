@@ -1,41 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-	<div class="container">
-	<form method="POST" enctype="multipart/form-data">
-		{% csrf_token %}
-		<div class="row">
-			<h1>Started at : <small>{{ lesson.start }}</small></h1>
-			{{ form.start }}
-		</div>
-		<div class="row">
-			<h1>Name of group : {{ lesson.group }}</h1>
-			{{ form.group }}
-		</div>
-		<div class="row">
-			<h1>Name of room : {{ lesson.room }}</h1>
-			{{ form.room }}
-		</div>
-		<div class="row">
-			<h1>Name of teacher : {{ lesson.teacher }}</h1>
-			{{ form.teacher }}
-		</div>
-		<div class="row">
-			<h1>Name of discipline : {{ lesson.discipline }}</h1>
-			{{ form.discipline }}
-		</div>
-		<div class="row">
-			<h1>Info about lesson : {{ lesson.info }}</h1>
-			{{ form.info }}
-		</div>
-       	<div class= 'row'>
-            <input type="submit" class="btn btn-primary" value="Submit">
-        </div>
-	</form>
-	</div>
+<body>
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="row">
+                <h1 class="text-center">Information about lesson</h1>
+            </div>
+            <div class="row">
+                <h3>Information about teacher :</h3>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <img class="img-responsive" src="/media/{{ lesson.teacher.photo }}">
+                </div>
+                <div class="col-xs-9">
+                    <div class="row">
+                    <p> <strong>{{ lesson.teacher.name }} {{ lesson.teacher.surname }}</strong></p>
+                    </div>
+                    <div class="row">
+                        <p>{{ lesson.teacher.info }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h3>Name of discipline :</h3>
+            </div>
+            <div class="row">
+                <p>{{ lesson.discipline }}</p>
+            </div>
+            <div class="row">
+                <h3>Short info :</h3>
+            </div>
+            <div class="row">
+                <p>{{ lesson.info }}</p>
+            </div>
+            <div class="row">
+                <h3>Group name :</h3>
+            </div>
+            <div class="row">
+                <p>{{ lesson.group }}</p>
+            </div>
+            <div class="row">
+                <h3>Room number :</h3>
+            </div>
+            <div class="row">
+                <p>{{ lesson.room }}</p>
+            </div>
+            <div class="row">
+                <h3>Time of starting and ending lesson :</h3>
+            </div>
+            <div class="row">
+                <p>{{ lesson.start }} - {{ lesson.end }}</p>
+            </div>
+    </div>
+        </form>
 </body>
 </html>

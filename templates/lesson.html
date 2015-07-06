@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center">Information about lesson</h1>
+        </div>
+        <div class="row">
+            <h3>Information about teacher :</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <img class="img-responsive" src="/media/{{ lesson.teacher.photo }}">
+            </div>
+            <div class="col-xs-9">
+                <div class="row">
+                <p> <strong>{{ lesson.teacher.name }} {{ lesson.teacher.surname }}</strong></p>
+                </div>
+                <div class="row">
+                    <p>{{ lesson.teacher.info }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h3>Name of discipline :</h3>
+        </div>
+        <div class="row">
+            <p>{{ lesson.discipline }}</p>
+        </div>
+        <div class="row">
+            <h3>Short info :</h3>
+        </div>
+        <div class="row">
+            <p>{{ lesson.info }}</p>
+        </div>
+        <div class="row">
+            <h3>Group name :</h3>
+        </div>
+        <div class="row">
+            <p>{{ lesson.group }}</p>
+        </div>
+        <div class="row">
+            <h3>Room number :</h3>
+        </div>
+        <div class="row">
+            <p>{{ lesson.room }}</p>
+        </div>
+        <div class="row">
+            <h3>Time of starting and ending lesson :</h3>
+        </div>
+        <div class="row">
+            <p>{{ lesson.start }} - {{ lesson.end }}</p>
+        </div>
+        <div class="row">
+            <h4>To edit this page. Please click <a href="{% url 'lesson_detail_edit' lesson_id=lesson.id %}"><span>{{ lesson }}</span></a></h4>
+        </div>
+    </div>
+</body>
+</html>
