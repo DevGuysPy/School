@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from .views import index, teacher_detail, group_detail, add_comment, search_room, lesson_detail  # , search_teacher
+from .views import index, teacher_detail, group_detail, add_comment, search_room, lesson_detail, student_detail  # , search_teacher
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^teacher/(?P<teacher_id>\d+)/$', teacher_detail, name='teacher_detail'),
     url(r'^group/(?P<group_id>\d+)/$', group_detail, name='group_detail'),
     url(r'^teacher/(?P<teacher_id>\d+)/addcomment/$', add_comment, name='add_comment'),
+    url(r'^student/(?P<student_id>\d+)/$', student_detail, name='student_detail'),
     url(r'^room/search/$', search_room, name="search_room"),
     # url(r'^search/teacher/$', search_teacher, name="search_teacher"),
     url(r'^lesson/(?P<lesson_id>\d+)/$', lesson_detail, name='lesson_detail'),

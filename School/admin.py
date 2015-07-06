@@ -29,6 +29,8 @@ class DisciplineAdmin(admin.ModelAdmin):
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+
 # admin.site.register(Teacher)
 # admin.site.register(Room)
 # admin.site.register(Group)

@@ -4,8 +4,8 @@ from datetime import timedelta
 from django.shortcuts import render, redirect
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
-                     Discipline)
-from .forms import TeacherForm, LessonForm
+                     Discipline, Student)
+from .forms import TeacherForm, LessonForm, StudentForm
 
 def result(request):
     ctx = {
@@ -35,6 +35,9 @@ def search_room(request):
     }
     return render(request, 'search/room.html', ctx)
 
+def search_students(name, surname):
+    return Student.objects.filter(name__icontains=name,
+                                  surname__icontains=surname)
 
 def search_rooms(room_id):
     return [Room.objects.get(id=room_id)]
@@ -51,6 +54,7 @@ def index(request):
     rooms = []
     teachers = []
     groups = []
+    students = []
     if request.method == 'POST':
         query = request.POST['query']
         if 'rooms' in request.POST:
@@ -75,6 +79,14 @@ def index(request):
                 second = ''
             teachers = list(search_teachers(first, second))
             teachers.extend(list(search_teachers(second, first)))
+        if 'students' in request.POST:
+            try:
+                first, second, *_ = query.split(' ')
+            except ValueError:
+                first = query
+                second = ''
+            students = list(search_students(first, second))
+            students.extend(list(search_students(second, first)))
 
         if 'groups' in request.POST:
             groups = search_groups(query)
@@ -84,6 +96,7 @@ def index(request):
         'rooms': rooms,
         'teachers': teachers,
         'groups': groups,
+        'students': students,
 
         
     }
@@ -135,3 +148,17 @@ def lesson_detail(request, lesson_id):
         form.save()
 
     return render(request, 'lesson/edit.html', ctx)
+
+def student_detail(request, student_id=1):
+    student = Student.objects.get(id=student_id)
+    form = StudentForm(request.POST or None, request.FILES or None,
+                        instance=student)
+    groups = Group.objects.all()
+    ctx = {
+        'student': student,
+        'form': form,
+        'groups': groups,
+    }
+    if form.is_valid():
+        form.save()
+    return render(request, 'student/edit.html', ctx)

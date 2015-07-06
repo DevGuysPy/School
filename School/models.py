@@ -4,6 +4,13 @@ from datetime import timedelta, datetime as dtime
 from django.db import models
 
 
+class Mark(models.Model):
+    number = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.number
+
+
 class Discipline(models.Model):
     name = models.CharField(max_length=100)
 
@@ -42,13 +49,19 @@ class Group(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    birthdate = models.DateTimeField()
+    birthdate = models.DateField()
     SEX = (
         ('m', "Male"),
         ('f', "Female"),
     )
     sex = models.CharField(max_length=1, choices=SEX)
     group = models.ForeignKey(Group)
+    photo = models.ImageField(blank=True, null=True)
+    info = models.TextField()
+    
+
+    def __str__(self):
+        return self.name
     # group _id
 
 
