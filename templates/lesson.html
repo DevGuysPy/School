@@ -8,7 +8,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <h1 class="text-center">Information about lesson</h1>
+            <h1 class="text-center">{{ lesson.discipline }}</h1>
         </div>
         <div class="row">
             <h3>Information about teacher :</h3>
@@ -27,13 +27,7 @@
             </div>
         </div>
         <div class="row">
-            <h3>Name of discipline :</h3>
-        </div>
-        <div class="row">
-            <p>{{ lesson.discipline }}</p>
-        </div>
-        <div class="row">
-            <h3>Short info :</h3>
+            <h3>Information about lesson :</h3>
         </div>
         <div class="row">
             <p>{{ lesson.info }}</p>
@@ -57,7 +51,7 @@
             <p>{{ lesson.start }} - {{ lesson.end }}</p>
         </div>
         <div class="row">
-            <h4>To edit this page. Please click <a href="{% url 'lesson_detail_edit' lesson_id=lesson.id %}"><span>{{ lesson }}</span></a></h4>
+            <h4>To edit this page, please click <a href="{% url 'lesson_detail_edit' lesson_id=lesson.id %}"><span>here</span></a></h4>
         </div>
     </div>
 </body>

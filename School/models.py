@@ -80,7 +80,6 @@ class Lesson(models.Model):
     teacher = models.ForeignKey(Teacher)
     discipline = models.ForeignKey(Discipline)
     info = models.TextField()
-    end = models.DateField()
 
     def __str__(self):
         return "{} в {}".format(self.discipline.name, self.start)

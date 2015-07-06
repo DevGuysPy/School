@@ -18,11 +18,9 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-<<<<<<< Updated upstream
-from .views import index, teacher_detail, group_detail, add_comment, search_room, lesson_detail, student_detail  # , search_teacher
-=======
-from .views import index, teacher_detail, group_detail, add_comment, search_room, lesson_detail, lesson_detail_edit  # , search_teacher
->>>>>>> Stashed changes
+
+from .views import index, teacher_detail, group_detail, add_comment, search_room, lesson_detail, student_detail, lesson_detail_edit  # , search_teacher
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
