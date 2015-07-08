@@ -1,33 +1,41 @@
 from datetime import date, datetime as dtime, timedelta, time
 from django.core.management.base import BaseCommand, CommandError
 from School.models import Lesson, Group, Room, Teacher, Discipline, Student
+import random
 
 class Command(BaseCommand):
     help = 'Create groups'
+    Student.objects.all().delete()
 
     def handle(self, *args, **options):
-        for i in range(30):
-            names = ['Petro']
-            surnames = ['Petrenko']
-            dt = date(1990, 1, 1)
-            for k in range(1,37):
-                for n in names:
-                    for s in surnames:
-                        Student.objects.create(
-                            name=n,
-                            surname=s,
-                            birthdate=dt +timedelta(weeks=1),
-                            sex="m",
-                            group_id=k
-                        )
-
-
-    #         name = models.CharField(max_length=50)
-    # surname = models.CharField(max_length=50)
-    # birthdate = models.DateTimeField()
-    # SEX = (
-    #     ('m', "Male"),
-    #     ('f', "Female"),
-    # )
-    # sex = models.CharField(max_length=1, choices=SEX)
-    # group = models.ForeignKey(Group)
+        grup = len(Group.objects.all())
+        names_male = ['Petro','Ivan','Roman','Andre','Sergij','Volodymyr']
+        names_female= ['Oksana','Marija','Natalja','Anna','Svitlana','Katja']
+        sex_m_f = ['m','f']
+        surnames = ['Petrenko','Nikolaenko','Sydorenko','Bondarenko','Poroshenko','Tymoshenko','Gubenko']
+        for i in range(10):
+            si = random.randint(0,1)
+            sexmf = sex_m_f[si]
+            for dd, s in enumerate(surnames):
+                # вибираємо випадкові імена з масивів імен чоловіків або жінок
+                if si==0:
+                    name_male_female = names_male[random.randint(0,len(names_male)-1)]
+                else:
+                    name_male_female = names_female[random.randint(0,len(names_female)-1)]
+                # формуємо псевдо випадкові дати народження учнів
+                # дні
+                if dd>30:
+                    dd = 1
+                # місяці
+                m = random.randint(0,11)
+                dt = date(1990+i, m+1, dd+1)
+                data_nar = dt +timedelta(days=1)
+                # розпихуємо учнів по випадкових наявних групах
+                nom_grup = random.randint(0,grup)
+                Student.objects.create(
+                    name=name_male_female,
+                    surname=s,
+                    birthdate=data_nar,
+                    sex=sexmf,
+                    group_id=nom_grup
+                )

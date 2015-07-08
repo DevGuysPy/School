@@ -4,14 +4,17 @@ from School.models import Lesson, Group, Room, Teacher, Discipline
 
 class Command(BaseCommand):
     help = 'Create groups'
+    Group.objects.all().delete()
 
     def handle(self, *args, **options):
-        for i in range(36):
+        teachers = Teacher.objects.all()
+        for i in range(33):
             classes = ['A', 'B', 'C']
             name = "{}-{}".format(i//3 + 1, classes[i % len(classes)])
+            teacher = i % len(teachers)
             Group.objects.create(
                 name=name,
-                teacher_id=1,
+                teacher_id=teacher,
                 info='',
                 member=30
             )

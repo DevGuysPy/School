@@ -4,6 +4,7 @@ from School.models import Lesson, Group, Room, Teacher, Discipline
 
 class Command(BaseCommand):
     help = 'Creates lessons for the whole week'
+    Lesson.objects.all().delete()
 
     def handle(self, *args, **options):
         today = date.today()
