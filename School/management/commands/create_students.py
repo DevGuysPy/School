@@ -4,11 +4,11 @@ from School.models import Lesson, Group, Room, Teacher, Discipline, Student
 import random
 
 class Command(BaseCommand):
-    help = 'Create groups'
+    help = 'Create Students'
     Student.objects.all().delete()
 
     def handle(self, *args, **options):
-        grup = len(Group.objects.all())
+        grup_count = len(Group.objects.all())
         names_male = ['Petro','Ivan','Roman','Andre','Sergij','Volodymyr']
         names_female= ['Oksana','Marija','Natalja','Anna','Svitlana','Katja']
         sex_m_f = ['m','f']
@@ -31,7 +31,7 @@ class Command(BaseCommand):
                 dt = date(1990+i, m+1, dd+1)
                 data_nar = dt +timedelta(days=1)
                 # розпихуємо учнів по випадкових наявних групах
-                nom_grup = random.randint(0,grup)
+                nom_grup = random.randint(0,grup_count)
                 Student.objects.create(
                     name=name_male_female,
                     surname=s,

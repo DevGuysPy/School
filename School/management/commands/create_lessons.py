@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand, CommandError
 from School.models import Lesson, Group, Room, Teacher, Discipline
 
 class Command(BaseCommand):
-    help = 'Creates lessons for the whole week'
+    help = 'Creates Lessons'
     Lesson.objects.all().delete()
 
     def handle(self, *args, **options):
