@@ -13,7 +13,6 @@ class Command(BaseCommand):
         for l in teachers:
             teacher_ids.append(l.id)
         for i in range(33):
-            teacher = i % len(teachers)
             for teacher in teacher_ids:
                 classes = ['A', 'B', 'C']
                 name = "{}-{}".format(i//3 + 1, classes[i % len(classes)])
@@ -23,4 +22,3 @@ class Command(BaseCommand):
                  info='',
                 member=30
                 )
-# -*- coding: utf-8 -*-
