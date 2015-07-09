@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark)
-from .forms import TeacherForm, LessonForm, StudentForm
+from .forms import TeacherForm, LessonForm, StudentForm, MarkForm
 
 def result(request):
     ctx = {
@@ -139,25 +139,21 @@ def add_comment(request, teacher_id):
 def lesson_detail(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
     mark = Mark.objects.filter(lesson_id=lesson_id)
-    disciplines = Discipline.objects.all()
     ctx = {
-    'lesson': lesson,
-    'disciplines': disciplines,
-    'mark': mark
+        'lesson': lesson,
+        'mark': mark
     }
 
 
     return render(request, 'lesson.html', ctx)
 
-def lesson_detail_edit(request, lesson_id):
+def lesson_detail_edit(request, lesson_id=1):
     lesson = Lesson.objects.get(id=lesson_id)
     form = LessonForm(request.POST or None, request.FILES or None,
                         instance=lesson)
-    disciplines = Discipline.objects.all()
     ctx = {
-    'lesson': lesson,
-    'form': form,
-    'disciplines': disciplines,
+        'lesson': lesson,
+        'form': form,
     }
     if form.is_valid():
         form.save()
@@ -167,14 +163,38 @@ def lesson_detail_edit(request, lesson_id):
 
 def student_detail(request, student_id=1):
     student = Student.objects.get(id=student_id)
+    mark = Mark.objects.filter(student_id=student_id)
+    ctx = {
+        'student': student,
+        'marks': mark
+    }
+
+
+    return render(request, 'studentprofile.html', ctx)
+
+def student_detail_edit(request, student_id=1):
+    student = Student.objects.get(id=student_id)
+    mark = Mark.objects.filter(student_id=student_id)
     form = StudentForm(request.POST or None, request.FILES or None,
                         instance=student)
+    form_mark = MarkForm(request.POST or None, request.FILES or None,
+                        instance=student)
+                        
     groups = Group.objects.all()
+    lessons = Lesson.objects.all()
+
     ctx = {
         'student': student,
         'form': form,
         'groups': groups,
+        'marks': mark,
+        'form_mark': form_mark,
+        'lessons': lessons,
     }
     if form.is_valid():
         form.save()
+    
+    if form_mark.is_valid():
+        form_mark.save()
+
     return render(request, 'student/edit.html', ctx)

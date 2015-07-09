@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Teacher</title>
-	 <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+	 <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 </head>
 <body>
 <div class='container'>
@@ -45,8 +45,45 @@
 	 	<h3>More about person</h3>
 	 	<p>{{ form.info}}</p>
 	</div>
+	<hr>
+        <div class="row">
+        	<div class="col-xs-3">
+                <h3> Lesson</h3>
+            </div>
+            <div class="col-xs-2">
+                <h3>Reason</h3>
+            </div>
+            <div class="col-xs-2">
+                <h3>Mark</h3>
+            </div>
+        </div>
+        {% for m in marks %}
+        <div class="row">
+        	<div class="col-xs-3">
+                 
+                 <select name="group">
+                {%  for l in lessons %}
+                    <option value="{{ l.id}}">
+                           {% if l.id == form_mark.lesson.value.id %}
+                           		selected="selected"
+                           {% endif %}
+                       	{{l.discipline|capfirst}} in {{ l.start|capfirst}}
+                   </option>
+                {% endfor %}
+            </select>
+            </div>
+            
+            <div class="col-xs-2">
+                {{ form_mark.reason}}
+            </div>
+            <div class="col-xs-2">
+                {{ form_mark.number}}
+             </div>   
+        </div>
+        {%endfor%}
+        <hr>
 	<div class= 'row'>
-           <input type="submit" class="btn btn-primary" value="Submit">
+           <input type="submit" class="btn btn-primary" value="Submit" >
      </div>
 	 
 </form>
