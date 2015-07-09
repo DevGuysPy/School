@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.shortcuts import render, redirect
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
-                     Discipline, Student)
+                     Discipline, Student, Mark)
 from .forms import TeacherForm, LessonForm, StudentForm
 
 def result(request):
@@ -49,6 +49,8 @@ def search_teachers(name, surname):
 
 def search_groups(name):
     return Group.objects.filter(name__icontains=name)
+def mark(mark_id):
+    return []
 
 def index(request):
     rooms = []
@@ -136,10 +138,12 @@ def add_comment(request, teacher_id):
 
 def lesson_detail(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
+    mark = Mark.objects.filter(lesson_id=lesson_id)
     disciplines = Discipline.objects.all()
     ctx = {
     'lesson': lesson,
-    'disciplines': disciplines
+    'disciplines': disciplines,
+    'mark': mark
     }
 
 
@@ -153,7 +157,7 @@ def lesson_detail_edit(request, lesson_id):
     ctx = {
     'lesson': lesson,
     'form': form,
-    'disciplines': disciplines
+    'disciplines': disciplines,
     }
     if form.is_valid():
         form.save()
@@ -174,4 +178,3 @@ def student_detail(request, student_id=1):
     if form.is_valid():
         form.save()
     return render(request, 'student/edit.html', ctx)
-

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from School.models import Teacher, Room, Lesson, Group, Discipline, Student
+from School.models import Teacher, Room, Lesson, Group, Discipline, Student, Mark
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
@@ -29,6 +29,10 @@ class DisciplineAdmin(admin.ModelAdmin):
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+@admin.register(Mark)
+class MarkAdmin(admin.ModelAdmin):
+    list_display = ('number',)
 
 
 # admin.site.register(Teacher)

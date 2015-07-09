@@ -50,6 +50,32 @@
         <div class="row">
             <p>{{ lesson.start }} - {{ lesson.end }}</p>
         </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-2">
+                <h3> Name</h3>
+            </div>
+            <div class="col-xs-2">
+                <h3>Reason</h3>
+            </div>
+            <div class="col-xs-2">
+                <h3>Mark</h3>
+            </div>
+        </div>
+        {% for m in mark %}
+        <div class="row">
+            <div class="col-xs-2">
+                {{ m.student}}
+            </div>
+            <div class="col-xs-2">
+                {{ m.reason}}
+            </div>
+            <div class="col-xs-2">
+                {{ m.number}}
+             </div>   
+        </div>
+        {%endfor%}
+        <hr>
         <div class="row">
             <h4>To edit this page, please click <a href="{% url 'lesson_detail_edit' lesson_id=lesson.id %}"><span>here</span></a></h4>
         </div>

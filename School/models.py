@@ -6,9 +6,10 @@ from django.db import models
 
 class Mark(models.Model):
     number = models.IntegerField(default=0)
-    
-    def __str__(self):
-        return self.number
+    lesson = models.ForeignKey('Lesson')
+    student = models.ForeignKey('Student')
+    reason = models.CharField(max_length=150)
+
 
 
 class Discipline(models.Model):
@@ -80,7 +81,7 @@ class Lesson(models.Model):
     teacher = models.ForeignKey(Teacher)
     discipline = models.ForeignKey(Discipline)
     info = models.TextField()
-
+    
     def __str__(self):
         return "{} в {}".format(self.discipline.name, self.start)
 
