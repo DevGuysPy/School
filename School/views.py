@@ -49,8 +49,6 @@ def search_teachers(name, surname):
 
 def search_groups(name):
     return Group.objects.filter(name__icontains=name)
-def mark(mark_id):
-    return []
 
 def index(request):
     rooms = []
@@ -198,3 +196,4 @@ def student_detail_edit(request, student_id=1):
         form_mark.save()
 
     return render(request, 'student/edit.html', ctx)
+

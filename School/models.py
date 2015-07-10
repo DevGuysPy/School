@@ -1,15 +1,16 @@
 import pytz
 from datetime import timedelta, datetime as dtime
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
 class Mark(models.Model):
-    number = models.IntegerField(default=0)
+    number = models.IntegerField(default=0, validators=[MinValueValidator(0),
+                                       MaxValueValidator(12)])
     lesson = models.ForeignKey('Lesson')
     student = models.ForeignKey('Student')
     reason = models.CharField(max_length=150)
-
+    
 
 
 class Discipline(models.Model):
