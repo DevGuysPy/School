@@ -150,8 +150,20 @@ def lesson_detail_edit(request, lesson_id):
 
 def lesson_detail(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
+    mark = Mark.objects.filter(lesson_id=lesson_id)
+    student = Student.objects.all()
+
+    if request.method == "POST":
+        student = request.POST['student']
+        reason = request.POST['reason']
+        number = request.POST['number']
+        Mark.objects.create(number=number, reason=reason, lesson_id=lesson.id, student_id=student)
+        return redirect('lesson_detail', lesson_id=lesson_id)
     ctx = {
         'lesson': lesson,
+        'mark': mark,
+        'student': student,
+        
     }
 
 
