@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
-from .views import index, teacher_detail, group_detail, add_comment, search_room, lesson_detail, student_detail, lesson_detail_edit, student_detail_edit  # , search_teacher
+from .views import index, teacher_detail, group_detail, add_comment, search_room, lesson_detail, student_detail, lesson_detail_edit, student_detail_edit, add_mark  # , search_teacher
 
 
 urlpatterns = [
@@ -27,9 +27,9 @@ urlpatterns = [
     url(r'^$', index,  name="index"),
     url(r'^teacher/(?P<teacher_id>\d+)/$', teacher_detail, name='teacher_detail'),
     url(r'^group/(?P<group_id>\d+)/$', group_detail, name='group_detail'),
-    url(r'^teacher/(?P<teacher_id>\d+)/addcomment/$', add_comment, name='add_comment'),
     url(r'^student/(?P<student_id>\d+)/$', student_detail, name='student_detail'),
     url(r'^student/(?P<student_id>\d+)/edit/$', student_detail_edit, name='student_detail_edit'),
+    url(r'^student/(?P<student_id>\d+)/addmark/$', student_detail, name='add_mark'),
     url(r'^room/search/$', search_room, name="search_room"),
     # url(r'^search/teacher/$', search_teacher, name="search_teacher"),
     url(r'^lesson/(?P<lesson_id>\d+)/$', lesson_detail, name='lesson_detail'),

@@ -7,7 +7,7 @@ from django.db import models
 class Mark(models.Model):
     number = models.IntegerField(default=0, validators=[MinValueValidator(0),
                                        MaxValueValidator(12)])
-    lesson = models.ForeignKey('Lesson')
+    lesson = models.ForeignKey('Lesson', null=True)
     student = models.ForeignKey('Student')
     reason = models.CharField(max_length=150)
     

@@ -63,6 +63,24 @@
         </div>
         {%endfor%}
         <hr>
+        <h3>Add mark</h3>
+        <form method="POST" action="addmark/">
+                {% csrf_token %}
+            <select name="lesson">
+                {%  for l in lesson %}
+                    <option value="{{ l.id}}">
+                           {% if l.id == lesson.value.id %}
+                                selected="selected"
+                           {% endif %}
+                        {{l.discipline|capfirst}} {{l.start|capfirst}} {{l.id|capfirst}}
+                   </option>
+                {% endfor %}
+            </select>
+            
+                    <input type='text' placeholder="Enter text" name="reason">
+                    <input type='text' placeholder="Enter text" name="number">
+                    <input type='submit' class='button margin-for-btn' value = 'Додати коментар'>
+        </form>
  
 <h4>To edit this page, please click <a href="{% url 'student_detail_edit' student_id=student.id %}"><span>here</span></a></h4>
 </div>

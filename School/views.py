@@ -160,9 +160,19 @@ def lesson_detail(request, lesson_id):
 def student_detail(request, student_id=1):
     student = Student.objects.get(id=student_id)
     mark = Mark.objects.filter(student_id=student_id)
+    lessons = Lesson.objects.all()
+
+    if request.method == "POST":
+        number = request.POST['number']
+        reason = request.POST['reason']
+        lesson = request.POST['lesson']
+        Mark.objects.create(number=number, reason=reason, student_id=student.id, lesson_id=lesson)
+        return redirect('student_detail', student_id=student_id) 
+
     ctx = {
         'student': student,
-        'marks': mark
+        'marks': mark,
+        'lesson': lessons,
     }
 
 
@@ -187,11 +197,21 @@ def student_detail_edit(request, student_id=1):
         'form_mark': form_mark,
         'lessons': lessons,
     }
-    if form.is_valid():
-        form.save()
-    
     if form_mark.is_valid():
         form_mark.save()
 
+    if form.is_valid():
+        form.save()
+    
+    
+
     return render(request, 'student/edit.html', ctx)
 
+def add_mark(request, student_id):
+    student = Student.objects.get(id=student_id)
+    
+    ctx = {
+        
+    }
+
+    return render(request, 'studentprofile.html', ctx) 
