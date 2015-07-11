@@ -9,9 +9,9 @@ class TeacherForm(ModelForm):
 
 
 class LessonForm(ModelForm):
-	class Meta:
-		model = Lesson
-		fields = ('start', 'group', 'room', 'discipline', 'info', 'teacher')
+    class Meta:
+        model = Lesson
+        fields = ('start', 'group', 'room', 'info')
 
 class StudentForm(ModelForm):
     class Meta:

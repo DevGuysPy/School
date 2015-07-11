@@ -134,30 +134,28 @@ def add_comment(request, teacher_id):
     return render(request, 'teacherprofile.html') 
 
 
-def lesson_detail(request, lesson_id):
+def lesson_detail_edit(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
-    mark = Mark.objects.filter(lesson_id=lesson_id)
+    form = LessonForm(request.POST or None, instance=lesson)
     ctx = {
         'lesson': lesson,
-        'mark': mark
-    }
-
-
-    return render(request, 'lesson.html', ctx)
-
-def lesson_detail_edit(request, lesson_id=1):
-    lesson = Lesson.objects.get(id=lesson_id)
-    form = LessonForm(request.POST or None, request.FILES or None,
-                        instance=lesson)
-    ctx = {
-        'lesson': lesson,
-        'form': form,
+        'form': form
     }
     if form.is_valid():
         form.save()
 
 
-    return render(request, 'lesson/edit.html', ctx)
+    return render (request, 'lesson/edit.html', ctx)
+
+
+def lesson_detail(request, lesson_id):
+    lesson = Lesson.objects.get(id=lesson_id)
+    ctx = {
+        'lesson': lesson,
+    }
+
+
+    return render (request, 'lesson.html', ctx)
 
 def student_detail(request, student_id=1):
     student = Student.objects.get(id=student_id)
