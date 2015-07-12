@@ -2,6 +2,7 @@ import datetime
 from datetime import timedelta
 
 from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark)
@@ -40,7 +41,10 @@ def search_students(name, surname):
                                   surname__icontains=surname)
 
 def search_rooms(room_id):
-    return [Room.objects.get(id=room_id)]
+    try:
+        return [Room.objects.get(id=room_id)]
+    except ObjectDoesNotExist:
+        return []
 
 
 def search_teachers(name, surname):
@@ -105,8 +109,9 @@ def index(request):
 
 def teacher_detail(request, teacher_id):
     teacher = Teacher.objects.get(id=teacher_id)
-    form = TeacherForm(request.POST or None, request.FILES or None,
-                        instance=teacher)
+    form = TeacherForm(
+        request.POST or None, request.FILES or None,
+        instance=teacher)
     disciplines = Discipline.objects.all()
     ctx = {
         'teacher': teacher,
