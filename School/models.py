@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import pytz
 from datetime import timedelta, datetime as dtime
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -5,12 +6,12 @@ from django.db import models
 
 
 class Mark(models.Model):
-    number = models.IntegerField(default=0, validators=[MinValueValidator(0),
-                                       MaxValueValidator(12)])
+    number = models.IntegerField(
+        default=0, validators=[MinValueValidator(0),
+                               MaxValueValidator(12)])
     lesson = models.ForeignKey('Lesson', null=True)
     student = models.ForeignKey('Student')
     reason = models.CharField(max_length=150)
-    
 
 
 class Discipline(models.Model):
@@ -60,7 +61,6 @@ class Student(models.Model):
     group = models.ForeignKey(Group)
     photo = models.ImageField(blank=True, null=True)
     info = models.TextField()
-    
 
     def __str__(self):
         return self.name
@@ -71,6 +71,7 @@ class Student(models.Model):
 class Room(models.Model):
     seats = models.IntegerField()
     number = models.IntegerField()
+
     def __str__(self):
         return str(self.id)
 

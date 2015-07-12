@@ -113,3 +113,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
+
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass

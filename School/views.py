@@ -73,7 +73,8 @@ def index(request):
             # second = "Vlad"
             # _ = ['Pocht']
             try:
-                first, second, *_ = query.split(' ')
+                query_words = query.split(' ')
+                first, second = query_words[0:2]
             except ValueError:
                 first = query
                 second = ''
@@ -81,7 +82,8 @@ def index(request):
             teachers.extend(list(search_teachers(second, first)))
         if 'students' in request.POST:
             try:
-                first, second, *_ = query.split(' ')
+                query_words = query.split(' ')
+                first, second = query_words[0:2]
             except ValueError:
                 first = query
                 second = ''
@@ -90,7 +92,6 @@ def index(request):
 
         if 'groups' in request.POST:
             groups = search_groups(query)
-        
 
     ctx = {
         'rooms': rooms,

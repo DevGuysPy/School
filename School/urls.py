@@ -18,8 +18,9 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-
-from .views import index, teacher_detail, group_detail, add_comment, search_room, lesson_detail, student_detail, lesson_detail_edit, student_detail_edit  # , search_teacher
+from .views import (index, teacher_detail, group_detail,
+                    add_comment, search_room, lesson_detail,
+                    student_detail, lesson_detail_edit, student_detail_edit)
 
 
 urlpatterns = [
