@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>room</title>
+</head>
+<body>
+{% for day in week %}
+    <h1>Day {{ forloop.counter }}</h1>
+    {% for lesson in day %}
+        <a href="{% url 'lesson_detail' lesson_id=lesson.id %}"><span>{{ lesson }}</span></a><br/>
+    {% endfor %}
+{% endfor %}
+
+
+{% for lesson in lessons %}
+    <hr/>
+    {% if lesson.is_now %}
+        <div class="alert alert-info" role="alert">
+    {% else %}
+        <div class="alert alert-warning">
+    {% endif %}
+            <div class="row"><div class="col-xs-12">{{ lesson.teacher }}</div></div>
+            <div class="row"><div class="col-xs-12">{{ lesson.group }}</div></div>
+            <div class="row"><div class="col-xs-12">{{ lesson.start }}-{{ lesson.end }}</div></div>
+    </div>
+{% endfor %}
+</body>
+</html>

@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from .views import (index, teacher_detail, group_detail,
-                    add_comment, search_room, lesson_detail,
+                    add_comment, room_detail, lesson_detail,
                     student_detail, lesson_detail_edit, student_detail_edit)
 
 
@@ -31,9 +31,9 @@ urlpatterns = [
     url(r'^student/(?P<student_id>\d+)/$', student_detail, name='student_detail'),
     url(r'^student/(?P<student_id>\d+)/edit/$', student_detail_edit, name='student_detail_edit'),
     url(r'^student/(?P<student_id>\d+)/addmark/$', student_detail, name='add_mark1'),
-    url(r'^room/search/$', search_room, name="search_room"),
     # url(r'^search/teacher/$', search_teacher, name="search_teacher"),
     url(r'^lesson/(?P<lesson_id>\d+)/$', lesson_detail, name='lesson_detail'),
     url(r'^lesson/(?P<lesson_id>\d+)/edit/$', lesson_detail_edit, name='lesson_detail_edit'),
     url(r'^lesson/(?P<lesson_id>\d+)/addmark/$', lesson_detail, name='add_mark2'),
+    url(r'^rooms/(?P<room_id>\d+)/$', room_detail, name='room_detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

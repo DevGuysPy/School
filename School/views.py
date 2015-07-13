@@ -15,34 +15,32 @@ def result(request):
     return render(request, 'index.html', ctx)
 
 
-def search_room(request):
-    if request.method == 'POST':
-        days_w_lessons = []
-        date = datetime.date.today()
-        monday = date - datetime.timedelta(days=date.weekday())
-        room_id = int(request.POST['room_id'])
-        for i in range(5):
-            date_to_select = monday + timedelta(days=i)
-            next_day = monday + timedelta(days=i+1)
-            lessons = Lesson.objects.filter(
-                room_id=room_id,
-                start__range=[date_to_select, next_day])
-            days_w_lessons.append(lessons)
+def room_detail(request, room_id):
+    days_w_lessons = []
+    date = datetime.date.today()
+    monday = date - datetime.timedelta(days=date.weekday())
+    room_id = Room.objects.get(id=room_id)
+    for i in range(5):
+        date_to_select = monday + timedelta(days=i)
+        next_day = monday + timedelta(days=i+1)
+        lessons = Lesson.objects.filter(
+            room_id=room_id,
+            start__range=[date_to_select, next_day])
+        days_w_lessons.append(lessons)
 
-    else:
-        days_w_lessons = []
     ctx = {
         'week': days_w_lessons
     }
-    return render(request, 'search/room.html', ctx)
+    
+    return render(request, 'room.html', ctx)
 
 def search_students(name, surname):
     return Student.objects.filter(name__icontains=name,
                                   surname__icontains=surname)
 
-def search_rooms(room_id):
+def search_rooms(number):
     try:
-        return [Room.objects.get(id=room_id)]
+        return [Room.objects.get(number=number)]
     except ObjectDoesNotExist:
         return []
 
