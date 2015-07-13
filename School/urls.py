@@ -20,14 +20,17 @@ from django.conf import settings
 
 from .views import (index, teacher_detail, group_detail,
                     add_comment, room_detail, lesson_detail,
-                    student_detail, lesson_detail_edit, student_detail_edit)
+                    student_detail, lesson_detail_edit, student_detail_edit,
+                    teacher_detail_edit, group_detail_edit)
 
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', index,  name="index"),
     url(r'^teacher/(?P<teacher_id>\d+)/$', teacher_detail, name='teacher_detail'),
+    url(r'^teacher/(?P<teacher_id>\d+)/edit/$', teacher_detail_edit, name='teacher_detail_edit'),
     url(r'^group/(?P<group_id>\d+)/$', group_detail, name='group_detail'),
+    url(r'^group/(?P<group_id>\d+)/edit/$', group_detail_edit, name='group_detail_edit'),
     url(r'^student/(?P<student_id>\d+)/$', student_detail, name='student_detail'),
     url(r'^student/(?P<student_id>\d+)/edit/$', student_detail_edit, name='student_detail_edit'),
     url(r'^student/(?P<student_id>\d+)/addmark/$', student_detail, name='add_mark1'),

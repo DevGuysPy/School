@@ -38,10 +38,10 @@ class Teacher(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length=50)
-    member = models.IntegerField(default=0)
     info = models.TextField()
     teacher = models.ForeignKey(Teacher)
-
+    photo = models.ImageField(blank=True, null=True)
+    
     class Meta():
         db_table = 'group'
 

@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark)
-from .forms import TeacherForm, LessonForm, StudentForm, MarkForm
+from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
 
 def result(request):
     ctx = {
@@ -107,6 +107,14 @@ def index(request):
 
 def teacher_detail(request, teacher_id):
     teacher = Teacher.objects.get(id=teacher_id)
+    ctx = {
+        'teacher': teacher,
+    }
+
+    return render(request, 'teacherprofile.html', ctx)
+
+def teacher_detail_edit(request, teacher_id):
+    teacher = Teacher.objects.get(id=teacher_id)
     form = TeacherForm(
         request.POST or None, request.FILES or None,
         instance=teacher)
@@ -123,10 +131,33 @@ def teacher_detail(request, teacher_id):
     return render(request, 'teacher/edit.html', ctx)
 
 def group_detail(request, group_id=1):
+    group = Group.objects.get(id=group_id)
+    student = Student.objects.filter(group_id=group_id)
+
     ctx = {
-        'group': Group.objects.get(id=group_id),
+        'group': group,
+        'student': student,
+
     }
     return render(request, 'groupprofile.html', ctx)
+
+def group_detail_edit(request, group_id):
+    group = Group.objects.get(id=group_id)
+    student = Student.objects.filter(group_id=group_id)
+    form = GroupForm(
+        request.POST or None, request.FILES or None,
+        instance=group)
+    teacher = Teacher.objects.all()
+    ctx = {
+        'group': group,
+        'student': student,
+        'form': form,
+        'teacher': teacher,
+    }
+    if form.is_valid():
+        form.save()
+
+    return render(request, 'groupprofile_edit.html', ctx)
 
 def add_comment(request, teacher_id):
     teacher = Teacher.objects.get(id=teacher_id)
