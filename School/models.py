@@ -3,7 +3,7 @@ import pytz
 from datetime import timedelta, datetime as dtime
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Mark(models.Model):
     number = models.IntegerField(
@@ -70,7 +70,7 @@ class Student(models.Model):
     group = models.ForeignKey(Group)
     photo = models.ImageField(blank=True, null=True)
     info = models.TextField()
-
+    user = models.OneToOneField(User)
     def __str__(self):
         return self.name
 

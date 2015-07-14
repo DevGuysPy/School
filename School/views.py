@@ -8,6 +8,9 @@ from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark)
 from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
 
+from django.contrib.auth.models import User
+
+
 def result(request):
     ctx = {
         
@@ -285,3 +288,12 @@ def all_teachers(request):
 
     return render (request, 'allteachers.html', ctx)
 
+def registration(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        User.objects.create_user(username=username, email=email, password=password)
+        return redirect('/login/')
+
+    return render(request, 'registration/registration.html')
