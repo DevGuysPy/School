@@ -3,6 +3,7 @@ from datetime import timedelta
 
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Avg
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark)
@@ -222,18 +223,20 @@ def student_detail(request, student_id=1):
     student = Student.objects.get(id=student_id)
     mark = Mark.objects.filter(student_id=student_id)
     lessons = Lesson.objects.all()
+    avg_mark = Mark.objects.filter(student_id=student_id).aggregate(Avg('number'))
 
     if request.method == "POST":
         number = request.POST['number']
         reason = request.POST['reason']
         lesson = request.POST['lesson']
         Mark.objects.create(number=number, reason=reason, student_id=student.id, lesson_id=lesson)
-        return redirect('student_detail', student_id=student_id) 
+        return redirect('student_detail', student_id=student_id)
 
     ctx = {
         'student': student,
         'marks': mark,
         'lesson': lessons,
+        'average_mark':avg_mark['number__avg'],
     }
 
 
