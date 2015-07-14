@@ -7,32 +7,33 @@
 </head>
 <body>
 <div class='container'>
- 
- <div  class= 'row '>
-  <div class='col-xs-3'>	
+  <a href="{% url 'index' %}"  >Home</a>
 
- 	<img class="img-responsive" src="/media/{{ teacher.photo }}">
- 	</div>
- 	<div class='col-xs-9'>
- 	<h1> {{ teacher.surname}} {{ teacher.name}}  </h1>
- 	</div>
- </div>
- <hr>
- <h2>Info</h2>
- <hr>
- <div class= 'row'>
- 	<h3>Discipline:</h3>
- 		<p>{{teacher.discipline}}</p>
- </div>
- <div class= 'row'>
- 	<h3>Birthdate:</h3>
- 		<p>{{ teacher.birthdate}}</p>
- </div>
- <div class= 'row'>
- 	<h3>More about person</h3>
- 		<p>{{ teacher.info}}</p>
- </div>
- <h4>To edit this page, please click <a href="{% url 'teacher_detail_edit' teacher_id=teacher.id %}"><span>here</span></a></h4>
+  <div  class= 'row '>
+   <div class='col-xs-3'>
+
+     <img class="img-responsive" src="/media/{{ teacher.photo }}">
+     </div>
+     <div class='col-xs-9'>
+     <h1> {{ teacher.surname}} {{ teacher.name}}  </h1>
+     </div>
+  </div>
+  <hr>
+  <h2>Info</h2>
+  <hr>
+  <div class= 'row'>
+     <h3>Discipline:</h3>
+         <p>{{teacher.discipline}}</p>
+  </div>
+  <div class= 'row'>
+     <h3>Birthdate:</h3>
+         <p>{{ teacher.birthdate}}</p>
+  </div>
+  <div class= 'row'>
+     <h3>More about person</h3>
+         <p>{{ teacher.info}}</p>
+  </div>
+  <h4>To edit this page, please click <a href="{% url 'teacher_detail_edit' teacher_id=teacher.id %}"><span>here</span></a></h4>
  </div>
 
 

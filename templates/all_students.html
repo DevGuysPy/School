@@ -7,30 +7,29 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
-<div class = 'container'>
-<h1 class="text-center">Our  students</h1>
-    <hr>
-{% for s in student %}
-<div class="media">
-  <div class="media-left">
-    <a href='/student/{{s.id}}/'>
-        {% if s.photo %}
-	        	<img src="/media/{{ s.photo }}" class = 'media-object img-rounded'>
-        {% else %}
-	        	<img src=" http://tatet.ua/themes/fenix/img/default-user.png" class = 'media-object img-rounded'>
-        {% endif %}
-
-    </a>
-  </div>
-  <div class="media-body">
-    <h4 class="media-heading"><a href='/student/{{s.id}}/'>{{ s.surname}} {{s.name}}</a><br></h4>
-    <h5 class = 'display'>Group:   </h5>{{ s.group }}
-
-
-  </div>
-</div>
-    <hr>
-{% endfor %}
-</div>
+    <div class = 'container'>
+    <a href="{% url 'index' %}"  >Home</a>
+        <hr>
+        <h1 class="text-center">Our  students</h1>
+        <hr>
+        {% for s in student %}
+        <div class="media">
+              <div class="media-left">
+                    <a href='/student/{{s.id}}/'>
+                        {% if s.photo %}
+                                <img src="/media/{{ s.photo }}" class = 'media-object img-rounded'>
+                        {% else %}
+                                <img src=" http://tatet.ua/themes/fenix/img/default-user.png" class = 'media-object img-rounded'>
+                        {% endif %}
+                    </a>
+              </div>
+            <div class="media-body">
+                <h4 class="media-heading"><a href='/student/{{s.id}}/'>{{ s.surname}} {{s.name}}</a><br></h4>
+                <h5 class = 'display'>Group:   </h5>{{ s.group }}
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
 </body>
 </html>

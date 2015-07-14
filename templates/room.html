@@ -4,6 +4,7 @@
 	<title>room</title>
 </head>
 <body>
+<a href="{% url 'index' %}"  >Home</a>
 {% for day in week %}
     <h1>Day {{ forloop.counter }}</h1>
     {% for lesson in day %}

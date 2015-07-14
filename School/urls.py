@@ -21,7 +21,7 @@ from django.conf import settings
 from .views import (index, teacher_detail, group_detail,
                     add_comment, room_detail, lesson_detail,
                     student_detail, lesson_detail_edit, student_detail_edit,
-                    teacher_detail_edit, group_detail_edit, all_student)
+                    teacher_detail_edit, group_detail_edit, all_students)
 
 
 urlpatterns = [
@@ -39,5 +39,5 @@ urlpatterns = [
     url(r'^lesson/(?P<lesson_id>\d+)/edit/$', lesson_detail_edit, name='lesson_detail_edit'),
     url(r'^lesson/(?P<lesson_id>\d+)/addmark/$', lesson_detail, name='add_mark2'),
     url(r'^rooms/(?P<room_id>\d+)/$', room_detail, name='room_detail'),
-    url(r'^students/$', all_student, name='all_student'),
+    url(r'^students/$', all_students, name='all_student'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

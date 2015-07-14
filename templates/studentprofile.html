@@ -5,84 +5,87 @@
 	 <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 </head>
 <body>
-<div class='container'>
- 
- <div  class= 'row '>
-  <div class='col-xs-3'>	
+    <div class='container'>
+        <a href="{% url 'index' %}"  >Home</a>
+        <div  class= 'row '>
+            <div class='col-xs-3'>
+                  {% if student.photo %}
+                        <img src="/media/{{ student.photo }}" class = ' img-rounded'>
+                  {% else %}
+                        <img src=" http://tatet.ua/themes/fenix/img/default-user.png" class = 'img-rounded'>
+                  {% endif %}
+            </div>
+            <div class='col-xs-9'>
+                <h1>{{ student.name}} {{ student.surname}} </h1>
+            </div>
+        </div>
+         <hr>
+         <h2>Info</h2>
+         <hr>
+         <div class= 'row'>
+            <h3>Group:</h3>
+                <p>{{student.group}}</p>
+         </div>
+         <div class= 'row'>
+            <h3>Birthdate:</h3>
+                <p>{{ student.birthdate}}</p>
+         </div>
+         <div class= 'row'>
+            <h3>More about person</h3>
+                <p>{{ student.info}}</p>
+         </div>
+         <hr>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <h3> Time</h3>
+                    </div>
+                    <div class="col-xs-2">
+                        <h3> Discipline</h3>
+                    </div>
+                    <div class="col-xs-2">
+                        <h3>Reason</h3>
+                    </div>
+                    <div class="col-xs-2">
+                        <h3>Mark</h3>
+                    </div>
+                </div>
+                {% for m in marks %}
+                <div class="row">
+                    <div class="col-xs-2">
+                         {{ m.lesson.start}}
+                    </div>
+                    <div class="col-xs-2">
+                        {{ m.lesson.discipline}}
+                    </div>
+                    <div class="col-xs-2">
+                        {{ m.reason}}
+                    </div>
+                    <div class="col-xs-2">
+                        {{ m.number}}
+                     </div>
+                </div>
+                {%endfor%}
+                <hr>
+                <h3>Add mark</h3>
+                <form method="POST" action="addmark/">
+                        {% csrf_token %}
+                    <select name="lesson">
+                        {%  for l in lesson %}
+                            <option value="{{ l.id}}">
+                                   {% if l.id == lesson.value.id %}
+                                        selected="selected"
+                                   {% endif %}
+                                {{l.discipline|capfirst}} {{l.start|capfirst}} {{l.id|capfirst}}
+                           </option>
+                        {% endfor %}
+                    </select>
 
- 	<img class="img-responsive" src="/media/{{ student.photo }}">
- 	</div>
- 	<div class='col-xs-9'>
- 	<h1>{{ student.name}} {{ student.surname}} </h1>
- 	</div>
- </div>
- <hr>
- <h2>Info</h2>
- <hr>
- <div class= 'row'>
- 	<h3>Group:</h3>
- 		<p>{{student.group}}</p>
- </div>
- <div class= 'row'>
- 	<h3>Birthdate:</h3>
- 		<p>{{ student.birthdate}}</p>
- </div>
- <div class= 'row'>
- 	<h3>More about person</h3>
- 		<p>{{ student.info}}</p>
- </div>
- <hr>
-        <div class="row">
-        	<div class="col-xs-2">
-                <h3> Time</h3>
-            </div>
-            <div class="col-xs-2">
-                <h3> Discipline</h3>
-            </div>
-            <div class="col-xs-2">
-                <h3>Reason</h3>
-            </div>
-            <div class="col-xs-2">
-                <h3>Mark</h3>
-            </div>
-        </div>
-        {% for m in marks %}
-        <div class="row">
-        	<div class="col-xs-2">
-                 {{ m.lesson.start}}
-            </div>
-            <div class="col-xs-2">
-                {{ m.lesson.discipline}} 
-            </div>
-            <div class="col-xs-2">
-                {{ m.reason}}
-            </div>
-            <div class="col-xs-2">
-                {{ m.number}}
-             </div>   
-        </div>
-        {%endfor%}
-        <hr>
-        <h3>Add mark</h3>
-        <form method="POST" action="addmark/">
-                {% csrf_token %}
-            <select name="lesson">
-                {%  for l in lesson %}
-                    <option value="{{ l.id}}">
-                           {% if l.id == lesson.value.id %}
-                                selected="selected"
-                           {% endif %}
-                        {{l.discipline|capfirst}} {{l.start|capfirst}} {{l.id|capfirst}}
-                   </option>
-                {% endfor %}
-            </select>
-            
-                    <input type='text' placeholder="Enter text" name="reason">
-                    <input type='text' placeholder="Enter text" name="number">
-                    <input type='submit' class='button margin-for-btn' value = 'Add'>
-        </form>
- 
-<h4>To edit this page, please click <a href="{% url 'student_detail_edit' student_id=student.id %}"><span>here</span></a></h4>
-</div>
+                            <input type='text' placeholder="Enter text" name="reason">
+                            <input type='text' placeholder="Enter text" name="number">
+                            <input type='submit' class='button margin-for-btn' value = 'Add'>
+                </form>
+
+        <h4>To edit this page, please click <a href="{% url 'student_detail_edit' student_id=student.id %}"><span>here</span></a></h4>
+    </div>
 </body>
 </html>

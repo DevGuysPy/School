@@ -34,9 +34,11 @@ def room_detail(request, room_id):
     
     return render(request, 'room.html', ctx)
 
+
 def search_students(name, surname):
     return Student.objects.filter(name__icontains=name,
                                   surname__icontains=surname)
+
 
 def search_rooms(number):
     try:
@@ -45,12 +47,15 @@ def search_rooms(number):
         return []
 
 
+
 def search_teachers(name, surname):
     return Teacher.objects.filter(name__icontains=name,
                                   surname__icontains=surname)
 
+
 def search_groups(name):
     return Group.objects.filter(name__icontains=name)
+
 
 def index(request):
     rooms = []
@@ -105,6 +110,7 @@ def index(request):
     }
     return render(request, 'index.html', ctx)
 
+
 def teacher_detail(request, teacher_id):
     teacher = Teacher.objects.get(id=teacher_id)
     ctx = {
@@ -112,6 +118,7 @@ def teacher_detail(request, teacher_id):
     }
 
     return render(request, 'teacherprofile.html', ctx)
+
 
 def teacher_detail_edit(request, teacher_id):
     teacher = Teacher.objects.get(id=teacher_id)
@@ -130,6 +137,7 @@ def teacher_detail_edit(request, teacher_id):
 
     return render(request, 'teacher/edit.html', ctx)
 
+
 def group_detail(request, group_id=1):
     group = Group.objects.get(id=group_id)
     student = Student.objects.filter(group_id=group_id)
@@ -140,6 +148,7 @@ def group_detail(request, group_id=1):
 
     }
     return render(request, 'groupprofile.html', ctx)
+
 
 def group_detail_edit(request, group_id):
     group = Group.objects.get(id=group_id)
@@ -158,6 +167,7 @@ def group_detail_edit(request, group_id):
         form.save()
 
     return render(request, 'groupprofile_edit.html', ctx)
+
 
 def add_comment(request, teacher_id):
     teacher = Teacher.objects.get(id=teacher_id)
@@ -204,6 +214,7 @@ def lesson_detail(request, lesson_id):
 
     return render (request, 'lesson.html', ctx)
 
+
 def student_detail(request, student_id=1):
     student = Student.objects.get(id=student_id)
     mark = Mark.objects.filter(student_id=student_id)
@@ -224,6 +235,7 @@ def student_detail(request, student_id=1):
 
 
     return render(request, 'studentprofile.html', ctx)
+
 
 def student_detail_edit(request, student_id=1):
     student = Student.objects.get(id=student_id)
@@ -254,15 +266,8 @@ def student_detail_edit(request, student_id=1):
 
     return render(request, 'student/edit.html', ctx)
 
-def add_mark(request, student_id):
-    student = Student.objects.get(id=student_id)
-    
-    ctx = {
-        
-    }
 
-    return render(request, 'studentprofile.html', ctx)
-def all_student(request):
+def all_students(request):
     students = Student.objects.all()
     ctx = {
         'student': students,
