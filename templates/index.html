@@ -8,6 +8,7 @@
 
 <h1>Главная</h1>
 <a href="{% url 'all_student' %}"  >All students</a>
+<a href="{% url 'all_teachers' %}">All teachers</a>
 <form method="POST">
     {% csrf_token %}
     <input type="text" name="query" placeholder="Enter search query">
@@ -40,7 +41,5 @@
         <a href='student/{{student.id}}/'>{{ student.surname }} {{ student.name }}</a><br>
     {%endfor%}
 </div>
-
-
 </body>
 </html>

@@ -272,4 +272,16 @@ def all_students(request):
     ctx = {
         'student': students,
     }
+
     return render (request, 'all_students.html', ctx)
+
+
+def all_teachers(request):
+    teachers = Teacher.objects.all()
+
+    ctx = {
+        'teachers': teachers
+    }
+
+    return render (request, 'allteachers.html', ctx)
+

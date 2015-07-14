@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
+
 from .views import (index, teacher_detail, group_detail,
                     add_comment, room_detail, lesson_detail,
                     student_detail, lesson_detail_edit, student_detail_edit,
-                    teacher_detail_edit, group_detail_edit, all_students)
+                    teacher_detail_edit, group_detail_edit, all_students, all_teachers)
 
 
 urlpatterns = [
@@ -40,4 +41,6 @@ urlpatterns = [
     url(r'^lesson/(?P<lesson_id>\d+)/addmark/$', lesson_detail, name='add_mark2'),
     url(r'^rooms/(?P<room_id>\d+)/$', room_detail, name='room_detail'),
     url(r'^students/$', all_students, name='all_student'),
+    url(r'^allteachers/$', all_teachers, name='all_teachers'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -18,7 +18,5 @@ class Command(BaseCommand):
                 name = "{}-{}".format(i//3 + 1, classes[i % len(classes)])
                 Group.objects.create(
                     name=name,
-                    teacher_id=teacher,
                     info='',
-                    member=30
                 )

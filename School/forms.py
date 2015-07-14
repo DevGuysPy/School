@@ -26,4 +26,4 @@ class MarkForm(ModelForm):
 class GroupForm(ModelForm):
     class Meta:
         model = Group
-        fields = ('name', 'info', 'teacher', 'photo')
+        fields = ('name', 'info', 'photo')

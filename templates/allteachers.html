@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>all</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+<body>
+    <div class = 'container'>
+    <a href="{% url 'index' %}"  >Home</a>
+        <hr>
+        <h1 class="text-center">Our teachers</h1>
+        <hr>
+        {% for teacher in teachers %}
+        <div class="media">
+              <div class="media-left">
+                    <a href='/teacher/{{teacher.id}}/'>
+                        {% if teacher.photo %}
+                                <img src="/media/{{ teacher.photo }}" class = 'media-object img-rounded'>
+                        {% else %}
+                                <img src=" http://tatet.ua/themes/fenix/img/default-user.png" class = 'media-object img-rounded img-responsive'>
+                        {% endif %}
+                    </a>
+              </div>
+            <div class="media-body">
+                <h4 class="media-heading"><a href='/teacher/{{teacher.id}}/'>{{ teacher.surname}} {{teacher.name}}</a><br></h4>
+                <h5 class = 'display'>Group:   </h5>{{ teacher.group }}
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>
