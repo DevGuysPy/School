@@ -7,8 +7,9 @@
 <div class="container">
 
 <h1>Главная</h1>
-<a href="{% url 'all_student' %}"  >All students</a>
-<a href="{% url 'all_teachers' %}">All teachers</a>
+    <a href="{% url 'all_student' %}"  >All students</a>
+    <a href="{% url 'all_teachers' %}">All teachers</a>
+    <a href = "{% url 'registration' %}">Registration</a>
 <form method="POST">
     {% csrf_token %}
     <input type="text" name="query" placeholder="Enter search query">
