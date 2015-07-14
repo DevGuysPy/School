@@ -3,10 +3,11 @@
 <head>
     <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
 </head>
-<body>
-<div class="container">
-<h1>Главная</h1>
 
+<div class="container">
+
+<h1>Главная</h1>
+<a href="{% url 'all_student' %}"  >All students</a>
 <form method="POST">
     {% csrf_token %}
     <input type="text" name="query" placeholder="Enter search query">
@@ -39,6 +40,7 @@
         <a href='student/{{student.id}}/'>{{ student.surname }} {{ student.name }}</a><br>
     {%endfor%}
 </div>
+
 
 </body>
 </html>

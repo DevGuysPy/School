@@ -261,4 +261,10 @@ def add_mark(request, student_id):
         
     }
 
-    return render(request, 'studentprofile.html', ctx) 
+    return render(request, 'studentprofile.html', ctx)
+def all_student(request):
+    students = Student.objects.all()
+    ctx = {
+        'student': students,
+    }
+    return render (request, 'all_students.html', ctx)
