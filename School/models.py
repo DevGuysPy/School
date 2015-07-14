@@ -31,7 +31,7 @@ class Teacher(models.Model):
     info = models.TextField()
     discipline = models.ForeignKey(Discipline)
     photo = models.ImageField(blank=True, null=True)
-    group = models.OneToOneField('Group', null=True)
+    group = models.OneToOneField('Group', null=True, blank=True)
 
     class Meta():
         db_table = 'teacher'
