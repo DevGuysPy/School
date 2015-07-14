@@ -20,6 +20,9 @@ class Discipline(models.Model):
     def __str__(self):
         return self.name
 
+    def __unicode__(self):
+        return self.name
+
 class Teacher(models.Model):
     # room = models.ForeignKey(Room)
     name = models.CharField(max_length=50)
@@ -34,7 +37,10 @@ class Teacher(models.Model):
         db_table = 'teacher'
 
     def __str__(self):
-        return self.name 
+        return self.name
+
+    def __unicode__(self):
+        return self.name
 
 
 class Group(models.Model):
@@ -46,6 +52,9 @@ class Group(models.Model):
         db_table = 'group'
 
     def __str__(self):
+        return self.name
+
+    def __unicode__(self):
         return self.name
 
 
@@ -64,7 +73,9 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
-    # group _id
+
+    def __unicode__(self):
+        return self.name
 
 
 
@@ -74,6 +85,9 @@ class Room(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Lesson(models.Model):
@@ -86,6 +100,9 @@ class Lesson(models.Model):
     
     def __str__(self):
         return "{} в {}".format(self.discipline.name, self.start)
+
+    def __unicode__(self):
+        return u"{} в {}".format(self.discipline.name, self.start)
 
     def end(self):
         return self.start + timedelta(minutes=45)
@@ -101,28 +118,3 @@ class Comments(models.Model):
 
     class Meta():
         db_table = 'comments'
-
-        
-# class MyGroup1(models.Model):
-#     name =
-#     student = models.ForeignKey(MyStudent1)
-#     group_director
-
-
-# class MyStudent1(models.Model):
-#     name =
-#
-# # --------------------
-#
-# class MyGroup2(models.Model):
-#     name =
-#     group_director =
-#
-# class MyStudent2(models.Model):
-#     name =
-#     surname =
-#     birthdate =
-#     group = models.ForeignKey(MyGroup2)
-#
-# # 1-A       Volodymyr
-# # 2-A
