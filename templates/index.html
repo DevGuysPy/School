@@ -9,6 +9,7 @@
 <h1>Главная</h1>
     <a href="{% url 'all_student' %}"  >All students</a>
     <a href="{% url 'all_teachers' %}">All teachers</a>
+    <a href="{% url 'all_groups' %}">All Groups</a>
     <a href = "{% url 'registration' %}">Registration</a>
 <form method="POST">
     {% csrf_token %}

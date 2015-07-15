@@ -291,6 +291,15 @@ def all_teachers(request):
 
     return render (request, 'allteachers.html', ctx)
 
+def all_groups(request):
+    groups = Group.objects.all()
+
+    ctx = {
+        'groups': groups
+        }
+
+    return render (request, 'all_groups.html', ctx)
+
 def registration(request):
     if request.method == 'POST':
         username = request.POST['username']

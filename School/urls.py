@@ -22,7 +22,7 @@ from django.conf import settings
 from .views import (index, teacher_detail, group_detail,
                     add_comment, room_detail, lesson_detail,
                     student_detail, lesson_detail_edit, student_detail_edit,
-                    teacher_detail_edit, group_detail_edit, all_students, all_teachers,
+                    teacher_detail_edit, group_detail_edit, all_students, all_teachers, all_groups,
                     registration)
 
 
@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^rooms/(?P<room_id>\d+)/$', room_detail, name='room_detail'),
     url(r'^students/$', all_students, name='all_student'),
     url(r'^allteachers/$', all_teachers, name='all_teachers'),
+    url(r'^allgroups/$', all_groups, name='all_groups'),
     url(r'^registration/$', registration, name="registration"),
     # url(r'^logout/$', 'django.contrib.auth.views.logout',
     #     {'next_page': '/'}, name='logout'),
