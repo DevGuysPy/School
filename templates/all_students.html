@@ -7,14 +7,16 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
-{% if user.is_authenticated %}
-    <li><a href="/logout/"><strong>Вийти</strong></a></li>
-{% else %}
-    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-    <li><a href="/login/"><strong>Логін</strong></a></li>      
-{% endif %}
+
+    {% if user.is_authenticated %}
+        <li><a href="/logout/"><strong>Вийти</strong></a></li>
+    {% else %}
+        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+        <li><a href="/login/"><strong>Логін</strong></a></li>
+    {% endif %}
+
     <div class = 'container'>
-    <a href="{% url 'index' %}"  >Home</a>
+        <a href="{% url 'index' %}"  >Home</a>
         <hr>
         <h1 class="text-center">Our  students</h1>
         <hr>
@@ -23,9 +25,9 @@
               <div class="media-left">
                     <a href='/student/{{s.id}}/'>
                         {% if s.photo %}
-                                <img src="/media/{{ s.photo }}" class = 'media-object img-rounded'>
+                            <div class="xs-ava" style="background-image: url('/media/{{ s.photo }}');"></div>
                         {% else %}
-                                <img src=" http://tatet.ua/themes/fenix/img/default-user.png" class = 'media-object img-rounded'>
+                            <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
                         {% endif %}
                     </a>
               </div>

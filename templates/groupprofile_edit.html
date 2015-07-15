@@ -1,61 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>group</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <meta charset="UTF-8">
+    <title>group</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-{% if user.is_authenticated %}
-    <li><a href="/logout/"><strong>Вийти</strong></a></li>
-{% else %}
-    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-    <li><a href="/login/"><strong>Логін</strong></a></li>      
-{% endif %}
-<div class='container'>
- 	<form method="POST" enctype="multipart/form-data">
-    	{% csrf_token %} 
-	 	<div  class= 'row '>
-	  		<div class='col-xs-3'>	
-				<img class="img-responsive" src="/media/{{ group.photo }}"></img>
-	 			{{ form.photo }}
-	 		</div>
-	 		<div class='col-xs-9'>
-	 			<h1>{{ group.name}} </h1>
-	 		</div>
-	 	</div>
-		 <hr>
-		 <h2>Info</h2>
-		 <hr>
-		 <div class= 'row'>
-		 	<h3>Director:</h3>
-		 		<p>{{group.teacher}}</p>
-		 		<select name="teacher">
-		                {%  for t in teacher %}
-		                    <option value="{{ t.id}}">
-		                           {% if t.id == form.teacher.value.id %}
-		                           		selected="selected"
-		                           {% endif %}
-		                       	{{t.surname|capfirst}} {{t.name|capfirst}}
-		                   </option>
-		                {% endfor %}
-		        </select>
-		 </div>
-		<div class= 'row'>
-		 	<h3>Members:</h3>
-		 		{% for s in student %}
-		 			<a href='/student/{{s.id}}/'>{{s.surname}} {{s.name}}</a><br>
-		 		{% endfor %}
-		</div>
-		 <div class= 'row'>
-		 	<h3>More about group</h3>
-		 	<p>{{ group.info}}</p>
-		 	{{ form.info}}
-		 </div>
-		<div class= 'row'>
-	           <input type="submit" class="btn btn-primary" value="Submit" >
-	    </div>
- 	</form>
-</div>
+    {% if user.is_authenticated %}
+        <li><a href="/logout/"><strong>Вийти</strong></a></li>
+    {% else %}
+        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+        <li><a href="/login/"><strong>Логін</strong></a></li>
+    {% endif %}
+
+    <div class='container'>
+        <a href="{% url 'index' %}"  >Home</a>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div  class= 'row '>
+                <div class='col-xs-3'>
+                    {% if form.photo.value %}
+                        <div class="xs-ava" style="background-image: url('/media/{{ form.photo.value }}');"></div>
+                    {% else %}
+                        <div class="xs-ava" style="background-image: url('http://www.salesmanago.pl/libs/unify/assets/img/testimonials/user.jpg;jsessionid=0E5F9F48BF3B7231C26C68CF7AD678EC');"></div>
+                    {% endif %}
+                    {{ form.photo }}
+                </div>
+                <div class='col-xs-9'>
+                    <h1>{{ group.name}} </h1>
+                </div>
+            </div>
+            <hr>
+            <h2>Info</h2>
+            <hr>
+            <div class= 'row'>
+                <h3>Director:</h3>
+                <p>{{group.teacher}}</p>
+                <select name="teacher">
+                    {%  for t in teacher %}
+                        <option value="{{ t.id}}">
+                            {% if t.id == form.teacher.value.id %}
+                                selected="selected"
+                            {% endif %}
+                            {{t.surname|capfirst}} {{t.name|capfirst}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class= 'row'>
+                <h3>Members:</h3>
+                {% for s in student %}
+                    <a href='/student/{{s.id}}/'>{{s.surname}} {{s.name}}</a><br>
+                {% endfor %}
+            </div>
+            <div class= 'row'>
+                <h3>More about group</h3>
+                <p>{{ group.info}}</p>
+                {{ form.info}}
+            </div>
+            <div class= 'row'>
+                <input type="submit" class="btn btn-primary" value="Submit" >
+            </div>
+        </form>
+    </div>
 </body>
 </html>
