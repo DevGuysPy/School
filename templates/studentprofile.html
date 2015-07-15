@@ -7,91 +7,93 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-{% if user.is_authenticated %}
-    <li><a href="/logout/"><strong>Вийти</strong></a></li>
-{% else %}
-    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-    <li><a href="/login/"><strong>Логін</strong></a></li>      
-{% endif %}
+
+    {% if user.is_authenticated %}
+        <li><a href="/logout/"><strong>Вийти</strong></a></li>
+    {% else %}
+        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+        <li><a href="/login/"><strong>Логін</strong></a></li>
+    {% endif %}
+
     <div class='container'>
         <a href="{% url 'index' %}"  >Home</a>
-        <div  class= 'row '>
-            <div class='col-xs-3'>
-              {% if student.photo %}
+            <div  class= 'row '>
+                <div class='col-xs-3'>
+                  {% if student.photo %}
                     <div class="xs-ava" style="background-image: url('/media/{{ student.photo }}');"></div>
-              {% else %}
+                  {% else %}
                     <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
-              {% endif %}
+                  {% endif %}
+                </div>
+                <div class='col-xs-9'>
+                    <h1>{{ student.name}} {{ student.surname}} </h1>
+                </div>
             </div>
-            <div class='col-xs-9'>
-                <h1>{{ student.name}} {{ student.surname}} </h1>
-            </div>
-        </div>
-         <hr>
+             <hr>
          <h2>Info</h2>
-         <hr>
+            <hr>
          <div class= 'row'>
             <h3>Group:</h3>
-                <p>{{student.group}}</p>
+            <p>{{student.group}}</p>
          </div>
          <div class= 'row'>
             <h3>Birthdate:</h3>
-                <p>{{ student.birthdate}}</p>
+            <p>{{ student.birthdate}}</p>
          </div>
          <div class= 'row'>
             <h3>More about person</h3>
                 <p>{{ student.info}}</p>
          </div>
          <hr>
-                <div class="row">
-                    <div class="col-xs-2">
-                        <h3> Time</h3>
-                    </div>
-                    <div class="col-xs-2">
-                        <h3> Discipline</h3>
-                    </div>
-                    <div class="col-xs-2">
-                        <h3>Reason</h3>
-                    </div>
-                    <div class="col-xs-2">
-                        <h3>Mark</h3>
-                    </div>
+        <div class="row">
+            <div class="col-xs-2">
+                <h3> Time</h3>
+            </div>
+            <div class="col-xs-2">
+                <h3> Discipline</h3>
+            </div>
+            <div class="col-xs-2">
+                <h3>Reason</h3>
+            </div>
+            <div class="col-xs-2">
+                <h3>Mark</h3>
+            </div>
+        </div>
+        {% for m in marks %}
+            <div class="row">
+                <div class="col-xs-2">
+                    {{ m.lesson.start}}
                 </div>
-                {% for m in marks %}
-                <div class="row">
-                    <div class="col-xs-2">
-                         {{ m.lesson.start}}
-                    </div>
-                    <div class="col-xs-2">
-                        {{ m.lesson.discipline}}
-                    </div>
-                    <div class="col-xs-2">
-                        {{ m.reason}}
-                    </div>
-                    <div class="col-xs-2">
-                        {{ m.number}}
-                     </div>
+                <div class="col-xs-2">
+                    {{ m.lesson.discipline}}
                 </div>
-                {%endfor%}
-                <hr>
-                <h3>Add mark</h3>
-                <form method="POST" action="addmark/">
-                        {% csrf_token %}
-                    <select name="lesson">
-                        {%  for l in lesson %}
-                            <option value="{{ l.id}}">
-                                   {% if l.id == lesson.value.id %}
-                                        selected="selected"
-                                   {% endif %}
-                                {{l.discipline|capfirst}} {{l.start|capfirst}} {{l.id|capfirst}}
-                           </option>
-                        {% endfor %}
-                    </select>
+                <div class="col-xs-2">
+                    {{ m.reason}}
+                </div>
+                <div class="col-xs-2">
+                    {{ m.number}}
+                 </div>
+            </div>
+        {%endfor%}
+        <hr>
+        <h3>Add mark</h3>
+        <form method="POST" action="addmark/">
+            {% csrf_token %}
+            <select name="lesson">
+                {%  for l in lesson %}
+                    <option value="{{ l.id}}">
+                       {% if l.id == lesson.value.id %}
+                            selected="selected"
+                       {% endif %}
+                        {{l.discipline|capfirst}} {{l.start|capfirst}} {{l.id|capfirst}}
+                    </option>
+                {% endfor %}
+            </select>
 
-                            <input type='text' placeholder="Enter text" name="reason">
-                            <input type='text' placeholder="Enter text" name="number">
-                            <input type='submit' class='button margin-for-btn' value = 'Add'>
-                </form>
+            <input type='text' placeholder="Enter text" name="reason">
+            <input type='text' placeholder="Enter text" name="number">
+            <input type='submit' class='button margin-for-btn' value = 'Add'>
+        </form>
 
         <h4>To edit this page, please click <a href="{% url 'student_detail_edit' student_id=student.id %}"><span>here</span></a></h4>
     </div>
