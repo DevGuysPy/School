@@ -6,17 +6,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
-                     Discipline, Student, Mark, Student_activity)
+                     Discipline, Student, Mark, StudentActivity)
 from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
 
 from django.contrib.auth.models import User
-
-
-def result(request):
-    ctx = {
-        
-    }
-    return render(request, 'index.html', ctx)
 
 
 def room_detail(request, room_id):
@@ -62,11 +55,6 @@ def search_groups(name):
 
 
 def index(request):
-    # student = Student.objects.get(id=2)
-    # lesson = Lesson.objects.get(id=2)
-    # mark = Mark.objects.get(id=2)
-    # Student_activity.objects.create(student=student, lesson=lesson, mark=mark)
-    # activity = Student_activity.objects.all()
     rooms = []
     teachers = []
     groups = []
@@ -114,10 +102,8 @@ def index(request):
         'teachers': teachers,
         'groups': groups,
         'students': students,
-        # 'activity': activity,
-
-        
     }
+
     return render(request, 'index.html', ctx)
 
 
@@ -199,13 +185,12 @@ def lesson_detail_edit(request, lesson_id):
     if form.is_valid():
         form.save()
 
-
     return render (request, 'lesson/edit.html', ctx)
 
 
 def lesson_detail(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
-    activities = Student_activity.objects.filter(lesson_id=lesson_id)
+    activities = StudentActivity.objects.filter(lesson_id=lesson_id)
     student = Student.objects.all()
 
     if request.method == "POST":
@@ -213,7 +198,7 @@ def lesson_detail(request, lesson_id):
         reason = request.POST['reason']
         number = request.POST['number']
         mark = Mark.objects.create(number=number, reason=reason)
-        Student_activity.objects.create(lesson_id=lesson.id, student_id=student, mark_id=mark.id)
+        StudentActivity.objects.create(lesson_id=lesson.id, student=student, mark_id=mark.id)
         return redirect('lesson_detail', lesson_id=lesson_id)
     ctx = {
         'lesson': lesson,
@@ -222,13 +207,12 @@ def lesson_detail(request, lesson_id):
         
     }
 
-
     return render (request, 'lesson.html', ctx)
 
 
 def student_detail(request, student_id=1):
     student = Student.objects.get(id=student_id)
-    activities = Student_activity.objects.filter(student_id=student_id)
+    activities = StudentActivity.objects.filter(student_id=student_id)
     lessons = Lesson.objects.all()
     # avg_mark = Mark.objects.filter(student_id=student_id).aggregate(Avg('number'))
 
@@ -237,7 +221,7 @@ def student_detail(request, student_id=1):
         reason = request.POST['reason']
         lesson = request.POST['lesson']
         mark = Mark.objects.create(number=number, reason=reason)
-        Student_activity.objects.create(student_id=student.id, lesson_id=lesson, mark_id=mark.id)
+        StudentActivity.objects.create(student_id=student.id, lesson_id=lesson, mark_id=mark.id)
         return redirect('student_detail', student_id=student_id)
 
     ctx = {
@@ -247,13 +231,12 @@ def student_detail(request, student_id=1):
         # 'average_mark':avg_mark['number__avg'],
     }
 
-
     return render(request, 'studentprofile.html', ctx)
 
 
 def student_detail_edit(request, student_id=1):
     student = Student.objects.get(id=student_id)
-    mark = Mark.objects.filter(student_id=student_id)
+    activity = StudentActivity.objects.filter(student_id=student_id)
     form = StudentForm(request.POST or None, request.FILES or None,
                         instance=student)
     form_mark = MarkForm(request.POST or None, request.FILES or None,
@@ -266,7 +249,7 @@ def student_detail_edit(request, student_id=1):
         'student': student,
         'form': form,
         'groups': groups,
-        'marks': mark,
+        'activities': activity,
         'form_mark': form_mark,
         'lessons': lessons,
     }
@@ -276,8 +259,6 @@ def student_detail_edit(request, student_id=1):
     if form.is_valid():
         form.save()
     
-    
-
     return render(request, 'student/edit.html', ctx)
 
 
@@ -317,12 +298,3 @@ def registration(request):
         return redirect('/login/')
 
     return render(request, 'registration/registration.html')
-
-def activity(request):
-
-
-    ctx = {
-
-    }
-
-    return render(request, 'index.html', ctx)

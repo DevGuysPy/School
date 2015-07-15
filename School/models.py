@@ -14,7 +14,7 @@ class Mark(models.Model):
 
 
 
-class Student_activity(models.Model):
+class StudentActivity(models.Model):
     lesson = models.ForeignKey('Lesson', null=True)
     student = models.ForeignKey('Student')
     mark = models.OneToOneField('Mark')
@@ -78,7 +78,7 @@ class Student(models.Model):
     photo = models.ImageField(blank=True, null=True)
     info = models.TextField()
     # user = models.OneToOneField(User, null=True)
-    activities = models.ManyToManyField('Lesson', through='Student_activity', related_name='activities')
+    activities = models.ManyToManyField('Lesson', through='StudentActivity', related_name='activities')
 
 
     def __str__(self):
