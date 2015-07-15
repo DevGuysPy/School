@@ -12,10 +12,10 @@
     <a href="{% url 'all_groups' %}">All Groups</a>
     
     {% if user.is_authenticated %}
-        <li><a href="../logout/"><strong>Вийти</strong></a></li>
+        <li><a href="/logout/"><strong>Вийти</strong></a></li>
     {% else %}
-        <li><a href="../registration/"><strong>Реєстрація</strong></a></li>
-        <li><a href="../login/"><strong>Логін</strong></a></li>      
+        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+        <li><a href="/login/"><strong>Логін</strong></a></li>      
     {% endif %}
 <form method="POST">
     {% csrf_token %}
