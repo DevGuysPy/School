@@ -45,8 +45,8 @@ urlpatterns = [
     url(r'^allteachers/$', all_teachers, name='all_teachers'),
     url(r'^allgroups/$', all_groups, name='all_groups'),
     url(r'^registration/$', registration, name="registration"),
-    # url(r'^logout/$', 'django.contrib.auth.views.logout',
-    #     {'next_page': '/'}, name='logout'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout',
+         {'next_page': '/'}, name='logout'),
     url(r'^', include('django.contrib.auth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
+{% if user.is_authenticated %}
+                        <li><a href="../logout/"><strong>Вийти</strong></a></li>
+    {% else %}
+                        <li><a href="../registration/"><strong>Реєстрація</strong></a></li>
+                        <li><a href="../login/"><strong>Логін</strong></a></li>      
+    {% endif %}
     <div class="container">
         <a href="{% url 'index' %}"  >Home</a>
         <div class="row">
