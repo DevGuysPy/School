@@ -69,16 +69,16 @@
                 <h3>Mark</h3>
             </div>
         </div>
-        {% for m in mark %}
+        {% for activity in activities %}
         <div class="row">
             <div class="col-xs-2">
-                {{ m.student.surname}} {{ m.student.name}}
+                {{ activity.student.surname}} {{ activity.student.name}}
             </div>
             <div class="col-xs-2">
-                {{ m.reason}}
+                {{ activity.mark.reason}}
             </div>
             <div class="col-xs-2">
-                {{ m.number}}
+                {{ activity.mark.number}}
              </div>   
         </div>
         {%endfor%}

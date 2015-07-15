@@ -21,7 +21,7 @@ class StudentForm(ModelForm):
 class MarkForm(ModelForm):
     class Meta:
         model = Mark
-        fields = ('number', 'lesson', 'reason')
+        fields = ('number', 'reason')
 
 class GroupForm(ModelForm):
     class Meta:

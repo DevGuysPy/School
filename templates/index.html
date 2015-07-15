@@ -10,6 +10,7 @@
     <a href="{% url 'all_student' %}"  >All students</a>
     <a href="{% url 'all_teachers' %}">All teachers</a>
     <a href="{% url 'all_groups' %}">All Groups</a>
+
     
     {% if user.is_authenticated %}
         <li><a href="/logout/"><strong>Вийти</strong></a></li>
@@ -17,6 +18,10 @@
         <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
         <li><a href="/login/"><strong>Логін</strong></a></li>      
     {% endif %}
+
+    <a href = "{% url 'registration' %}">Registration</a>
+
+
 <form method="POST">
     {% csrf_token %}
     <input type="text" name="query" placeholder="Enter search query">
@@ -48,6 +53,10 @@
     {% for student in students %}
         <a href='student/{{student.id}}/'>{{ student.surname }} {{ student.name }}</a><br>
     {%endfor%}
+
+{% for a in activity %}
+    {{ a.student }}
+{% endfor %}
 </div>
 </body>
 </html>

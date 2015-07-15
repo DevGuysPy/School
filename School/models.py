@@ -5,13 +5,20 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Mark(models.Model):
     number = models.IntegerField(
         default=0, validators=[MinValueValidator(0),
                                MaxValueValidator(12)])
+    reason = models.CharField(max_length=150)
+
+
+
+class Student_activity(models.Model):
     lesson = models.ForeignKey('Lesson', null=True)
     student = models.ForeignKey('Student')
-    reason = models.CharField(max_length=150)
+    mark = models.OneToOneField('Mark')
+
 
 
 class Discipline(models.Model):
@@ -70,7 +77,10 @@ class Student(models.Model):
     group = models.ForeignKey(Group)
     photo = models.ImageField(blank=True, null=True)
     info = models.TextField()
-    user = models.OneToOneField(User, null=True)
+    # user = models.OneToOneField(User, null=True)
+    activities = models.ManyToManyField('Lesson', through='Student_activity', related_name='activities')
+
+
     def __str__(self):
         return self.name
 
@@ -97,7 +107,7 @@ class Lesson(models.Model):
     teacher = models.ForeignKey(Teacher)
     discipline = models.ForeignKey(Discipline)
     info = models.TextField()
-    
+
     def __str__(self):
         return "{} в {}".format(self.discipline.name, self.start)
 

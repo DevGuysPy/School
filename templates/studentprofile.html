@@ -9,10 +9,10 @@
 <body>
 
     {% if user.is_authenticated %}
-        <li><a href="/logout/"><strong>Вийти</strong></a></li>
+        <li><a href="/logout/"><strong>Р’РёР№С‚Рё</strong></a></li>
     {% else %}
-        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-        <li><a href="/login/"><strong>Логін</strong></a></li>
+        <li><a href="/registration/"><strong>Р РµС”СЃС‚СЂР°С†С–СЏ</strong></a></li>
+        <li><a href="/login/"><strong>Р›РѕРіС–РЅ</strong></a></li>
     {% endif %}
 
     <div class='container'>
@@ -59,19 +59,19 @@
                 <h3>Mark</h3>
             </div>
         </div>
-        {% for m in marks %}
+        {% for activity in activities %}
             <div class="row">
                 <div class="col-xs-2">
-                    {{ m.lesson.start}}
+                    {{ activity.lesson.start}}
                 </div>
                 <div class="col-xs-2">
-                    {{ m.lesson.discipline}}
+                    {{ activity.lesson.discipline}}
                 </div>
                 <div class="col-xs-2">
-                    {{ m.reason}}
+                    {{ activity.mark.reason}}
                 </div>
                 <div class="col-xs-2">
-                    {{ m.number}}
+                    {{ activity.mark.number}}
                 </div>
             </div>
         {%endfor%}

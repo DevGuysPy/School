@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
-                     Discipline, Student, Mark)
+                     Discipline, Student, Mark, Student_activity)
 from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
 
 from django.contrib.auth.models import User
@@ -62,6 +62,11 @@ def search_groups(name):
 
 
 def index(request):
+    # student = Student.objects.get(id=2)
+    # lesson = Lesson.objects.get(id=2)
+    # mark = Mark.objects.get(id=2)
+    # Student_activity.objects.create(student=student, lesson=lesson, mark=mark)
+    # activity = Student_activity.objects.all()
     rooms = []
     teachers = []
     groups = []
@@ -109,6 +114,7 @@ def index(request):
         'teachers': teachers,
         'groups': groups,
         'students': students,
+        # 'activity': activity,
 
         
     }
@@ -199,18 +205,19 @@ def lesson_detail_edit(request, lesson_id):
 
 def lesson_detail(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
-    mark = Mark.objects.filter(lesson_id=lesson_id)
+    activities = Student_activity.objects.filter(lesson_id=lesson_id)
     student = Student.objects.all()
 
     if request.method == "POST":
         student = request.POST['student']
         reason = request.POST['reason']
         number = request.POST['number']
-        Mark.objects.create(number=number, reason=reason, lesson_id=lesson.id, student_id=student)
+        mark = Mark.objects.create(number=number, reason=reason)
+        Student_activity.objects.create(lesson_id=lesson.id, student_id=student, mark_id=mark.id)
         return redirect('lesson_detail', lesson_id=lesson_id)
     ctx = {
         'lesson': lesson,
-        'mark': mark,
+        'activities': activities,
         'student': student,
         
     }
@@ -221,22 +228,23 @@ def lesson_detail(request, lesson_id):
 
 def student_detail(request, student_id=1):
     student = Student.objects.get(id=student_id)
-    mark = Mark.objects.filter(student_id=student_id)
+    activities = Student_activity.objects.filter(student_id=student_id)
     lessons = Lesson.objects.all()
-    avg_mark = Mark.objects.filter(student_id=student_id).aggregate(Avg('number'))
+    # avg_mark = Mark.objects.filter(student_id=student_id).aggregate(Avg('number'))
 
     if request.method == "POST":
         number = request.POST['number']
         reason = request.POST['reason']
         lesson = request.POST['lesson']
-        Mark.objects.create(number=number, reason=reason, student_id=student.id, lesson_id=lesson)
+        mark = Mark.objects.create(number=number, reason=reason)
+        Student_activity.objects.create(student_id=student.id, lesson_id=lesson, mark_id=mark.id)
         return redirect('student_detail', student_id=student_id)
 
     ctx = {
         'student': student,
-        'marks': mark,
+        'activities': activities,
         'lesson': lessons,
-        'average_mark':avg_mark['number__avg'],
+        # 'average_mark':avg_mark['number__avg'],
     }
 
 
@@ -309,3 +317,12 @@ def registration(request):
         return redirect('/login/')
 
     return render(request, 'registration/registration.html')
+
+def activity(request):
+
+
+    ctx = {
+
+    }
+
+    return render(request, 'index.html', ctx)
