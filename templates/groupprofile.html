@@ -16,9 +16,12 @@
 <div class='container'>
  <a href="{% url 'index' %}"  >Home</a>
  <div  class= 'row '>
-  <div class='col-xs-3'>	
-
- 	<img class="img-responsive" src="/media/{{ group.photo }}"></img>
+  <div class='col-xs-3'>
+      {% if group.photo %}
+            <div class="xs-ava" style="background-image: url('/media/{{ group.photo }}');"></div>
+      {% else %}
+            <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
+      {% endif %}
  	</div>
  	<div class='col-xs-9'>
  	<h1>{{ group.name}} </h1>

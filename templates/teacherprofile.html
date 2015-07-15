@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
 	<title>Teacher</title>
-	 <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 {% if user.is_authenticated %}
@@ -41,7 +42,5 @@
   </div>
   <h4>To edit this page, please click <a href="{% url 'teacher_detail_edit' teacher_id=teacher.id %}"><span>here</span></a></h4>
  </div>
-
-
 </body>
 </html>

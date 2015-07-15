@@ -70,7 +70,7 @@ class Student(models.Model):
     group = models.ForeignKey(Group)
     photo = models.ImageField(blank=True, null=True)
     info = models.TextField()
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, null=True)
     def __str__(self):
         return self.name
 

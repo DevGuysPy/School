@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
 	<title>Teacher</title>
-	 <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 {% if user.is_authenticated %}
@@ -16,11 +17,11 @@
         <a href="{% url 'index' %}"  >Home</a>
         <div  class= 'row '>
             <div class='col-xs-3'>
-                  {% if student.photo %}
-                        <img src="/media/{{ student.photo }}" class = ' img-rounded'>
-                  {% else %}
-                        <img src=" http://tatet.ua/themes/fenix/img/default-user.png" class = 'img-rounded'>
-                  {% endif %}
+              {% if student.photo %}
+                    <div class="xs-ava" style="background-image: url('/media/{{ student.photo }}');"></div>
+              {% else %}
+                    <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
+              {% endif %}
             </div>
             <div class='col-xs-9'>
                 <h1>{{ student.name}} {{ student.surname}} </h1>
@@ -91,8 +92,6 @@
                             <input type='text' placeholder="Enter text" name="number">
                             <input type='submit' class='button margin-for-btn' value = 'Add'>
                 </form>
-
-                {{ average_mark }}
 
         <h4>To edit this page, please click <a href="{% url 'student_detail_edit' student_id=student.id %}"><span>here</span></a></h4>
     </div>
