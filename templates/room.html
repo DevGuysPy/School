@@ -6,11 +6,11 @@
 </head>
 <body>
 {% if user.is_authenticated %}
-                        <li><a href="../logout/"><strong>Вийти</strong></a></li>
-    {% else %}
-                        <li><a href="../registration/"><strong>Реєстрація</strong></a></li>
-                        <li><a href="../login/"><strong>Логін</strong></a></li>      
-    {% endif %}
+    <li><a href="../logout/"><strong>Вийти</strong></a></li>
+{% else %}
+    <li><a href="../registration/"><strong>Реєстрація</strong></a></li>
+    <li><a href="../login/"><strong>Логін</strong></a></li>      
+{% endif %}
 <a href="{% url 'index' %}"  >Home</a>
 {% for day in week %}
     <h1>Day {{ forloop.counter }}</h1>
