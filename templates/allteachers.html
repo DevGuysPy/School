@@ -7,34 +7,35 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
-{% if user.is_authenticated %}
-    <li><a href="/logout/"><strong>Вийти</strong></a></li>
-{% else %}
-    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-    <li><a href="/login/"><strong>Логін</strong></a></li>      
-{% endif %}
+    {% if user.is_authenticated %}
+        <li><a href="/logout/"><strong>Вийти</strong></a></li>
+    {% else %}
+        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+        <li><a href="/login/"><strong>Логін</strong></a></li>
+    {% endif %}
+
     <div class = 'container'>
-    <a href="{% url 'index' %}"  >Home</a>
+        <a href="{% url 'index' %}"  >Home</a>
         <hr>
         <h1 class="text-center">Our teachers</h1>
         <hr>
         {% for teacher in teachers %}
-        <div class="media">
-              <div class="media-left">
-                    <a href='/teacher/{{teacher.id}}/'>
-                        {% if teacher.photo %}
-                            <div class="xs-ava" style="background-image: url('/media/{{ teacher.photo }}');"></div>
-                        {% else %}
-                            <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
-                        {% endif %}
-                    </a>
-              </div>
-            <div class="media-body">
-                <h4 class="media-heading"><a href='/teacher/{{teacher.id}}/'>{{ teacher.surname}} {{teacher.name}}</a></h4>
-                <h5 class = 'display'>Group:   </h5>{{ teacher.group }}
+            <div class="media">
+                  <div class="media-left">
+                        <a href='/teacher/{{teacher.id}}/'>
+                            {% if teacher.photo %}
+                                <div class="xs-ava" style="background-image: url('/media/{{ teacher.photo }}');"></div>
+                            {% else %}
+                                <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
+                            {% endif %}
+                        </a>
+                  </div>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href='/teacher/{{teacher.id}}/'>{{ teacher.surname}} {{teacher.name}}</a></h4>
+                    <h5 class = 'display'>Group:   </h5>{{ teacher.group }}
+                </div>
             </div>
-        </div>
-        <hr>
+            <hr>
         {% endfor %}
     </div>
 </body>

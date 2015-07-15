@@ -1,127 +1,127 @@
 .search {
-	width: 300px;
-	height: 40px;
-	padding-top: 6px;
-	padding-left: 35px;
-	padding-right: 12px;
-	padding-bottom: 6px;
-	outline: none;
+    width: 300px;
+    height: 40px;
+    padding-top: 6px;
+    padding-left: 35px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    outline: none;
 }
 .position-for-icon{
-	position: relative;
-	left:-293px;
-	top: 7px;
-	font-size: 21px;
+    position: relative;
+    left:-293px;
+    top: 7px;
+    font-size: 21px;
 }
 .search_button {
-	position: relative;
-	left:-29px;
-	top: -1px;
-	height: 40px;
-	border-radius: 0;
-	font-size: 21px;
+    position: relative;
+    left:-29px;
+    top: -1px;
+    height: 40px;
+    border-radius: 0;
+    font-size: 21px;
 
 }
 .checkbox {
-	width: 21px;
-	height: 21px;
-	display: inline;
+    width: 21px;
+    height: 21px;
+    display: inline;
 }
 
 .font-checkbox {
-	font-size: 21px;
+    font-size: 21px;
 }
 .margin {
-	margin-left: 15px;
+    margin-left: 15px;
 }
 .display {
-	display: inline;
+    display: inline;
 }
 
 .navbar {
-	background-color: #333333;
-	height: 54px;
-	border-radius: 10px;
+    background-color: #333333;
+    height: 54px;
+    border-radius: 10px;
 
 }
 
 .margin-button {
-	position:
+    position:
 }
 
 
 
 .navbar-buttons {
-	height: 53px;
-	width: 132px;
-	background-color: #333333;
-	padding: 0;
-	border: 0;
-	color: #FFFFFF;
-	cursor: pointer;
-	font-family: Campton Demo;
-	font-size: 12pt;
-	outline: none;
+    height: 53px;
+    width: 132px;
+    background-color: #333333;
+    padding: 0;
+    border: 0;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Campton Demo;
+    font-size: 12pt;
+    outline: none;
 
 
 
 }
 .navbar-buttons:hover {
-	background-color: #ff5454;
+    background-color: #ff5454;
 }
 
 .margin-1button {
-	position:relative;
-	left: 60px;
+    position:relative;
+    left: 60px;
 }
 
 .padding-navbar {
-	padding-left: 0px;
-	padding-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .search-input {
-	border-radius: 5px;
-	border: none;
-	outline: none;
-	background-image: url(Search.png);
-	background-repeat: no-repeat;
-	background-position: 155px;
-	height: 25px;
-	padding-left: 10px;
-	padding-right: 25px;
-	padding-top: 5px;
-	width: 180px;
-	font-family: Campton Demo;
-	font-size: 12pt;
-	margin-top: 14px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-image: url(Search.png);
+    background-repeat: no-repeat;
+    background-position: 155px;
+    height: 25px;
+    padding-left: 10px;
+    padding-right: 25px;
+    padding-top: 5px;
+    width: 180px;
+    font-family: Campton Demo;
+    font-size: 12pt;
+    margin-top: 14px;
 }
 
 .decoration:hover{
-	text-decoration: none;
+    text-decoration: none;
 }
 .decoration:visited{
-	text-decoration: none;
+    text-decoration: none;
 }
 .decoration:active{
-	text-decoration: none;
+    text-decoration: none;
 }
 .decoration:focus{
-	text-decoration: none;
+    text-decoration: none;
 }
 .margin-for-likes {
-	float: right;
+    float: right;
 }
 .form-control1{
-	max-width: 1140px;
-	max-height: 600px;
-	margin-top: 5px;
+    max-width: 1140px;
+    max-height: 600px;
+    margin-top: 5px;
 }
 .margin-for-btn {
-	margin-top: 8px;
+    margin-top: 8px;
 }
 .margin1 {
-	color: black;
+    color: black;
 }
 
 .registration-form {
@@ -130,10 +130,10 @@
     max-height: 500px;
 }
 .margin {
-	margin-top: 15px;
+    margin-top: 15px;
 }
 .Anya {
-	background-color: #2980b9;
+    background-color: #2980b9;
 
 }
 
@@ -173,10 +173,10 @@ label {
 
 
 .xs-ava {
-	background-size: cover;
-	background-repeat: no-repeat;
-	width: 150px;
-	height: 150px;
-	background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 150px;
+    background-position: center;
 
 }

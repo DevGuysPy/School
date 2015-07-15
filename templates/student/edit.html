@@ -1,94 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Teacher</title>
-        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
-        <link rel="stylesheet" href="/static/css/style.css">
+    <title>Teacher</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-<div class='container'>
-     <a href="{% url 'index' %}"  >Home</a>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %} 
-	<div  class= 'row '>
-	  	<div class='col-xs-3'>
-			{% if form.photo.value %}
-                <div class="xs-ava" style="background-image: url('/media/{{ form.photo.value }}');"></div>
-	    	{% else %}
-	        	<div class="xs-ava" style="background-image: url('http://www.salesmanago.pl/libs/unify/assets/img/testimonials/user.jpg;jsessionid=0E5F9F48BF3B7231C26C68CF7AD678EC');"></div>
-	    	{% endif %}
-	    	{{ form.photo }}
-	    </div>
-	</div>
-	 <hr>
-	 <h2>Info</h2>
-	 <hr>
-	 <div class= 'row'>
-	 	<h3>Group:</h3>
-	 	{{ student.group }}
-	 		<select name="group">
-                {%  for g in groups %}
-                    <option value="{{ g.id}}">
-                           {% if g.id == form.group.value.id %}
-                           		selected="selected"
-                           {% endif %}
-                       	{{g.name|capfirst}}
-                   </option>
-                {% endfor %}
-            </select>
-	 </div>
+    <div class='container'>
+        <a href="{% url 'index' %}"  >Home</a>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div  class= 'row '>
+                <div class='col-xs-3'>
+                    {% if form.photo.value %}
+                        <div class="xs-ava" style="background-image: url('/media/{{ form.photo.value }}');"></div>
+                    {% else %}
+                        <div class="xs-ava" style="background-image: url('http://www.salesmanago.pl/libs/unify/assets/img/testimonials/user.jpg;jsessionid=0E5F9F48BF3B7231C26C68CF7AD678EC');"></div>
+                    {% endif %}
+                    {{ form.photo }}
+                </div>
+            </div>
+            <hr>
+            <h2>Info</h2>
+            <hr>
+            <div class= 'row'>
+                <h3>Group:</h3>
+                {{ student.group }}
+                <select name="group">
+                    {%  for g in groups %}
+                        <option value="{{ g.id}}">
+                            {% if g.id == form.group.value.id %}
+                                selected="selected"
+                            {% endif %}
+                            {{g.name|capfirst}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-	<div class= 'row'>
-		<h3>Birthdate:</h3>
-		<p>{{ student.birthdate}}</p>
-		<p>{{ form.birthdate}}</p>
-	</div>
-	<div class= 'row'>
-	 	<h3>More about person</h3>
-	 	<p>{{ form.info}}</p>
-	</div>
-	<hr>
-        <div class="row">
-        	<div class="col-xs-3">
-                <h3> Lesson</h3>
+            <div class= 'row'>
+                <h3>Birthdate:</h3>
+                <p>{{ student.birthdate}}</p>
+                <p>{{ form.birthdate}}</p>
             </div>
-            <div class="col-xs-2">
-                <h3>Reason</h3>
+            <div class= 'row'>
+                <h3>More about person</h3>
+                <p>{{ form.info}}</p>
             </div>
-            <div class="col-xs-2">
-                <h3>Mark</h3>
+            <hr>
+            <div class="row">
+                <div class="col-xs-3">
+                    <h3> Lesson</h3>
+                </div>
+                <div class="col-xs-2">
+                    <h3>Reason</h3>
+                </div>
+                <div class="col-xs-2">
+                    <h3>Mark</h3>
+                </div>
             </div>
-        </div>
-        {% for m in marks %}
-        <div class="row">
-        	<div class="col-xs-3">
-                 
-                 <select name="group">
-                {%  for l in lessons %}
-                    <option value="{{ l.id}}">
-                           {% if l.id == form_mark.lesson.value.id %}
-                           		selected="selected"
-                           {% endif %}
-                       	{{l.discipline|capfirst}} in {{ l.start|capfirst}}
-                   </option>
-                {% endfor %}
-            </select>
-            </div>
-            
-            <div class="col-xs-2">
-                {{ form_mark.reason}}
-            </div>
-            <div class="col-xs-2">
-                {{ form_mark.number}}
-             </div>   
-        </div>
-        {%endfor%}
-        <hr>
-	<div class= 'row'>
-           <input type="submit" class="btn btn-primary" value="Submit" >
-     </div>
-	 
-</form>
-
+            {% for m in marks %}
+                <div class="row">
+                    <div class="col-xs-3">
+                        <select name="group">
+                            {%  for l in lessons %}
+                                <option value="{{ l.id}}">
+                                    {% if l.id == form_mark.lesson.value.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                    {{l.discipline|capfirst}} in {{ l.start|capfirst}}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_mark.reason}}
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_mark.number}}
+                    </div>
+                </div>
+            {%endfor%}
+            <hr>
+            <div class= 'row'>
+                <input type="submit" class="btn btn-primary" value="Submit" >
+        </form>
+    </div>
 </body>
 </html>

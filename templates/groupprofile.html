@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Group</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <meta charset="UTF-8">
+    <title>Group</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 </head>
 <body>
-{% if user.is_authenticated %}
-    <li><a href="/logout/"><strong>Вийти</strong></a></li>
-{% else %}
-    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-    <li><a href="/login/"><strong>Логін</strong></a></li>      
-{% endif %}
-<div class='container'>
- <a href="{% url 'index' %}"  >Home</a>
- <div  class= 'row '>
-  <div class='col-xs-3'>
-      {% if group.photo %}
-            <div class="xs-ava" style="background-image: url('/media/{{ group.photo }}');"></div>
-      {% else %}
-            <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
-      {% endif %}
- 	</div>
- 	<div class='col-xs-9'>
- 	<h1>{{ group.name}} </h1>
- 	</div>
- </div>
- <hr>
- <h2>Info</h2>
- <hr>
- <div class= 'row'>
- 	<h3>Director:</h3>
- 		<p>{{group.teacher}}</p>
- </div>
- <div class= 'row'>
- 	<h3>Members:</h3>
- 		{% for s in student %}
- 			<a href='/student/{{s.id}}/'>{{s.surname}} {{s.name}}</a><br>
- 		{% endfor %}
- </div>
- <div class= 'row'>
- 	<h3>More about group</h3>
- 		<p>{{ group.info}}</p>
- </div>
-<h4>To edit this page, please click <a href="{% url 'group_detail_edit' group_id=group.id %}"><span>here</span></a></h4>
- </div>
+    {% if user.is_authenticated %}
+        <li><a href="/logout/"><strong>Вийти</strong></a></li>
+    {% else %}
+        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+        <li><a href="/login/"><strong>Логін</strong></a></li>
+    {% endif %}
+
+    <div class='container'>
+        <a href="{% url 'index' %}"  >Home</a>
+        <div  class= 'row '>
+            <div class='col-xs-3'>
+                {% if group.photo %}
+                    <div class="xs-ava" style="background-image: url('/media/{{ group.photo }}');"></div>
+                {% else %}
+                    <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
+                {% endif %}
+            </div>
+            <div class='col-xs-9'>
+                <h1>{{ group.name}} </h1>
+            </div>
+        </div>
+        <hr>
+        <h2>Info</h2>
+        <hr>
+        <div class= 'row'>
+            <h3>Director:</h3>
+            <p>{{group.teacher}}</p>
+        </div>
+        <div class= 'row'>
+            <h3>Members:</h3>
+            {% for s in student %}
+                <a href='/student/{{s.id}}/'>{{s.surname}} {{s.name}}</a><br>
+            {% endfor %}
+        </div>
+        <div class= 'row'>
+            <h3>More about group</h3>
+            <p>{{ group.info}}</p>
+        </div>
+        <h4>To edit this page, please click <a href="{% url 'group_detail_edit' group_id=group.id %}"><span>here</span></a></h4>
+    </div>
 
 </body>
 </html>

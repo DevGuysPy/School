@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-	<title>Teacher</title>
+    <meta charset="UTF-8">
+    <title>Teacher</title>
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
@@ -17,34 +17,34 @@
 
     <div class='container'>
         <a href="{% url 'index' %}"  >Home</a>
-            <div  class= 'row '>
-                <div class='col-xs-3'>
-                  {% if student.photo %}
+        <div  class= 'row '>
+            <div class='col-xs-3'>
+                {% if student.photo %}
                     <div class="xs-ava" style="background-image: url('/media/{{ student.photo }}');"></div>
-                  {% else %}
+                {% else %}
                     <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
-                  {% endif %}
-                </div>
-                <div class='col-xs-9'>
-                    <h1>{{ student.name}} {{ student.surname}} </h1>
-                </div>
+                {% endif %}
             </div>
-             <hr>
-         <h2>Info</h2>
-            <hr>
-         <div class= 'row'>
+            <div class='col-xs-9'>
+                <h1>{{ student.name}} {{ student.surname}} </h1>
+            </div>
+        </div>
+        <hr>
+        <h2>Info</h2>
+        <hr>
+        <div class= 'row'>
             <h3>Group:</h3>
             <p>{{student.group}}</p>
-         </div>
-         <div class= 'row'>
+        </div>
+        <div class= 'row'>
             <h3>Birthdate:</h3>
             <p>{{ student.birthdate}}</p>
-         </div>
-         <div class= 'row'>
+        </div>
+        <div class= 'row'>
             <h3>More about person</h3>
-                <p>{{ student.info}}</p>
-         </div>
-         <hr>
+            <p>{{ student.info}}</p>
+        </div>
+        <hr>
         <div class="row">
             <div class="col-xs-2">
                 <h3> Time</h3>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-xs-2">
                     {{ m.number}}
-                 </div>
+                </div>
             </div>
         {%endfor%}
         <hr>
@@ -82,9 +82,9 @@
             <select name="lesson">
                 {%  for l in lesson %}
                     <option value="{{ l.id}}">
-                       {% if l.id == lesson.value.id %}
+                        {% if l.id == lesson.value.id %}
                             selected="selected"
-                       {% endif %}
+                        {% endif %}
                         {{l.discipline|capfirst}} {{l.start|capfirst}} {{l.id|capfirst}}
                     </option>
                 {% endfor %}
