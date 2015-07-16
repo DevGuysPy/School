@@ -23,7 +23,7 @@ from .views import (index, teacher_detail, group_detail,
                     add_comment, room_detail, lesson_detail,
                     student_detail, lesson_detail_edit, student_detail_edit,
                     teacher_detail_edit, group_detail_edit, all_students, all_teachers, all_groups,
-                    registration)
+                    registration, new_article, article_detail,)
 
 
 urlpatterns = [
@@ -47,6 +47,8 @@ urlpatterns = [
     url(r'^registration/$', registration, name="registration"),
     url(r'^logout/$', 'django.contrib.auth.views.logout',
          {'next_page': '/'}, name='logout'),
+    url(r'^new_article/$', new_article, name='new_article'),
+    url(r'^articles/(?P<article_id>\d+)/$', article_detail, name='article_detail'),
     url(r'^', include('django.contrib.auth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
-                     Discipline, Student, Mark)
+                     Discipline, Student, Mark, Article)
 from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
 
 from django.contrib.auth.models import User
@@ -62,6 +62,7 @@ def search_groups(name):
 
 
 def index(request):
+    # Article.objects.all().delete()
     rooms = []
     teachers = []
     groups = []
@@ -105,12 +106,11 @@ def index(request):
             groups = search_groups(query)
 
     ctx = {
+        'articles': reversed(Article.objects.all()),
         'rooms': rooms,
         'teachers': teachers,
         'groups': groups,
         'students': students,
-
-        
     }
     return render(request, 'index.html', ctx)
 
@@ -267,8 +267,8 @@ def student_detail_edit(request, student_id=1):
 
     if form.is_valid():
         form.save()
-    
-    
+
+
 
     return render(request, 'student/edit.html', ctx)
 
@@ -309,3 +309,18 @@ def registration(request):
         return redirect('/login/')
 
     return render(request, 'registration/registration.html')
+
+def new_article(request):
+    if request.method == "POST":
+        new_article_title = request.POST['title']
+        new_article_text = request.POST['text']
+        article = Article.objects.create(title=new_article_title, text=new_article_text, author=request.user)
+        return redirect('article_detail', article_id=article.id)
+    return render(request, 'new_article.html')
+
+def article_detail(request, article_id=1):
+    ctx = {
+        'article': Article.objects.get(id=article_id),
+    }
+
+    return render(request, 'article.html', ctx)

@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Article</title>
+{#    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <nav class="nav_bg">
+            <div class="nav-wrapper">
+              <a href="{% url 'index' %}" class="brand-logo nav_main_pad">Головна</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'all_student' %}">Учні</a></li>
+                <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
+                <li><a href="{% url 'all_groups' %}">Класи</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/logout/"><strong>Вийти</strong></a></li>
+                {% else %}
+                    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+                    <li><a href="/login/"><strong>Логін</strong></a></li>
+                {% endif %}
+              </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="card-panel">
+
+            <h3 class="art_disp">{{ article.title }}</h3>
+            <h5 class="art_disp">by</h5>
+            <h4 class="art_disp">{{ article.author }}</h4>
+
+        <p class="flow-text">{{ article.text }}</p>
+        <p class="flow-text">{{ article.date }}</p>
+    </div>
+</div>
+</body>
+<script src="{% static 'https://code.jquery.com/jquery-2.1.1.min.js' %}"></script>
+</html>

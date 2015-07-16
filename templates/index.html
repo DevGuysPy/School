@@ -1,53 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+    <title>Головна</title>
+{#    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
 <div class="container">
+    <div class="row">
+        <nav class="nav_bg">
+            <div class="nav-wrapper">
+              <a href="{% url 'index' %}" class="brand-logo nav_main_pad">Головна</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'all_student' %}">Учні</a></li>
+                <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
+                <li><a href="{% url 'all_groups' %}">Класи</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/logout/"><strong>Вийти</strong></a></li>
+                {% else %}
+                    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+                    <li><a href="/login/"><strong>Логін</strong></a></li>
+                {% endif %}
+              </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="col s6">
+                <h5>Новини</h5><blockquote><a href="{% url 'new_article' %}">Пропозиції по розвитку сайту</a></blockquote>
+                {% for article in articles %}
+                    <div class="card-panel">
+                        <div id="{{ article.id }}">
+                            <h5><a href='articles/{{article.id}}/'>{{ article.title }}</a></h5>
+                            <hr>
+                            <p>{{ article.author }}</p>
+                            <hr>
+                            <p class="text-right">{{ article.date }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col s6 marg_top_search">
+                <input class="col s6" type="text" name="query" placeholder="Enter search query">
+                <div class="col s6">
+                    <input id="rooms" type="checkbox" name="rooms">
+                    <label for="rooms">Кабінети</label>
 
-<h1>Главная</h1>
-    <a href="{% url 'all_student' %}"  >All students</a>
-    <a href="{% url 'all_teachers' %}">All teachers</a>
-    <a href="{% url 'all_groups' %}">All Groups</a>
-    
-    {% if user.is_authenticated %}
-        <li><a href="/logout/"><strong>Вийти</strong></a></li>
-    {% else %}
-        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-        <li><a href="/login/"><strong>Логін</strong></a></li>      
-    {% endif %}
-<form method="POST">
-    {% csrf_token %}
-    <input type="text" name="query" placeholder="Enter search query">
+                    <input id="teachers" type="checkbox" name="teachers">
+                    <label for="teachers">Вчителі</label>
 
-    <label for="rooms">Rooms</label>
-    <input id="rooms" type="checkbox" name="rooms">
+                    <input id="students" type="checkbox" name="students">
+                    <label for="students">Учні</label>
 
-    <label for="teachers">Teachers</label>
-    <input id="teachers" type="checkbox" name="teachers">
-
-    <label for="students">Students</label>
-    <input id="students" type="checkbox" name="students">
-
-    <label for="groups">Groups</label>
-    <input id="groups" type="checkbox" name="groups">
-
-    <input type="submit" value="Search">
-</form>
-
-    {% for room in rooms %}
-        <a href="rooms/{{ room.id }}/">Room:{{ room.number }}</a><br>
-    {% endfor %}
-    {% for teacher in teachers %}
-        <a href='teacher/{{teacher.id}}/'>{{ teacher.surname}} {{ teacher.name}}</a><br>
-    {% endfor %}
-    {% for group in groups %}
-        <a href='group/{{group.id}}/'>{{ group.name }}</a><br>
-    {%endfor%}
-    {% for student in students %}
-        <a href='student/{{student.id}}/'>{{ student.surname }} {{ student.name }}</a><br>
-    {%endfor%}
+                    <input id="groups" type="checkbox" name="groups">
+                    <label for="groups">Класи</label>
+{#                    <input type="submit" value="Search">#}
+                </div>
+                <div class="row margin_output">
+                    {% for room in rooms %}
+                        <div class="card-panel">
+                            <a href="rooms/{{ room.id }}/">Кабінет:{{ room.number }}</a>
+                        </div>
+                    {% endfor %}
+                    {% for teacher in teachers %}
+                        <div class="card-panel">
+                            <a href='teacher/{{teacher.id}}/'>{{ teacher.surname}} {{ teacher.name}}</a>
+                        </div>
+                    {% endfor %}
+                    {% for group in groups %}
+                        <div class="card-panel">
+                            <a href='group/{{group.id}}/'>{{ group.name }}</a>
+                        </div>
+                    {%endfor%}
+                    {% for student in students %}
+                        <div class="card-panel">
+                            <a href='student/{{student.id}}/'>{{ student.surname }} {{ student.name }}</a>
+                        </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>
