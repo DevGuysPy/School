@@ -6,10 +6,10 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-        <li><a href="/logout/"><strong>Вийти</strong></a></li>
+        <li><a href="/logout/"><strong>Log out</strong></a></li>
     {% else %}
-        <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-        <li><a href="/login/"><strong>Логін</strong></a></li>
+        <li><a href="/registration/"><strong>Registration</strong></a></li>
+        <li><a href="/login/"><strong>Sign up</strong></a></li>
     {% endif %}
 
 <a href="{% url 'index' %}"  >Home</a>

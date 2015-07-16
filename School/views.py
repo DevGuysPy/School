@@ -236,7 +236,7 @@ def student_detail(request, student_id):
 
 def student_detail_edit(request, student_id=1):
     student = Student.objects.get(id=student_id)
-    activity = StudentActivity.objects.filter(student_id=student_id)
+    activities = StudentActivity.objects.filter(student_id=student_id)
     form = StudentForm(request.POST or None, request.FILES or None,
                         instance=student)
     form_mark = MarkForm(request.POST or None, request.FILES or None,
@@ -249,7 +249,7 @@ def student_detail_edit(request, student_id=1):
         'student': student,
         'form': form,
         'groups': groups,
-        'activities': activity,
+        'activities': activities,
         'form_mark': form_mark,
         'lessons': lessons,
     }

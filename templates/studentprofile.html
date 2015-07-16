@@ -8,11 +8,11 @@
 </head>
 <body>
 
-    {% if user.is_authenticated %}
-        <li><a href="/logout/"><strong>Р’РёР№С‚Рё</strong></a></li>
+    {{% if user.is_authenticated %}
+        <li><a href="/logout/"><strong>Log out</strong></a></li>
     {% else %}
-        <li><a href="/registration/"><strong>Р РµС”СЃС‚СЂР°С†С–СЏ</strong></a></li>
-        <li><a href="/login/"><strong>Р›РѕРіС–РЅ</strong></a></li>
+        <li><a href="/registration/"><strong>Registration</strong></a></li>
+        <li><a href="/login/"><strong>Sign up</strong></a></li>
     {% endif %}
 
     <div class='container'>
