@@ -7,9 +7,6 @@ from django.contrib.auth.models import User
 
 
 class Mark(models.Model):
-    lesson = models.ForeignKey('Lesson', null=True)
-    student = models.ForeignKey('Student')
-
     number = models.IntegerField(
         default=0, validators=[MinValueValidator(0),
                                MaxValueValidator(12)])
