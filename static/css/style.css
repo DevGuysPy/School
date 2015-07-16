@@ -199,3 +199,12 @@ label {
 .art_disp{
     display: -webkit-inline-box;
 }
+.margin_login{
+    margin: 50px 278px;
+}
+.margin_btn_reg{
+    margin-left: 51px;
+}
+.panel-title{
+    margin-left: 40px;
+}
