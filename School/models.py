@@ -35,10 +35,11 @@ class Teacher(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     birthdate = models.DateField()
-    info = models.TextField()
-    discipline = models.ForeignKey(Discipline)
+    info = models.TextField(null=True)
+    discipline = models.ForeignKey(Discipline, null=True)
     photo = models.ImageField(blank=True, null=True)
     group = models.OneToOneField('Group', null=True, blank=True)
+    user = models.OneToOneField(User, null=True)
 
     class Meta():
         db_table = 'teacher'
@@ -74,7 +75,7 @@ class Student(models.Model):
         ('f', "Female"),
     )
     sex = models.CharField(max_length=1, choices=SEX)
-    group = models.ForeignKey(Group)
+    group = models.ForeignKey(Group, null=True)
     photo = models.ImageField(blank=True, null=True)
     info = models.TextField(null=True, blank=True)
     user = models.OneToOneField(User, null=True)

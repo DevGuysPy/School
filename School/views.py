@@ -1,6 +1,6 @@
 import datetime
 from datetime import timedelta
-
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
@@ -11,6 +11,8 @@ from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
 
 from django.contrib.auth.models import User
 
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 def room_detail(request, room_id):
     days_w_lessons = []
@@ -291,6 +293,7 @@ def all_groups(request):
 
 def registration(request):
     groups = Group.objects.all()
+    disciplines = Discipline.objects.all()
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -300,10 +303,29 @@ def registration(request):
         birthdate = request.POST['birthdate']
         sex = request.POST['sex']
         group = request.POST['group']
-        user = User.objects.create_user(username=username, email=email, password=password)
-        Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex, group_id=group, user_id=user.id)
-        return redirect('/login/')
+        discipline = request.POST['discipline']
+        account_type = request.POST['account_type']
+        if account_type == 'student':
+            user = User.objects.create_user(username=username, email=email, password=password)
+            Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex, group_id=group, user_id=user.id)
+            return redirect('/login/')
+        if account_type == 'teacher':
+            ctx1 = {
+                'name': name,
+                'surname': surname,
+            }
+            email_message = render_to_string('email.html', ctx1)
+            send_mail('TeacherRegistration', settings.EMAIL_HOST_USER,
+            ['jyvylo@mail.ru'], fail_silently=False, html_message=email_message)
+            user = User.objects.create_user(username=username, email=email, password=password)
+            Teacher.objects.create(name=name, surname=surname, birthdate=birthdate, user_id=user.id, discipline_id=discipline)
+
+            return redirect('/login/')
     ctx = {
         'groups': groups,
+        'disciplines': disciplines,
     }
+
+
     return render(request, 'registration/registration.html', ctx)
+

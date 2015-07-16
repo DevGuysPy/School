@@ -13,9 +13,16 @@
         <div class="registration-form background-color">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Реєстрація</strong></h3>
+                    <h3 class="panel-title"><strong>Sign up</strong></h3>
                 </div>
                 <div class="panel-body">
+
+                    <input id="1" type="radio" name="account_type" value="student">
+                        Student
+
+                    <input id="2" type="radio" name="account_type" value="teacher">
+                        Teacher
+
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span></span>
                         <input type="text" name='username' class="form-control margin-for-input" placeholder="Username" aria-describedby="sizing-addon1">
@@ -44,22 +51,32 @@
                         <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span></span>
                         <input type="text" name='birthdate' class="form-control margin-for-input" placeholder="Birthdate" aria-describedby="sizing-addon1">
                     </div>
-                        <div class="input-group input-group-lg margin">
+                    <div class="input-group input-group-lg margin">
                         <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span></span>
                         <input type="text" name='sex' class="form-control margin-for-input" placeholder="Sex" aria-describedby="sizing-addon1">
                     </div>
-                    <select name="group">
-                    {%  for g in groups %}
-                        <option value="{{ g.id}}">
-                            {% if g.id == group.value.id %}
-                                selected="selected"
-                            {% endif %}
-                            {{g.name|capfirst}}
-                        </option>
-                    {% endfor %}
-                    </select>
+{#                    <select name="group">#}
+{#                    {%  for g in groups %}#}
+{#                        <option value="{{ g.id}}">#}
+{#                            {% if g.id == group.value.id %}#}
+{#                                selected="selected"#}
+{#                            {% endif %}#}
+{#                            {{g.name|capfirst}}#}
+{#                        </option>#}
+{#                    {% endfor %}#}
+{#                    </select>#}
+{#                    <select name="discipline">#}
+{#                    {%  for d in disciplines %}#}
+{#                        <option value="{{ d.id}}">#}
+{#                            {% if d.id == discipline.value.id %}#}
+{#                                selected="selected"#}
+{#                            {% endif %}#}
+{#                            {{d.name|capfirst}}#}
+{#                        </option>#}
+{#                    {% endfor %}#}
+{#                    </select>#}
                     <div class="text-center">
-                        <input type="submit" class="btn btn-default margin" value="Зареєструватися">
+                        <input type="submit" class="btn btn-default margin" value="Sign up">
                     </div>
                 </div>
             </div>
