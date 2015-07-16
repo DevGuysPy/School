@@ -210,7 +210,7 @@ def lesson_detail(request, lesson_id):
     return render (request, 'lesson.html', ctx)
 
 
-def student_detail(request, student_id=1):
+def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
     activities = StudentActivity.objects.filter(student_id=student_id)
     lessons = Lesson.objects.all()
