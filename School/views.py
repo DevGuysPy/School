@@ -290,11 +290,20 @@ def all_groups(request):
     return render (request, 'all_groups.html', ctx)
 
 def registration(request):
+    groups = Group.objects.all()
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-        User.objects.create_user(username=username, email=email, password=password)
+        name = request.POST['name']
+        surname = request.POST['surname']
+        birthdate = request.POST['birthdate']
+        sex = request.POST['sex']
+        group = request.POST['group']
+        user = User.objects.create_user(username=username, email=email, password=password)
+        Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex, group_id=group, user_id=user.id)
         return redirect('/login/')
-
-    return render(request, 'registration/registration.html')
+    ctx = {
+        'groups': groups,
+    }
+    return render(request, 'registration/registration.html', ctx)

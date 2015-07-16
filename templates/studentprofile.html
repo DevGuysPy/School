@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    {{% if user.is_authenticated %}
+    {% if user.is_authenticated %}
         <li><a href="/logout/"><strong>Log out</strong></a></li>
     {% else %}
         <li><a href="/registration/"><strong>Registration</strong></a></li>

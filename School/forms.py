@@ -27,3 +27,4 @@ class GroupForm(ModelForm):
     class Meta:
         model = Group
         fields = ('info', 'photo')
+

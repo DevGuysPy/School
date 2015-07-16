@@ -76,8 +76,8 @@ class Student(models.Model):
     sex = models.CharField(max_length=1, choices=SEX)
     group = models.ForeignKey(Group)
     photo = models.ImageField(blank=True, null=True)
-    info = models.TextField()
-    # user = models.OneToOneField(User, null=True)
+    info = models.TextField(null=True, blank=True)
+    user = models.OneToOneField(User, null=True)
     activities = models.ManyToManyField('Lesson', through='StudentActivity', related_name='activities')
 
 
