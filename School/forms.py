@@ -16,7 +16,7 @@ class LessonForm(ModelForm):
 class StudentForm(ModelForm):
     class Meta:
         model = Student
-        fields = ('birthdate', 'info', 'group', 'photo')
+        fields = ('birthdate', 'name', 'surname')
 
 class MarkForm(ModelForm):
     class Meta:

@@ -305,7 +305,12 @@ def registration(request):
         account_type = request.POST['account_type']
         if account_type == 'student':
             user = User.objects.create_user(username=username, email=email, password=password)
-            Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex,  user_id=user.id)
+            # Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex,  user_id=user.id)
+            form = StudentForm(request.POST or None)
+            if form.is_valid():
+                new_student = form.save(commit=False)
+                new_student.user = user
+                form.save()
             return redirect('/login/')
         if account_type == 'teacher':
             user = User.objects.create_user(username=username, email=email, password=password, first_name=name, last_name=surname)

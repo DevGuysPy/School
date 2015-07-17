@@ -69,7 +69,7 @@ class Group(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    birthdate = models.DateField()
+    birthdate = models.DateField(null=True)
     SEX = (
         ('m', "Male"),
         ('f', "Female"),
