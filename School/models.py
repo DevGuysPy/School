@@ -34,7 +34,7 @@ class Teacher(models.Model):
     # room = models.ForeignKey(Room)
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    birthdate = models.DateField()
+    birthdate = models.DateField(null=True)
     info = models.TextField(null=True)
     discipline = models.ForeignKey(Discipline, null=True)
     photo = models.ImageField(blank=True, null=True)

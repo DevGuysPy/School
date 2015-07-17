@@ -302,30 +302,34 @@ def registration(request):
         surname = request.POST['surname']
         birthdate = request.POST['birthdate']
         sex = request.POST['sex']
-        group = request.POST['group']
-        discipline = request.POST['discipline']
         account_type = request.POST['account_type']
         if account_type == 'student':
             user = User.objects.create_user(username=username, email=email, password=password)
-            Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex, group_id=group, user_id=user.id)
+            Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex,  user_id=user.id)
             return redirect('/login/')
         if account_type == 'teacher':
-            ctx1 = {
+            user = User.objects.create_user(username=username, email=email, password=password, first_name=name, last_name=surname)
+
+            ctx_email = {
                 'name': name,
                 'surname': surname,
+                'password': password,
+                'user': user,
             }
-            email_message = render_to_string('email.html', ctx1)
-            send_mail('TeacherRegistration', settings.EMAIL_HOST_USER,
+            email_message = render_to_string('email.html', ctx_email)
+            send_mail('TeacherRegistration', 'my', settings.EMAIL_BACKEND,
             ['jyvylo@mail.ru'], fail_silently=False, html_message=email_message)
-            user = User.objects.create_user(username=username, email=email, password=password)
-            Teacher.objects.create(name=name, surname=surname, birthdate=birthdate, user_id=user.id, discipline_id=discipline)
-
             return redirect('/login/')
     ctx = {
         'groups': groups,
         'disciplines': disciplines,
     }
 
-
     return render(request, 'registration/registration.html', ctx)
 
+def verification(request, user_id):
+    user = User.objects.get(id=user_id)
+    if request.method == 'POST':
+        Teacher.objects.create(name=user.first_name, surname=user.last_name, user_id=user.id)
+
+    return render(request, 'registration/verification.html')
