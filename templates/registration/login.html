@@ -13,6 +13,7 @@
         <div class="card-panel margin_login">
             <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
                 {% csrf_token %}
+                    <h4 class="panel-title-1">Логін</h4>
                     {{ form.username.label_tag }}
                     {{ form.username }}
                     {{ form.password.label_tag }}
