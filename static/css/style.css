@@ -1,3 +1,4 @@
+     213 lines (190 sloc)  3.295 kB
 .search {
     width: 300px;
     height: 40px;
@@ -179,4 +180,36 @@ label {
     height: 150px;
     background-position: center;
 
+}
+.nav_main_pad{
+    padding-left: 16px !important;
+}
+.margin_for_check{
+    margin-top: 8px;
+}
+.nav_bg{
+    background-color: #2aabd2;
+}
+.margin_output{
+    margin-top: 61px;
+    margin-left: 0px !important;
+}
+.marg_top_search{
+    margin-top: 15px !important;
+}
+.art_disp{
+    display: -webkit-inline-box;
+}
+.margin_login{
+    margin: 50px 278px;
+}
+.margin_btn_reg{
+    margin-left: 51px;
+    margin-top: 20px;
+}
+.panel-title{
+    margin-left: 40px;
+}
+.panel-title-1{
+    margin-left: 125px;
 }

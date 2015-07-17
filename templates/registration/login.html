@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="container">
-        <div class="login-form radius">
+        <div class="card-panel margin_login">
             <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
                 {% csrf_token %}
+                    <h4 class="panel-title-1">Логін</h4>
                     {{ form.username.label_tag }}
                     {{ form.username }}
                     {{ form.password.label_tag }}
@@ -21,6 +24,5 @@
             </form>
         </div>
     </div>
-
 </body>
 </html>

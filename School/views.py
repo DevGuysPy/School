@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
 
 from .models import (Teacher, Lesson, Room, Group, Comments,
-                     Discipline, Student, Mark, StudentActivity)
+                     Discipline, Student, Mark, StudentActivity, Article)
 from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
 
 from django.contrib.auth.models import User
@@ -98,6 +98,7 @@ def index(request):
             groups = search_groups(query)
 
     ctx = {
+        'articles': reversed(Article.objects.all()),
         'rooms': rooms,
         'teachers': teachers,
         'groups': groups,
@@ -299,7 +300,8 @@ def registration(request):
         surname = request.POST['surname']
         birthdate = request.POST['birthdate']
         sex = request.POST['sex']
-        group = request.POST['group']
+        #group = request.POST['group']
+        group = request.POST.get('group', False)
         user = User.objects.create_user(username=username, email=email, password=password)
         Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex, group_id=group, user_id=user.id)
         return redirect('/login/')
@@ -307,3 +309,19 @@ def registration(request):
         'groups': groups,
     }
     return render(request, 'registration/registration.html', ctx)
+
+
+def article(request, article_id=1):
+    ctx = {
+        'article': Article.objects.get(id=article_id),
+    }
+
+    return render(request, 'article.html', ctx)
+
+def new_article(request):
+    if request.method == "POST":
+        new_article_title = request.POST['title']
+        new_article_text = request.POST['text']
+        article = Article.objects.create(title=new_article_title, text=new_article_text, author=request.user)
+        return redirect('article_detail', article_id=article.id)
+    return render(request, 'new_article.html')
