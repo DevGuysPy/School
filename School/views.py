@@ -252,6 +252,7 @@ def count_avg_mark_discpline(activities_for_marksd):
     return avg_d
 
 
+
 def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
     activities = StudentActivity.objects.filter(student_id=student_id)
