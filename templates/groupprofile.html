@@ -38,6 +38,7 @@
         </div>
         <div class= 'row'>
             <h3>Members:</h3>
+            Кількість учнів - {{ all_students }}<br>
             {% for s in student %}
                 <a href='/student/{{s.id}}/'>{{s.surname}} {{s.name}}</a><br>
             {% endfor %}

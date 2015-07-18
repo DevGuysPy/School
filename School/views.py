@@ -138,11 +138,12 @@ def teacher_detail_edit(request, teacher_id):
 def group_detail(request, group_id=1):
     group = Group.objects.get(id=group_id)
     student = Student.objects.filter(group_id=group_id)
+    all_students = len(student)
 
     ctx = {
         'group': group,
         'student': student,
-
+        'all_students': all_students,
     }
     return render(request, 'groupprofile.html', ctx)
 
@@ -252,7 +253,6 @@ def count_avg_mark_discpline(activities_for_marksd):
     return avg_d
 
 
-
 def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
     activities = StudentActivity.objects.filter(student_id=student_id)
@@ -314,8 +314,11 @@ def student_detail_edit(request, student_id=1):
 
 def all_students(request):
     students = Student.objects.all()
+    all_students = len(students)
+    print(students)
     ctx = {
         'student': students,
+        'all_students': all_students,
     }
 
     return render (request, 'all_students.html', ctx)
@@ -323,18 +326,23 @@ def all_students(request):
 
 def all_teachers(request):
     teachers = Teacher.objects.all()
+    all_teachers = len(teachers)
 
     ctx = {
-        'teachers': teachers
+        'teachers': teachers,
+        'all_teachers': all_teachers,
+
     }
 
     return render (request, 'allteachers.html', ctx)
 
 def all_groups(request):
     groups = Group.objects.all()
+    all_groups = len(groups)
 
     ctx = {
-        'groups': groups
+        'groups': groups,
+        'all_groups': all_groups,
         }
 
     return render (request, 'all_groups.html', ctx)

@@ -18,6 +18,7 @@
         <h1 class="text-center">Groups</h1>
         <hr>
         {% for s in groups %}
+        Всього класів - {{ all_groups }}
             <div class="media">
                 <div class="media-left">
                     <a href="{% url 'group_detail' s.id %}">
