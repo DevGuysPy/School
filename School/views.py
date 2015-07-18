@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
-
+from decimal import Decimal
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark, StudentActivity, Article)
 from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
@@ -211,11 +211,57 @@ def lesson_detail(request, lesson_id):
     return render (request, 'lesson.html', ctx)
 
 
+def countavgmark(activities):
+    all_marks = []
+
+    for s in activities:
+        marks = s.mark.number
+        all_marks.append(marks)
+
+    start = 0
+
+    for m in all_marks:
+        start = start + m
+
+    if all_marks:
+        x = Decimal(float(start) / len(all_marks))
+        avg = round(x,2)
+    else:
+        avg = 0
+
+    return avg
+
+
+def count_avg_mark_discpline(activities_for_marksd):
+
+    all_marks_discipline = []
+
+    for i in activities_for_marksd:
+        marks_discipline = i.mark.number
+        all_marks_discipline.append(marks_discipline)
+    start = 0
+
+    for k in all_marks_discipline:
+        start = start + k
+
+    if all_marks_discipline:
+        x = Decimal(float(start) / len(all_marks_discipline))
+        avg_d = round(x,2)
+    else:
+        avg_d = 0
+    return avg_d
+
+
 def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
     activities = StudentActivity.objects.filter(student_id=student_id)
     lessons = Lesson.objects.all()
-    # avg_mark = Mark.objects.filter(student_id=student_id).aggregate(Avg('number'))
+    all_discipline_marks = {} 
+
+    for l in lessons:
+        discipline_lessons = l.discipline
+        activities_for_marksd = StudentActivity.objects.filter(lesson__discipline=discipline_lessons, student_id=student_id)
+        all_discipline_marks[discipline_lessons.name] = count_avg_mark_discpline(activities_for_marksd)
 
     if request.method == "POST":
         number = request.POST['number']
@@ -223,13 +269,15 @@ def student_detail(request, student_id):
         lesson = request.POST['lesson']
         mark = Mark.objects.create(number=number, reason=reason)
         StudentActivity.objects.create(student_id=student.id, lesson_id=lesson, mark_id=mark.id)
+
         return redirect('student_detail', student_id=student_id)
 
     ctx = {
         'student': student,
         'activities': activities,
         'lesson': lessons,
-        # 'average_mark':avg_mark['number__avg'],
+        'avgmark': countavgmark(activities),
+        'all_discipline_marks': all_discipline_marks,
     }
 
     return render(request, 'studentprofile.html', ctx)

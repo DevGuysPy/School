@@ -94,7 +94,10 @@
             <input type='text' placeholder="Enter text" name="number">
             <input type='submit' class='button margin-for-btn' value = 'Add'>
         </form>
-
+        General everage mark: {{ avgmark }}<br>
+        {% for key, value in all_discipline_marks.items %} 
+            <li>{{ key }} - {{ value }}</li>
+        {% endfor %}
         <h4>To edit this page, please click <a href="{% url 'student_detail_edit' student_id=student.id %}"><span>here</span></a></h4>
     </div>
 </body>
