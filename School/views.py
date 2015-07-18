@@ -135,15 +135,15 @@ def teacher_detail_edit(request, teacher_id):
     return render(request, 'teacher/edit.html', ctx)
 
 
-def group_detail(request, group_id=1):
+def group_detail(request, group_id):
     group = Group.objects.get(id=group_id)
-    student = Student.objects.filter(group_id=group_id)
-    all_students = len(student)
+    students = Student.objects.filter(group_id=group_id)
+    students_count = len(students)
 
     ctx = {
         'group': group,
-        'student': student,
-        'all_students': all_students,
+        'student': students,
+        'students_count': students_count,
     }
     return render(request, 'groupprofile.html', ctx)
 
@@ -171,7 +171,8 @@ def add_comment(request, teacher_id):
     teacher = Teacher.objects.get(id=teacher_id)
     if request.method == "POST":
         new_comment_text = request.POST['comment_text']
-        Comments.objects.create(comment_text=new_comment_text, comment_teacher_id=teacher_id)
+        Comments.objects.create(comment_text=new_comment_text, \
+            comment_teacher_id=teacher_id)
         return redirect('teacher_detail', teacher_id=teacher.id) 
 
     return render(request, 'teacherprofile.html') 
@@ -200,7 +201,8 @@ def lesson_detail(request, lesson_id):
         reason = request.POST['reason']
         number = request.POST['number']
         mark = Mark.objects.create(number=number, reason=reason)
-        StudentActivity.objects.create(lesson_id=lesson.id, student=student, mark_id=mark.id)
+        StudentActivity.objects.create(lesson_id=lesson.id, student=student,\
+            mark_id=mark.id)
         return redirect('lesson_detail', lesson_id=lesson_id)
     ctx = {
         'lesson': lesson,
@@ -232,27 +234,6 @@ def countavgmark(activities):
 
     return avg
 
-
-def count_avg_mark_discpline(activities_for_marksd):
-
-    all_marks_discipline = []
-
-    for i in activities_for_marksd:
-        marks_discipline = i.mark.number
-        all_marks_discipline.append(marks_discipline)
-    start = 0
-
-    for k in all_marks_discipline:
-        start = start + k
-
-    if all_marks_discipline:
-        x = Decimal(float(start) / len(all_marks_discipline))
-        avg_d = round(x,2)
-    else:
-        avg_d = 0
-    return avg_d
-
-
 def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
     activities = StudentActivity.objects.filter(student_id=student_id)
@@ -261,15 +242,19 @@ def student_detail(request, student_id):
 
     for l in lessons:
         discipline_lessons = l.discipline
-        activities_for_marksd = StudentActivity.objects.filter(lesson__discipline=discipline_lessons, student_id=student_id)
-        all_discipline_marks[discipline_lessons.name] = count_avg_mark_discpline(activities_for_marksd)
+        activities_for_marksd = \
+            StudentActivity.objects.filter(lesson__discipline=discipline_lessons,\
+                student_id=student_id)
+        all_discipline_marks[discipline_lessons.name] = \
+        countavgmark(activities_for_marksd)
 
     if request.method == "POST":
         number = request.POST['number']
         reason = request.POST['reason']
         lesson = request.POST['lesson']
         mark = Mark.objects.create(number=number, reason=reason)
-        StudentActivity.objects.create(student_id=student.id, lesson_id=lesson, mark_id=mark.id)
+        StudentActivity.objects.create(student_id=student.id, lesson_id=lesson,\
+            mark_id=mark.id)
 
         return redirect('student_detail', student_id=student_id)
 
@@ -314,11 +299,11 @@ def student_detail_edit(request, student_id=1):
 
 def all_students(request):
     students = Student.objects.all()
-    all_students = len(students)
+    students_count = len(students)
     print(students)
     ctx = {
         'student': students,
-        'all_students': all_students,
+        'students_count': students_count,
     }
 
     return render (request, 'all_students.html', ctx)
@@ -326,11 +311,11 @@ def all_students(request):
 
 def all_teachers(request):
     teachers = Teacher.objects.all()
-    all_teachers = len(teachers)
+    teachers_count = len(teachers)
 
     ctx = {
         'teachers': teachers,
-        'all_teachers': all_teachers,
+        'teachers_count': teachers_count,
 
     }
 
@@ -338,11 +323,11 @@ def all_teachers(request):
 
 def all_groups(request):
     groups = Group.objects.all()
-    all_groups = len(groups)
+    groups_count = len(groups)
 
     ctx = {
         'groups': groups,
-        'all_groups': all_groups,
+        'groups_count': groups_count,
         }
 
     return render (request, 'all_groups.html', ctx)
@@ -359,8 +344,10 @@ def registration(request):
         sex = request.POST['sex']
         #group = request.POST['group']
         group = request.POST.get('group', False)
-        user = User.objects.create_user(username=username, email=email, password=password)
-        Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex, group_id=group, user_id=user.id)
+        user = User.objects.create_user(username=username, email=email,\
+            password=password)
+        Student.objects.create(name=name, surname=surname, birthdate=birthdate,\
+            sex=sex, group_id=group, user_id=user.id)
         return redirect('/login/')
     ctx = {
         'groups': groups,
@@ -379,6 +366,7 @@ def new_article(request):
     if request.method == "POST":
         new_article_title = request.POST['title']
         new_article_text = request.POST['text']
-        article = Article.objects.create(title=new_article_title, text=new_article_text, author=request.user)
+        article = Article.objects.create(title=new_article_title,\
+        text=new_article_text, author=request.user)
         return redirect('article_detail', article_id=article.id)
     return render(request, 'new_article.html')
