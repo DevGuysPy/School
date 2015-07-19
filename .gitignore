@@ -7,6 +7,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+local_settings.py
+db.sqlite3
 env/
 build/
 develop-eggs/
