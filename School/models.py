@@ -72,7 +72,7 @@ class Student(models.Model):
         ('f', "Female"),
     )
     sex = models.CharField(max_length=1, choices=SEX)
-    group = models.ForeignKey(Group)
+    group = models.ForeignKey(Group, related_name='members')
     photo = models.ImageField(blank=True, null=True)
     info = models.TextField(null=True, blank=True)
     user = models.OneToOneField(User, null=True)
@@ -106,7 +106,7 @@ class Lesson(models.Model):
     info = models.TextField()
 
     def __str__(self):
-        return "{} в {}".format(self.discipline.name, self.start)
+        return u"{} в {}".format(self.discipline.name, self.start)
 
     def __unicode__(self):
         return u"{} в {}".format(self.discipline.name, self.start)
