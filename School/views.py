@@ -4,13 +4,11 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
-
+from django.http import JsonResponse
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark, StudentActivity)
-from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
-
+from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm, UserForm, UserForm2
 from django.contrib.auth.models import User
-
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
@@ -291,46 +289,83 @@ def all_groups(request):
 
     return render (request, 'all_groups.html', ctx)
 
+
 def registration(request):
     groups = Group.objects.all()
-    disciplines = Discipline.objects.all()
     if request.method == 'POST':
         username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        name = request.POST['name']
-        surname = request.POST['surname']
-        birthdate = request.POST['birthdate']
-        sex = request.POST['sex']
         account_type = request.POST['account_type']
+        form_user = UserForm(request.POST or None)
+        form_user2 = UserForm2(request.POST or None)
         if account_type == 'student':
-            user = User.objects.create_user(username=username, email=email, password=password)
-            # Student.objects.create(name=name, surname=surname, birthdate=birthdate, sex=sex,  user_id=user.id)
-            form = StudentForm(request.POST or None)
-            if form.is_valid():
-                new_student = form.save(commit=False)
-                new_student.user = user
-                form.save()
-            return redirect('/login/')
-        if account_type == 'teacher':
-            user = User.objects.create_user(username=username, email=email, password=password, first_name=name, last_name=surname)
-
-            ctx_email = {
-                'name': name,
-                'surname': surname,
-                'password': password,
-                'user': user,
+            form_student = StudentForm(request.POST or None)
+            if form_user.is_valid():
+                user_save = form_user.save()
+                user_save.set_password(user_save.password)
+                user_save.save()
+            ctx_user = {
+                'message': form_user.errors,
             }
-            email_message = render_to_string('email.html', ctx_email)
-            send_mail('TeacherRegistration', 'my', settings.EMAIL_BACKEND,
-            ['jyvylo@mail.ru'], fail_silently=False, html_message=email_message)
-            return redirect('/login/')
+            if form_user.is_valid():
+                user = User.objects.get(username=username)
+                if form_student.is_valid():
+                    new_student = form_student.save(commit=False)
+                    new_student.user = user
+                    form_student.save()
+                    return JsonResponse({
+                        'status': 'ok',
+                    })
+            else:
+                ctx_student = {
+                    'status': 'error',
+                    'message1': form_student.errors,
+                }
+                ctx_student.update(ctx_user)
+                return JsonResponse(ctx_student)
+
+        if account_type == 'teacher':
+            if form_user2.is_valid():
+                user_save = form_user2.save()
+                user_save.set_password(user_save.password)
+                user_save.save()
+                user = User.objects.get(username=username)
+                name = request.POST['first_name']
+                surname = request.POST['last_name']
+                ctx_email = {
+                    'name': name,
+                    'surname': surname,
+                    'user': user,
+                }
+                email_message = render_to_string('email.html', ctx_email)
+                send_mail('TeacherRegistration', 'my', settings.EMAIL_BACKEND,
+                ['jyvylo@mail.ru'], fail_silently=False, html_message=email_message)
+                return JsonResponse({
+                    'status': 'ok',
+                })
+            else:
+                return JsonResponse ({
+                    'status': 'error',
+                    'message': form_user2.errors,
+            })
+        if account_type == 'other':
+            if form_user.is_valid():
+                user = form_user.save()
+                user.set_password(user.password)
+                user.save()
+                return JsonResponse({
+                    'status': 'ok',
+                })
+            else:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': form_user.errors,
+                })
     ctx = {
         'groups': groups,
-        'disciplines': disciplines,
     }
 
     return render(request, 'registration/registration.html', ctx)
+
 
 def verification(request, user_id):
     user = User.objects.get(id=user_id)

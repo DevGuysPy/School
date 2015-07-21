@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Mark(models.Model):
     number = models.IntegerField(
         default=0, validators=[MinValueValidator(0),
