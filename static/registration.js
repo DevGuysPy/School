@@ -45,29 +45,34 @@ $(document).ready(function() {
         });
     });
 
-    $("#formCheckPassword").validate({
+    $("form").validate({
            rules: {
                password: {
-                 required: true,
-                    minlength: 4,
-                    maxlength: 20
+                   required: true,
+                   minlength: 4,
+                   maxlength: 20
 
                } ,
 
-                   cfmPassword: {
-                    equalTo: "#password",
-                     minlength: 4,
-                     maxlength: 20
-               }
+               cfmPassword: {
+                   equalTo: "#password",
+                   minlength: 4,
+                   maxlength: 20
+               },
+               first_name: {
+                   required: true,
+                   minlength: 4,
+                   maxlength: 20
+                },
+               last_name: {
+                   required: true,
+                   minlength: 4,
+                   maxlength: 20
+                }
 
 
-           },
-        messages:{
-            password: {
-                 required:"the password is required"
+           }
 
-            }
-        }
     });
 });
 

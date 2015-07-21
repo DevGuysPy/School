@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <form method="POST" action="" id="formCheckPassword">
+        <form method="POST" action="">
         {% csrf_token %}
                 <div class="radio">
                     <label>
@@ -34,7 +34,7 @@
                         <div class="error username"></div>
                     </div>
                     <div class="form-group">
-                        <input type="email" name='email'  placeholder="Email" aria-describedby="sizing-addon1">
+                        <input type="email" name='email'  placeholder="Email" >
                         <div class="error email"></div>
                     </div>
                     <div class="form-group" >

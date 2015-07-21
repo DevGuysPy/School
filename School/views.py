@@ -329,12 +329,14 @@ def registration(request):
                 user_save.set_password(user_save.password)
                 user_save.save()
                 user = User.objects.get(username=username)
+                host = request.get_host()
                 name = request.POST['first_name']
                 surname = request.POST['last_name']
                 ctx_email = {
                     'name': name,
                     'surname': surname,
                     'user': user,
+                    'host': host,
                 }
                 email_message = render_to_string('email.html', ctx_email)
                 send_mail('TeacherRegistration', 'my', settings.EMAIL_BACKEND,

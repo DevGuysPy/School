@@ -37,7 +37,7 @@
 
     <input type="submit" value="Search">
 </form>
-
+{{ host }}
     {% for room in rooms %}
         <a href="rooms/{{ room.id }}/">Room:{{ room.number }}</a><br>
     {% endfor %}
