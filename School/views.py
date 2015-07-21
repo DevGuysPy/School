@@ -68,14 +68,6 @@ def index(request):
                 rooms = []
 
         if 'teachers' in request.POST:
-            # *_ - unpacking
-            # save all other parts to _ as array
-            # so that
-            # "Sergey Vlad Potcht"
-            # =>
-            # first = "Sergey"
-            # second = "Vlad"
-            # _ = ['Pocht']
             try:
                 query_words = query.split(' ')
                 first, second = query_words[0:2]

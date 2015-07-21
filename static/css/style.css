@@ -201,15 +201,44 @@ label {
     display: -webkit-inline-box;
 }
 .margin_login{
-    margin: 50px 278px;
+
 }
-.margin_btn_reg{
-    margin-left: 51px;
-    margin-top: 20px;
-}
+/*.margin_btn_reg{*/
+    /*margin-left: 51px;*/
+    /*margin-top: 20px;*/
+/*}*/
 .panel-title{
-    margin-left: 40px;
+    text-align: center;
 }
 .panel-title-1{
-    margin-left: 125px;
+    text-align: center;
 }
+.center-input{
+    text-align:center;
+    margin-top: 22px;
+}
+.navbar-fixed{
+    position: fixed;
+}
+.parallax-container {
+    height: 379px;
+}
+.parallax-container {
+	height: 375px;
+}
+.search-pos{
+	margin-top: -52px;
+	padding: 0;
+}
+[type="checkbox"] + label{
+	margin: 19px;
+}
+.search-pos > nav {
+	box-shadow: none !important;
+}
+.search-output{
+    padding: 0;
+}
+/*.search-output > div {*/
+    /*display: none;*/
+/*}*/
