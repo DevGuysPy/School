@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from datetime import date, datetime as dtime, timedelta, time
 from django.core.management.base import BaseCommand, CommandError
 from School.models import Lesson, Group, Room, Teacher, Discipline

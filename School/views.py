@@ -3,11 +3,17 @@ from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
+
 from django.db.models import Avg
 from django.http import JsonResponse
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark, StudentActivity)
 from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm, UserForm, UserForm2
+
+from decimal import Decimal
+
+from articles.models import Article
+
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -68,14 +74,6 @@ def index(request):
                 rooms = []
 
         if 'teachers' in request.POST:
-            # *_ - unpacking
-            # save all other parts to _ as array
-            # so that
-            # "Sergey Vlad Potcht"
-            # =>
-            # first = "Sergey"
-            # second = "Vlad"
-            # _ = ['Pocht']
             try:
                 query_words = query.split(' ')
                 first, second = query_words[0:2]
@@ -98,6 +96,7 @@ def index(request):
             groups = search_groups(query)
 
     ctx = {
+        'articles': reversed(Article.objects.all()),
         'rooms': rooms,
         'teachers': teachers,
         'groups': groups,
@@ -134,14 +133,15 @@ def teacher_detail_edit(request, teacher_id):
     return render(request, 'teacher/edit.html', ctx)
 
 
-def group_detail(request, group_id=1):
+def group_detail(request, group_id):
     group = Group.objects.get(id=group_id)
-    student = Student.objects.filter(group_id=group_id)
+    students = Student.objects.filter(group_id=group_id)
+    students_count = len(students)
 
     ctx = {
         'group': group,
-        'student': student,
-
+        'student': students,
+        'students_count': students_count,
     }
     return render(request, 'groupprofile.html', ctx)
 
@@ -169,7 +169,8 @@ def add_comment(request, teacher_id):
     teacher = Teacher.objects.get(id=teacher_id)
     if request.method == "POST":
         new_comment_text = request.POST['comment_text']
-        Comments.objects.create(comment_text=new_comment_text, comment_teacher_id=teacher_id)
+        Comments.objects.create(comment_text=new_comment_text, \
+            comment_teacher_id=teacher_id)
         return redirect('teacher_detail', teacher_id=teacher.id) 
 
     return render(request, 'teacherprofile.html') 
@@ -198,7 +199,8 @@ def lesson_detail(request, lesson_id):
         reason = request.POST['reason']
         number = request.POST['number']
         mark = Mark.objects.create(number=number, reason=reason)
-        StudentActivity.objects.create(lesson_id=lesson.id, student=student, mark_id=mark.id)
+        StudentActivity.objects.create(lesson_id=lesson.id, student=student,\
+            mark_id=mark.id)
         return redirect('lesson_detail', lesson_id=lesson_id)
     ctx = {
         'lesson': lesson,
@@ -210,25 +212,56 @@ def lesson_detail(request, lesson_id):
     return render (request, 'lesson.html', ctx)
 
 
-def student_detail(request, student_id=1):
+def countavgmark(activities):
+    all_marks = []
+
+    for s in activities:
+        marks = s.mark.number
+        all_marks.append(marks)
+
+    start = 0
+
+    for m in all_marks:
+        start = start + m
+
+    if all_marks:
+        x = Decimal(float(start) / len(all_marks))
+        avg = round(x,2)
+    else:
+        avg = 0
+
+    return avg
+
+def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
     activities = StudentActivity.objects.filter(student_id=student_id)
     lessons = Lesson.objects.all()
-    # avg_mark = Mark.objects.filter(student_id=student_id).aggregate(Avg('number'))
+    all_discipline_marks = {} 
+
+    for l in lessons:
+        discipline_lessons = l.discipline
+        activities_for_marksd = \
+            StudentActivity.objects.filter(lesson__discipline=discipline_lessons,\
+                student_id=student_id)
+        all_discipline_marks[discipline_lessons.name] = \
+        countavgmark(activities_for_marksd)
 
     if request.method == "POST":
         number = request.POST['number']
         reason = request.POST['reason']
         lesson = request.POST['lesson']
         mark = Mark.objects.create(number=number, reason=reason)
-        StudentActivity.objects.create(student_id=student.id, lesson_id=lesson, mark_id=mark.id)
+        StudentActivity.objects.create(student_id=student.id, lesson_id=lesson,\
+            mark_id=mark.id)
+
         return redirect('student_detail', student_id=student_id)
 
     ctx = {
         'student': student,
         'activities': activities,
         'lesson': lessons,
-        # 'average_mark':avg_mark['number__avg'],
+        'avgmark': countavgmark(activities),
+        'all_discipline_marks': all_discipline_marks,
     }
 
     return render(request, 'studentprofile.html', ctx)
@@ -264,8 +297,11 @@ def student_detail_edit(request, student_id=1):
 
 def all_students(request):
     students = Student.objects.all()
+    students_count = len(students)
+    print(students)
     ctx = {
         'student': students,
+        'students_count': students_count,
     }
 
     return render (request, 'all_students.html', ctx)
@@ -273,18 +309,23 @@ def all_students(request):
 
 def all_teachers(request):
     teachers = Teacher.objects.all()
+    teachers_count = len(teachers)
 
     ctx = {
-        'teachers': teachers
+        'teachers': teachers,
+        'teachers_count': teachers_count,
+
     }
 
     return render (request, 'allteachers.html', ctx)
 
 def all_groups(request):
     groups = Group.objects.all()
+    groups_count = len(groups)
 
     ctx = {
-        'groups': groups
+        'groups': groups,
+        'groups_count': groups_count,
         }
 
     return render (request, 'all_groups.html', ctx)
@@ -367,6 +408,7 @@ def registration(request):
     }
 
     return render(request, 'registration/registration.html', ctx)
+
 
 
 def verification(request, user_id):

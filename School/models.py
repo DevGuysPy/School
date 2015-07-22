@@ -14,12 +14,10 @@ class Mark(models.Model):
     reason = models.CharField(max_length=150)
 
 
-
 class StudentActivity(models.Model):
     lesson = models.ForeignKey('Lesson', null=True)
     student = models.ForeignKey('Student')
     mark = models.OneToOneField('Mark')
-
 
 
 class Discipline(models.Model):
@@ -42,7 +40,7 @@ class Teacher(models.Model):
     group = models.OneToOneField('Group', null=True, blank=True)
     user = models.OneToOneField(User, null=True)
 
-    class Meta():
+    class Meta:
         db_table = 'teacher'
 
     def __str__(self):
@@ -56,7 +54,7 @@ class Group(models.Model):
     name = models.CharField(max_length=50)
     info = models.TextField()
     photo = models.ImageField(blank=True, null=True)
-    
+
     class Meta():
         db_table = 'group'
 
@@ -76,12 +74,11 @@ class Student(models.Model):
         ('f', "Female"),
     )
     sex = models.CharField(max_length=1, choices=SEX)
-    group = models.ForeignKey(Group, null=True)
+    group = models.ForeignKey(Group, related_name='members')
     photo = models.ImageField(blank=True, null=True)
     info = models.TextField(null=True, blank=True)
     user = models.OneToOneField(User, null=True)
     activities = models.ManyToManyField('Lesson', through='StudentActivity', related_name='activities')
-
 
     def __str__(self):
         return self.name
@@ -99,7 +96,7 @@ class Room(models.Model):
         return str(self.id)
 
     def __unicode__(self):
-        return self.name
+        return str(self.id)
 
 
 class Lesson(models.Model):
@@ -111,7 +108,7 @@ class Lesson(models.Model):
     info = models.TextField()
 
     def __str__(self):
-        return "{} в {}".format(self.discipline.name, self.start)
+        return u"{} в {}".format(self.discipline.name, self.start)
 
     def __unicode__(self):
         return u"{} в {}".format(self.discipline.name, self.start)
@@ -130,3 +127,5 @@ class Comments(models.Model):
 
     class Meta():
         db_table = 'comments'
+
+

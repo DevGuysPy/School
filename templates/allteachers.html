@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>all</title>
+    <title>Усі вчителі</title>
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
@@ -15,6 +15,7 @@
     {% endif %}
 
     <div class = 'container'>
+        <p>Всього Учителів: {{ teachers_count }}</p> 
         <a href="{% url 'index' %}"  >Home</a>
         <hr>
         <h1 class="text-center">Our teachers</h1>

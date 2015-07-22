@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New article</title>
+     <title>Головна</title>
+{#    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+    <script src="static/js/test.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <nav class="nav_bg">
+            <div class="nav-wrapper">
+              <a href="{% url 'index' %}" class="brand-logo nav_main_pad">Головна</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'all_student' %}">Учні</a></li>
+                <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
+                <li><a href="{% url 'all_groups' %}">Класи</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/logout/"><strong>Вийти</strong></a></li>
+                {% else %}
+                    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
+                    <li><a href="/login/"><strong>Логін</strong></a></li>
+                {% endif %}
+              </ul>
+            </div>
+        </nav>
+    </div>
+    {% if user.is_authenticated %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="text" class="form-control" placeholder="Заголовок" name="title">
+            <textarea class="form-control form-control1" rows="5" placeholder="Текст" name="text"></textarea>
+            <button class="btn btn-primary margin-for-btn" type="submit">Опублікувати</button>
+        </form>
+    {% else %}
+        <div class="alert alert-danger text-center" role="alert">
+            <p>Щоб додати нові пропозиції - будь ласка, увійдіть <a href="../login/">login</p></a>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

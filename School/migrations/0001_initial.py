@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Comments',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('comment_text', models.TextField()),
             ],
             options={
@@ -26,17 +26,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Discipline',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('name', models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
             name='Group',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('name', models.CharField(max_length=50)),
                 ('info', models.TextField()),
-                ('photo', models.ImageField(null=True, upload_to='', blank=True)),
+                ('photo', models.ImageField(null=True, blank=True, upload_to='')),
             ],
             options={
                 'db_table': 'group',
@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Lesson',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('start', models.DateTimeField()),
                 ('info', models.TextField()),
                 ('discipline', models.ForeignKey(to='School.Discipline')),
@@ -55,16 +55,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Mark',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('number', models.IntegerField(validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(12)], default=0)),
                 ('reason', models.CharField(max_length=150)),
-                ('lesson', models.ForeignKey(null=True, to='School.Lesson')),
             ],
         ),
         migrations.CreateModel(
             name='Room',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('seats', models.IntegerField()),
                 ('number', models.IntegerField()),
             ],
@@ -72,37 +71,55 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Student',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('name', models.CharField(max_length=50)),
                 ('surname', models.CharField(max_length=50)),
-                ('birthdate', models.DateField()),
+                ('birthdate', models.DateField(null=True)),
                 ('sex', models.CharField(choices=[('m', 'Male'), ('f', 'Female')], max_length=1)),
-                ('photo', models.ImageField(null=True, upload_to='', blank=True)),
-                ('info', models.TextField()),
-                ('group', models.ForeignKey(to='School.Group')),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('photo', models.ImageField(null=True, blank=True, upload_to='')),
+                ('info', models.TextField(null=True, blank=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='StudentActivity',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
+                ('lesson', models.ForeignKey(null=True, to='School.Lesson')),
+                ('mark', models.OneToOneField(to='School.Mark')),
+                ('student', models.ForeignKey(to='School.Student')),
             ],
         ),
         migrations.CreateModel(
             name='Teacher',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('name', models.CharField(max_length=50)),
                 ('surname', models.CharField(max_length=50)),
-                ('birthdate', models.DateField()),
-                ('info', models.TextField()),
-                ('photo', models.ImageField(null=True, upload_to='', blank=True)),
-                ('discipline', models.ForeignKey(to='School.Discipline')),
-                ('group', models.OneToOneField(null=True, blank=True, to='School.Group')),
+                ('birthdate', models.DateField(null=True)),
+                ('info', models.TextField(null=True)),
+                ('photo', models.ImageField(null=True, blank=True, upload_to='')),
+                ('discipline', models.ForeignKey(null=True, to='School.Discipline')),
+                ('group', models.OneToOneField(blank=True, to='School.Group', null=True)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'db_table': 'teacher',
             },
         ),
         migrations.AddField(
-            model_name='mark',
-            name='student',
-            field=models.ForeignKey(to='School.Student'),
+            model_name='student',
+            name='activities',
+            field=models.ManyToManyField(through='School.StudentActivity', to='School.Lesson', related_name='activities'),
+        ),
+        migrations.AddField(
+            model_name='student',
+            name='group',
+            field=models.ForeignKey(to='School.Group', related_name='members'),
+        ),
+        migrations.AddField(
+            model_name='student',
+            name='user',
+            field=models.OneToOneField(to=settings.AUTH_USER_MODEL, null=True),
         ),
         migrations.AddField(
             model_name='lesson',

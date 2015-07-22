@@ -1,3 +1,4 @@
+     213 lines (190 sloc)  3.295 kB
 .search {
     width: 300px;
     height: 40px;
@@ -180,3 +181,64 @@ label {
     background-position: center;
 
 }
+.nav_main_pad{
+    padding-left: 16px !important;
+}
+.margin_for_check{
+    margin-top: 8px;
+}
+.nav_bg{
+    background-color: #2aabd2;
+}
+.margin_output{
+    margin-top: 61px;
+    margin-left: 0px !important;
+}
+.marg_top_search{
+    margin-top: 15px !important;
+}
+.art_disp{
+    display: -webkit-inline-box;
+}
+.margin_login{
+
+}
+/*.margin_btn_reg{*/
+    /*margin-left: 51px;*/
+    /*margin-top: 20px;*/
+/*}*/
+.panel-title{
+    text-align: center;
+}
+.panel-title-1{
+    text-align: center;
+}
+.center-input{
+    text-align:center;
+    margin-top: 22px;
+}
+.navbar-fixed{
+    position: fixed;
+}
+.parallax-container {
+    height: 379px;
+}
+.parallax-container {
+	height: 375px;
+}
+.search-pos{
+	margin-top: -52px;
+	padding: 0;
+}
+[type="checkbox"] + label{
+	margin: 19px;
+}
+.search-pos > nav {
+	box-shadow: none !important;
+}
+.search-output{
+    padding: 0;
+}
+/*.search-output > div {*/
+    /*display: none;*/
+/*}*/

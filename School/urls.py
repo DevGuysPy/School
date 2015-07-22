@@ -50,5 +50,5 @@ urlpatterns = [
     url(r'^logout/$', 'django.contrib.auth.views.logout',
          {'next_page': '/'}, name='logout'),
     url(r'^', include('django.contrib.auth.urls')),
-
+    url(r'^articles/', include('articles.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
