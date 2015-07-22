@@ -14,22 +14,22 @@
         <form method="POST" action="">
         {% csrf_token %}
                 <div class="radio">
-                    <label>
-                        <input class="choice" name="account_type" type="radio"  value="student">
-                        Student
-                    </label>
+                    <p>
+                        <input class="with-gap choice" name="account_type" type="radio"  value="student" id="test1">
+                        <label for="test1">Student</label>
+                    </p>
                 </div>
                 <div class="radio">
-                    <label>
-                        <input class="choice" name="account_type" type="radio"  value="teacher">
-                        Teacher
-                    </label>
+                    <p>
+                        <input class="with-gap choice" name="account_type" type="radio"  value="teacher" id="test2">
+                        <label for="test2">Teacher</label>
+                    </p>
                 </div>
                 <div class="radio">
-                    <label>
-                        <input class="choice" name="account_type" type="radio"  value="other">
-                        Other
-                    </label>
+                    <p>
+                        <input class="with-gap choice" name="account_type" type="radio"  value="other" id="test3">
+                        <label for="test3">Other</label>
+                    </p>
                 </div>
                     <div class="form-group">
                         <input type="text" name='username'  placeholder="Username">
@@ -49,7 +49,7 @@
                         <div class="error name"></div>
                         <input type="text" name="surname" placeholder="Surname">
                         <div class="error surname"></div>
-                        <select name="group">
+                        <select name="group" class="browser-default">
                                 {%  for g in groups %}
                                     <option value="{{ g.id}}">
                                         {% if g.id == group.value.id %}
@@ -59,7 +59,7 @@
                                     </option>
                                 {% endfor %}
                         </select>
-                        <select name="sex">
+                        <select name="sex" class="browser-default">
                             <option value="m">
                                Male
                             </option>
@@ -80,12 +80,12 @@
         </form>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="{% static 'registration.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
-
+    <script src="{% static 'registration.js' %}"></script>
 
 </body>
 </html>
