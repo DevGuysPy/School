@@ -1,22 +1,23 @@
 from django.forms.models import ModelForm
-
 from .models import Teacher, Lesson, Student, Mark, Group
-
-class TeacherForm(ModelForm):
-    class Meta:
-        model = Teacher
-        fields = ('birthdate', 'info', 'discipline', 'photo')
-
+from django.contrib.auth.models import User
 
 class LessonForm(ModelForm):
     class Meta:
         model = Lesson
         fields = ('start', 'group', 'room', 'info')
 
+
 class StudentForm(ModelForm):
     class Meta:
         model = Student
-        fields = ('birthdate', 'info', 'group', 'photo')
+        fields = ('name', 'surname', 'group', 'sex')
+
+
+class TeacherForm(ModelForm):
+    class Meta:
+        model = Teacher
+        fields = ('name', 'surname')
 
 class MarkForm(ModelForm):
     class Meta:
@@ -28,3 +29,14 @@ class GroupForm(ModelForm):
         model = Group
         fields = ('info', 'photo')
 
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+
+class UserForm2(ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password', 'first_name', 'last_name')

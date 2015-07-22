@@ -1,16 +1,22 @@
 import datetime
 from datetime import timedelta
-
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
-from decimal import Decimal
+
+from django.db.models import Avg
+from django.http import JsonResponse
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark, StudentActivity)
+from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm, UserForm, UserForm2
+
+from decimal import Decimal
+
 from articles.models import Article
-from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm
 
 from django.contrib.auth.models import User
-
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 def room_detail(request, room_id):
     days_w_lessons = []
@@ -324,27 +330,90 @@ def all_groups(request):
 
     return render (request, 'all_groups.html', ctx)
 
+
 def registration(request):
     groups = Group.objects.all()
     if request.method == 'POST':
         username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        name = request.POST['name']
-        surname = request.POST['surname']
-        birthdate = request.POST['birthdate']
-        sex = request.POST['sex']
-        #group = request.POST['group']
-        group = request.POST.get('group', False)
-        user = User.objects.create_user(
-            username=username, email=email, password=password)
-        Student.objects.create(
-            name=name, surname=surname, birthdate=birthdate,
-            sex=sex, group_id=group, user_id=user.id)
-        return redirect('/login/')
+        account_type = request.POST['account_type']
+        form_user = UserForm(request.POST or None)
+        form_user2 = UserForm2(request.POST or None)
+        if account_type == 'student':
+            form_student = StudentForm(request.POST or None)
+            if form_user.is_valid():
+                user_save = form_user.save()
+                user_save.set_password(user_save.password)
+                user_save.save()
+            ctx_user = {
+                'message': form_user.errors,
+            }
+            if form_user.is_valid():
+                user = User.objects.get(username=username)
+                if form_student.is_valid():
+                    new_student = form_student.save(commit=False)
+                    new_student.user = user
+                    form_student.save()
+                    return JsonResponse({
+                        'status': 'ok',
+                    })
+            else:
+                ctx_student = {
+                    'status': 'error',
+                    'message1': form_student.errors,
+                }
+                ctx_student.update(ctx_user)
+                return JsonResponse(ctx_student)
+
+        if account_type == 'teacher':
+            if form_user2.is_valid():
+                user_save = form_user2.save()
+                user_save.set_password(user_save.password)
+                user_save.save()
+                user = User.objects.get(username=username)
+                host = request.get_host()
+                name = request.POST['first_name']
+                surname = request.POST['last_name']
+                ctx_email = {
+                    'name': name,
+                    'surname': surname,
+                    'user': user,
+                    'host': host,
+                }
+                email_message = render_to_string('email.html', ctx_email)
+                send_mail('TeacherRegistration', 'my', settings.EMAIL_BACKEND,
+                ['jyvylo@mail.ru'], fail_silently=False, html_message=email_message)
+                return JsonResponse({
+                    'status': 'ok',
+                })
+            else:
+                return JsonResponse ({
+                    'status': 'error',
+                    'message': form_user2.errors,
+            })
+        if account_type == 'other':
+            if form_user.is_valid():
+                user = form_user.save()
+                user.set_password(user.password)
+                user.save()
+                return JsonResponse({
+                    'status': 'ok',
+                })
+            else:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': form_user.errors,
+                })
     ctx = {
         'groups': groups,
     }
+
     return render(request, 'registration/registration.html', ctx)
 
 
+
+def verification(request, user_id):
+    user = User.objects.get(id=user_id)
+    if request.method == 'POST':
+        Teacher.objects.create(name=user.first_name, surname=user.last_name, user_id=user.id)
+
+    return render(request, 'registration/verification.html')

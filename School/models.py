@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Mark(models.Model):
     number = models.IntegerField(
         default=0, validators=[MinValueValidator(0),
@@ -32,11 +33,12 @@ class Teacher(models.Model):
     # room = models.ForeignKey(Room)
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    birthdate = models.DateField()
-    info = models.TextField()
-    discipline = models.ForeignKey(Discipline)
+    birthdate = models.DateField(null=True)
+    info = models.TextField(null=True)
+    discipline = models.ForeignKey(Discipline, null=True)
     photo = models.ImageField(blank=True, null=True)
     group = models.OneToOneField('Group', null=True, blank=True)
+    user = models.OneToOneField(User, null=True)
 
     class Meta:
         db_table = 'teacher'
@@ -66,7 +68,7 @@ class Group(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    birthdate = models.DateField()
+    birthdate = models.DateField(null=True)
     SEX = (
         ('m', "Male"),
         ('f', "Female"),
