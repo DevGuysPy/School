@@ -1,6 +1,7 @@
 from django.forms.models import ModelForm
 from .models import Teacher, Lesson, Student, Mark, Group
 from django.contrib.auth.models import User
+from django.forms import forms, fields
 
 class LessonForm(ModelForm):
     class Meta:
@@ -40,3 +41,6 @@ class UserForm2(ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'first_name', 'last_name')
+
+class FilterStudentsByMarks(forms.Form):
+    avg_mark = fields.FloatField(min_value=1, max_value=12)

@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,10 +18,29 @@
     {% endif %}
 
     <div class = 'container'>
-    Всього студентів - {{ students_count }}
-        <a href="{% url 'index' %}"  >Home</a>
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <p>Студенти з загальною середньою оцінкою вище</p><input type="number" name="avg_mark">
+            <div class="error avg_mark"></div>
+        </div>
+        <input type="submit" value="Search" class="form-submit">
+    </form>
+        {% for key, value in students_with_query.items %}
+        <div class="media">
+            <div class="media-body">
+                <h4 class="media-heading">
+                <a href='/student/{{ average_mark }}/'>{{ key }}</a>
+                <br></h4> 
+                Середня оцінка: {{ value }}
+            </div>
+        </div>
+        <hr> 
+        {% endfor %}
+    
+        <a href="{% url 'index' %}" >Home</a>
         <hr>
-        <h1 class="text-center">Our  students</h1>
+        <h1 class="text-center">Our students  - {{ students_count }}</h1>
         <hr>
         {% for s in student %}
         <div class="media">
@@ -33,7 +54,7 @@
                     </a>
               </div>
             <div class="media-body">
-                <h4 class="media-heading"><a href='/student/{{s.id}}/'>{{ s.surname}} {{s.name}}</a><br></h4>
+                <h4 class="media-heading"><a href='/student/{{s.id}}/'>{{ s.surname }} {{ s.name }}</a><br></h4>
                 <h5 class = 'display'>Group:   </h5>{{ s.group }}
             </div>
         </div>
@@ -41,5 +62,9 @@
         {% endfor %}
     </div>
 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="{% static 'allstudents.js' %}"></script>
 </body>
 </html>

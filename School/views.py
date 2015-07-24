@@ -3,12 +3,13 @@ from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 
 from django.db.models import Avg
 from django.http import JsonResponse
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark, StudentActivity)
-from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm, UserForm, UserForm2
+from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm, UserForm, UserForm2, FilterStudentsByMarks
 
 from decimal import Decimal
 
@@ -237,7 +238,7 @@ def student_detail(request, student_id):
     activities = StudentActivity.objects.filter(student_id=student_id)
     lessons = Lesson.objects.all()
     all_discipline_marks = {} 
-
+    general_average_mark = countavgmark(activities)
     for l in lessons:
         discipline_lessons = l.discipline
         activities_for_marksd = \
@@ -260,7 +261,7 @@ def student_detail(request, student_id):
         'student': student,
         'activities': activities,
         'lesson': lessons,
-        'avgmark': countavgmark(activities),
+        'avgmark': general_average_mark,
         'all_discipline_marks': all_discipline_marks,
     }
 
@@ -298,8 +299,33 @@ def student_detail_edit(request, student_id=1):
 def all_students(request):
     students = Student.objects.all()
     students_count = len(students)
-    print(students)
+    form = FilterStudentsByMarks(request.POST or None)
+    students_with_query = {}
+    students_ids = {}
+
+    if request.method == 'POST':
+        query = float(request.POST['avg_mark'])
+        if form.is_valid():
+            
+            all_students = Student.objects.all()
+            for s in all_students:
+                student_name = s.name + ' ' + s.surname
+                student_id = s.id
+                average_mark = Decimal(float(StudentActivity.objects.filter(student_id=student_id).aggregate(Avg('mark__number')).values()[0]))
+                avg = round(average_mark,2)
+                if query <= avg:
+                    students_with_query[student_name] = avg 
+            return JsonResponse({
+            'status': 'ok'
+            })
+        return JsonResponse({
+            'status': 'error',
+            'main': form.errors
+            })
+
+
     ctx = {
+        'students_with_query' : students_with_query,
         'student': students,
         'students_count': students_count,
     }
