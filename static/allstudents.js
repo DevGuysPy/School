@@ -10,7 +10,7 @@ $(document).ready(function()
             if (response.status == 'ok') {
                 alert('Success');
             } else {
-                for(var key in response.main)
+                for(var key in response.main) {
                     var errorDiv = $(".error." + key);
                     errorDiv.html(response.main[key][0])
                     }
