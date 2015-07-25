@@ -295,40 +295,24 @@ def student_detail_edit(request, student_id=1):
     return render(request, 'student/edit.html', ctx)
 
 
-def all_students(request):
+def all_school(request):
     students = Student.objects.all()
-    students_count = len(students)
-    print(students)
-    ctx = {
-        'student': students,
-        'students_count': students_count,
-    }
-
-    return render (request, 'all_students.html', ctx)
-
-
-def all_teachers(request):
     teachers = Teacher.objects.all()
-    teachers_count = len(teachers)
-
-    ctx = {
-        'teachers': teachers,
-        'teachers_count': teachers_count,
-
-    }
-
-    return render (request, 'allteachers.html', ctx)
-
-def all_groups(request):
     groups = Group.objects.all()
+    teachers_count = len(teachers)
+    students_count = len(students)
     groups_count = len(groups)
 
     ctx = {
+        'student': students,
+        'students_count': students_count,
+        'teachers': teachers,
+        'teachers_count': teachers_count,
         'groups': groups,
         'groups_count': groups_count,
-        }
+    }
 
-    return render (request, 'all_groups.html', ctx)
+    return render (request, 'all_school.html', ctx)
 
 
 def registration(request):
