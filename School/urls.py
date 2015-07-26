@@ -50,3 +50,8 @@ urlpatterns = [
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^articles/', include('articles.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.SERVE_STATIC:
+    urlpatterns += ('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    )
