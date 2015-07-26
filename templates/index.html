@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Головна</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.3.0/animate.min.css"/>
+    <meta charset="utf-8">
+    <title>Головна</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
 <!-- NAV_START -->
 <nav>
     <div class="nav-wrapper container">
-        <a href="{% url 'index' %}" class="brand-logo">School</a>
+        <a href="{% url 'index' %}" class="brand-logo">Logo</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="{% url 'all_student' %}">Учні</a></li>
-            <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
-            <li><a href="{% url 'all_groups' %}">Класи</a></li>
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
             {% if user.is_authenticated %}
                 <li><a href="/logout/">Вийти</a></li>
             {% else %}
@@ -28,9 +25,7 @@
             {% endif %}
         </ul>
         <ul class="side-nav" id="mobile-demo">
-            <li><a href="{% url 'all_student' %}">Учні</a></li>
-            <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
-            <li><a href="{% url 'all_groups' %}">Класи</a></li>
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
             {% if user.is_authenticated %}
                 <li><a href="/logout/">Вийти</a></li>
             {% else %}
@@ -46,7 +41,7 @@
 <div class="parallax-container">
     <div class="container">
         <!-- <h1 class="right-align">Lorem</h1>
-		<h3 class="right-align">Lorem</h3> -->
+        <h3 class="right-align">Lorem</h3> -->
     </div>
     <div class="parallax">
         <img src="http://placehold.it/2050x500">
@@ -54,6 +49,26 @@
 </div>
 <!-- PARALLAX_END -->
 
+<div class="container">
+    <div class="row">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="col offset-l1 l10 s12 white">
+                <div class="card-panel search-pos">
+                    <nav>
+                        <div class="nav-wrapper">
+                            <form>
+                                <div class="input-field">
+                                    <input id="search" type="search" required name="query">
+                                    <label for="search"><i class="material-icons">search</i></label>
+                                    <button type="submit" class="search-btn waves-effect waves-red">search</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </nav>
+                    <div class="center">
+                        <input id="rooms" type="checkbox" name="rooms" checked>
 <!-- SEARCH_START -->
 <div class="section">
     <div class="row"  style="max-width: 1062px">
@@ -89,6 +104,29 @@
             </div>
         </form>
         <div class="col offset-l1 l10 s12 white">
+            <div class="card-panel search-output" style="display: none" id="content_div">
+                <div class="collection">
+                    {% for room in rooms %}
+                        <a id="to_check" href="rooms/{{ room.id }}/" class="collection-item">
+                            Кабінет №{{ room.number }}
+                        </a>
+                    {% endfor %}
+                    {% for teacher in teachers %}
+                        <a id="to_check" href='teacher/{{teacher.id}}/' class="collection-item">
+                            {{ teacher.surname}} {{ teacher.name}}
+                        </a>
+                    {% endfor %}
+                    {% for group in groups %}
+                        <a id="to_check" href='group/{{group.id}}/' class="collection-item">
+                            {{ group.name }}
+                        </a>
+                    {%endfor%}
+                    {% for student in students %}
+                        <a id="to_check" href="student/{{student.id}}/" class="collection-item">
+                            {#                        http://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil#}
+                            <span class="title">{{ student.surname }} {{ student.name }} </span>
+                        </a>
+                    {%endfor%}
             <div class="card-panel search-output collection" style="display: none" id="content_div">
 
                     {% for room in rooms %}
@@ -135,7 +173,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <div class="container" style="margin-top: -25px;">
     <div class="row">
@@ -174,12 +211,10 @@
 <script>
     $(document).ready(function(){
         if ($("#to_check").html().length > 0) {
-            $('#content_div').show('Clip');
-{#            $('#content_div').addClass('animated zoomInDown');#}
+            $('#content_div').show();
         }
     });
 </script>
-
 <script>
     $(".button-collapse").sideNav();
 </script>
