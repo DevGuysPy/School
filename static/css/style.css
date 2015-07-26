@@ -1,178 +1,8 @@
-     213 lines (190 sloc)  3.295 kB
-.search {
-    width: 300px;
-    height: 40px;
-    padding-top: 6px;
-    padding-left: 35px;
-    padding-right: 12px;
-    padding-bottom: 6px;
-    outline: none;
-}
-.position-for-icon{
-    position: relative;
-    left:-293px;
-    top: 7px;
-    font-size: 21px;
-}
-.search_button {
-    position: relative;
-    left:-29px;
-    top: -1px;
-    height: 40px;
-    border-radius: 0;
-    font-size: 21px;
-
-}
-.checkbox {
-    width: 21px;
-    height: 21px;
-    display: inline;
-}
-
-.font-checkbox {
-    font-size: 21px;
-}
-.margin {
-    margin-left: 15px;
-}
-.display {
-    display: inline;
-}
-
-.navbar {
-    background-color: #333333;
-    height: 54px;
-    border-radius: 10px;
-
-}
-
-.margin-button {
-    position:
-}
-
-
-
-.navbar-buttons {
-    height: 53px;
-    width: 132px;
-    background-color: #333333;
-    padding: 0;
-    border: 0;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-family: Campton Demo;
-    font-size: 12pt;
-    outline: none;
-
-
-
-}
-.navbar-buttons:hover {
-    background-color: #ff5454;
-}
-
-.margin-1button {
-    position:relative;
-    left: 60px;
-}
-
-.padding-navbar {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
-.search-input {
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    background-image: url(Search.png);
-    background-repeat: no-repeat;
-    background-position: 155px;
-    height: 25px;
-    padding-left: 10px;
-    padding-right: 25px;
-    padding-top: 5px;
-    width: 180px;
-    font-family: Campton Demo;
-    font-size: 12pt;
-    margin-top: 14px;
-}
-
-.decoration:hover{
-    text-decoration: none;
-}
-.decoration:visited{
-    text-decoration: none;
-}
-.decoration:active{
-    text-decoration: none;
-}
-.decoration:focus{
-    text-decoration: none;
-}
-.margin-for-likes {
-    float: right;
-}
-.form-control1{
-    max-width: 1140px;
-    max-height: 600px;
-    margin-top: 5px;
-}
-.margin-for-btn {
-    margin-top: 8px;
-}
-.margin1 {
-    color: black;
-}
-
 .registration-form {
     margin: 20px auto;
     max-width: 350px;
     max-height: 500px;
 }
-.margin {
-    margin-top: 15px;
-}
-.Anya {
-    background-color: #2980b9;
-
-}
-
-#id_username,
-#id_password {
-    display: block;
-    width: 100%;
-    height: 34px;
-    font-size: 14px;
-    padding: 6px 6px;
-    line-height: 1.42857;
-    color: #555;
-    background-color: #FFF;
-    background-image: none;
-    border: 1px solid #CCC;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.login-form {
-    margin: 20px auto;
-    max-width: 350px;
-    padding: 10px;
-    background-color:#ecf0f1;
-}
-
-.radius {
-  border: 1px solid #000000;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-}
-label {
-    font-weight: normal;
-}
-
-
 .xs-ava {
     background-size: cover;
     background-repeat: no-repeat;
@@ -187,9 +17,6 @@ label {
 .margin_for_check{
     margin-top: 8px;
 }
-.nav_bg{
-    background-color: #2aabd2;
-}
 .margin_output{
     margin-top: 61px;
     margin-left: 0px !important;
@@ -198,7 +25,7 @@ label {
     margin-top: 15px !important;
 }
 .art_disp{
-    display: -webkit-inline-box;
+    display: inline-block;
 }
 .margin_login{
 
@@ -242,3 +69,14 @@ label {
 /*.search-output > div {*/
     /*display: none;*/
 /*}*/
+.radio{
+    max-width: 100px;
+    display: inline-block;
+    margin-left: 10px;
+}
+.card-image > img {
+    object-fit: none; /* Do not scale the image */
+    object-position: center; /* Center the image within the element */
+    height: 450px;
+    max-width: 100%;
+}

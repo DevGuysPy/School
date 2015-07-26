@@ -4,39 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Реєстрація</title>
+    <link rel="stylesheet" href="/static/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <form method="POST" action="">
-        {% csrf_token %}
-                <div class="radio">
-                    <p>
-                        <input class="with-gap choice" name="account_type" type="radio"  value="student" id="test1">
-                        <label for="test1">Student</label>
-                    </p>
+<div class="section">
+    <div class="row">
+        <div class="col offset-l4 l4 s12 offset-m3 m6">
+            <div class="card-panel">
+                <div class="panel-title">
+                    <h3>Реєстрація</h3>
                 </div>
-                <div class="radio">
-                    <p>
-                        <input class="with-gap choice" name="account_type" type="radio"  value="teacher" id="test2">
-                        <label for="test2">Teacher</label>
-                    </p>
-                </div>
-                <div class="radio">
-                    <p>
-                        <input class="with-gap choice" name="account_type" type="radio"  value="other" id="test3">
-                        <label for="test3">Other</label>
-                    </p>
-                </div>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="center">
+                        <div class="radio">
+                            <p>
+                                <input class="with-gap choice" name="account_type" type="radio"  value="other" id="test3" checked>
+                                <label for="test3">Гість</label>
+                            </p>
+                        </div>
+                        <div class="radio">
+                            <p>
+                                <input class="with-gap choice" name="account_type" type="radio"  value="student" id="test1">
+                                <label for="test1">Учень</label>
+                            </p>
+                        </div>
+                        <div class="radio">
+                            <p>
+                                <input class="with-gap choice" name="account_type" type="radio"  value="teacher" id="test2">
+                                <label for="test2">Вчитель</label>
+                            </p>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <input type="text" name='username'  placeholder="Username">
                         <div class="error username"></div>
                     </div>
                     <div class="form-group">
-                        <input type="email" name='email'  placeholder="Email" >
+                        <input type="email" name='email'  placeholder="Email" id="email">
                         <div class="error email"></div>
                     </div>
                     <div class="form-group" >
@@ -49,23 +58,25 @@
                         <div class="error name"></div>
                         <input type="text" name="surname" placeholder="Surname">
                         <div class="error surname"></div>
+                        <div class="center">
+                            <p style="display: inline-block">
+                                <input name="sex" class="with-gap" type="radio"  value="m" checked id="m">
+                                <label for="m">Male</label>
+                            </p>
+                            <p style="display: inline-block">
+                                <input name="sex" class="with-gap" type="radio"  value="f" checked id="f">
+                                <label for="f">Female</label>
+                            </p>
+                        </div>
                         <select name="group" class="browser-default">
-                                {%  for g in groups %}
-                                    <option value="{{ g.id}}">
-                                        {% if g.id == group.value.id %}
-                                            selected="selected"
-                                        {% endif %}
-                                        {{g.name|capfirst}}
-                                    </option>
-                                {% endfor %}
-                        </select>
-                        <select name="sex" class="browser-default">
-                            <option value="m">
-                               Male
-                            </option>
-                            <option value="f">
-                                Female
-                            </option>
+                            {%  for g in groups %}
+                                <option value="{{ g.id}}">
+                                    {% if g.id == group.value.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                    {{g.name|capfirst}}
+                                </option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="user-form teacher-form" style="display: none;">
@@ -75,17 +86,21 @@
                         <div class="error last_name"></div>
                     </div>
                     <div class="user-form other-form" style="display: none;"></div>
-                    <button class="form-submit">Submit</button>
-
-        </form>
+                    <div class="center">
+                        <button class="form-submit btn waves-effect waves-light" style="margin-top: 10px">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
-    <script src="{% static 'registration.js' %}"></script>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
+<script src="{% static 'registration.js' %}"></script>
 
 </body>
 </html>

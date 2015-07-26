@@ -1,16 +1,16 @@
 $(document).ready(function() {
 
     $(".choice").change(function () {
-        $('.user-form').hide();
+        $('.user-form').hide('clip');
         switch ($(this).val()) {
             case "student":
-                $('.student-form').show();
+                $('.student-form').show('clip');
                 break;
             case 'teacher':
-                $('.teacher-form').show();
+                $('.teacher-form').show('clip');
                 break;
             case 'other':
-                $('.other-form').show();
+                $('.other-form').show('clip');
                 break;
         }
     });
@@ -27,7 +27,6 @@ $(document).ready(function() {
             if (response.status == 'ok') {
                 document.location.href = "/login/";
             } else {
-                debugger;
                 for (var key in response.message) {
                     var errorDiv = $(".error." + key);
                     errorDiv.html(response.message[key][0]);
@@ -47,6 +46,10 @@ $(document).ready(function() {
 
     $("form").validate({
            rules: {
+               field: {
+                   required: true,
+                   email: true
+               },
                password: {
                    required: true,
                    minlength: 4,

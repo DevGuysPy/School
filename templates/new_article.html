@@ -1,50 +1,95 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>New article</title>
-     <title>Головна</title>
-{#    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">#}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-    <script src="static/js/test.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="/static/css/style.css">
+	<meta charset="utf-8">
+	<title>Головна</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
+
+<!-- NAV_START -->
+<nav>
+    <div class="nav-wrapper container">
+        <a href="{% url 'index' %}" class="brand-logo">School</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'all_student' %}">Учні</a></li>
+            <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
+            <li><a href="{% url 'all_groups' %}">Класи</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/logout/">Вийти</a></li>
+            {% else %}
+                <li><a href="/registration/">Реєстрація</a></li>
+                <li><a href="/login/">Логін</a></li>
+            {% endif %}
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="{% url 'all_student' %}">Учні</a></li>
+            <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
+            <li><a href="{% url 'all_groups' %}">Класи</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/logout/">Вийти</a></li>
+            {% else %}
+                <li><a href="/registration/">Реєстрація</a></li>
+                <li><a href="/login/">Логін</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<!-- NAV_END -->
+
+<!-- PARALLAX_START -->
+<div class="parallax-container">
+    <div class="container">
+        <!-- <h1 class="right-align">Lorem</h1>
+		<h3 class="right-align">Lorem</h3> -->
+    </div>
+    <div class="parallax">
+        <img src="http://placehold.it/2050x500">
+    </div>
+</div>
+<!-- PARALLAX_END -->
+
 <div class="container">
     <div class="row">
-        <nav class="nav_bg">
-            <div class="nav-wrapper">
-              <a href="{% url 'index' %}" class="brand-logo nav_main_pad">Головна</a>
-              <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{% url 'all_student' %}">Учні</a></li>
-                <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
-                <li><a href="{% url 'all_groups' %}">Класи</a></li>
+        <div class="col s12 ">
+            <div class="card-panel" style="margin-top: -55px;">
                 {% if user.is_authenticated %}
-                    <li><a href="/logout/"><strong>Вийти</strong></a></li>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <input type="text" class="form-control" placeholder="Заголовок" name="title">
+                        <textarea class="form-control form-control1" rows="5" placeholder="Текст" name="text"></textarea>
+                        <button class="btn btn-primary margin-for-btn" type="submit">Опублікувати</button>
+                    </form>
                 {% else %}
-                    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-                    <li><a href="/login/"><strong>Логін</strong></a></li>
+                    <div class="alert alert-danger text-center" role="alert">
+                        <p>Щоб додати статтю - будь ласка, увійдіть <a href="{% url 'login' %}">login</p></a>
+                    </div>
                 {% endif %}
-              </ul>
             </div>
-        </nav>
-    </div>
-    {% if user.is_authenticated %}
-        <form method="POST" action="">
-            {% csrf_token %}
-            <input type="text" class="form-control" placeholder="Заголовок" name="title">
-            <textarea class="form-control form-control1" rows="5" placeholder="Текст" name="text"></textarea>
-            <button class="btn btn-primary margin-for-btn" type="submit">Опублікувати</button>
-        </form>
-    {% else %}
-        <div class="alert alert-danger text-center" role="alert">
-            <p>Щоб додати нові пропозиції - будь ласка, увійдіть <a href="../login/">login</p></a>
         </div>
-    {% endif %}
+    </div>
 </div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.parallax').parallax();
+    });
+</script>
+<script>
+    $(".button-collapse").sideNav();
+</script>
 </body>
 </html>
+
+
+
+
+
+

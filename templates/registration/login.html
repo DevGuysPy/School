@@ -2,27 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <title>Логін</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="card-panel margin_login">
-            <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
-                {% csrf_token %}
-                    <h4 class="panel-title-1">Логін</h4>
+<div class="section">
+    <div class="row">
+        <div class="col offset-l4 l4 s12 offset-m3 m6">
+            <div class="card-panel">
+                <div class="panel-title">
+                    <h3>Логін</h3>
+                </div>
+                <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                    {% csrf_token %}
                     {{ form.username.label_tag }}
                     {{ form.username }}
                     {{ form.password.label_tag }}
                     {{ form.password }}
-                <div class="text-center">
-                    <input type="submit" class="btn btn-default" value="Sign In" />
-                </div>
-            </form>
+                    <div class="center">
+                        <button value="Sign In" class="form-submit btn waves-effect waves-light" style="margin-top: 10px">Login</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 </body>
 </html>
