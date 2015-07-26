@@ -2,5 +2,7 @@ Django==1.8.2
 Pillow==2.9.0
 dj-database-url==0.3.0
 django-toolbelt==0.0.1
+django-storages==1.1.8
 psycopg2==2.6.1
+s3==3.0.0
 pytz==2015.4
