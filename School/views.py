@@ -300,32 +300,33 @@ def all_students(request):
     students = Student.objects.all()
     students_count = len(students)
     form = FilterStudentsByMarks(request.POST or None)
-    students_with_query = {}
-    students_ids = {}
+    students_with_marks = {}
 
     if request.method == 'POST':
         query = float(request.POST['avg_mark'])
         if form.is_valid():
-            
             all_students = Student.objects.all()
             for s in all_students:
                 student_name = s.name + ' ' + s.surname
                 student_id = s.id
-                average_mark = Decimal(float(StudentActivity.objects.filter(student_id=student_id).aggregate(Avg('mark__number')).values()[0]))
+                average_mark = Decimal(float(StudentActivity.objects.filter \
+                    (student_id=student_id).aggregate(Avg('mark__number'))\
+                        .values()[0]))
                 avg = round(average_mark,2)
                 if query <= avg:
-                    students_with_query[student_name] = avg 
+                   students_with_marks[student_name] = {'mark': avg, 'id': student_id}
             return JsonResponse({
-            'status': 'ok'
+                'students_with_marks' : students_with_marks,
+                'status': 'ok'
             })
-        return JsonResponse({
-            'status': 'error',
-            'main': form.errors
+        else:
+            return JsonResponse({
+                'status': 'error',
+                'main': form.errors
             })
 
 
     ctx = {
-        'students_with_query' : students_with_query,
         'student': students,
         'students_count': students_count,
     }

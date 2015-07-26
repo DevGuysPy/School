@@ -1,23 +1,30 @@
-$(document).ready(function()
+$(document).ready(function(){ 
     $('.form-submit').click(function(event){
         event.preventDefault();
         $('.error').html('');
+        $(".searchedstudents").html('');
         $.ajax({
             method: "POST",
             url: '/students/',
             data: $('form').serializeArray()
         }).done(function(response){
             if (response.status == 'ok') {
-                alert('Success');
+                $('.media').hide();
+                for (var student in response.students_with_marks) {
+                    $('#' + response.students_with_marks[student]['id']).show();
+                    $('#' + response.students_with_marks[student]['id'] + ' .mark-field').html('Mark: ' + response.students_with_marks[student]['mark'])
+                }
             } else {
                 for(var key in response.main) {
                     var errorDiv = $(".error." + key);
                     errorDiv.html(response.main[key][0])
                     }
                 }
-            }
         }).fail(function(response){
-            alert('Fail :(');
+            alert('Будьте ласкаві, введіть оцінку!');
         });
+    });
+    $('#show-all-students').click(function() {
+        $('.media').show();
     });
 });
