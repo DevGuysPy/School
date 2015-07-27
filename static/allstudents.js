@@ -11,10 +11,11 @@ $(document).ready(function(){
             if (response.status == 'ok') {
                 $('.media').hide();
                 for (var student in response.students_with_marks) {
-                    var resultDiv = $('#' + response.students_with_marks[student]['id']);
+                    var requestResponse = response.students_with_marks[student];
+                    var resultDiv = $('#' + requestResponse['id']);
                     resultDiv.show();
-                    var markDiv = $('#' + response.students_with_marks[student]['id'] + ' .mark-field');
-                    markDiv.html('Average mark: ' + response.students_with_marks[student]['mark']).show();
+                    var markDiv = resultDiv.find('.mark-field');
+                    markDiv.html('Average mark: ' + requestResponse['mark']).show();
                 }
             } else {
                 for(var key in response.main) {
