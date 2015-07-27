@@ -18,24 +18,25 @@
         <ul class="right hide-on-med-and-down">
             <li><a href="{% url 'all_school' %}">Учні</a></li>
             {% if user.is_authenticated %}
-                <li><a href="/logout/">Вийти</a></li>
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}
-                <li><a href="/registration/">Реєстрація</a></li>
-                <li><a href="/login/">Логін</a></li>
+                <li><a href="{% url 'registration' %}">Реєстрація</a></li>
+                <li><a href="{% url 'login' %}">Логін</a></li>
             {% endif %}
         </ul>
         <ul class="side-nav" id="mobile-demo">
             <li><a href="{% url 'all_school' %}">Учні</a></li>
             {% if user.is_authenticated %}
-                <li><a href="/logout/">Вийти</a></li>
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}
-                <li><a href="/registration/">Реєстрація</a></li>
-                <li><a href="/login/">Логін</a></li>
+                <li><a href="{% url 'registration' %}">Реєстрація</a></li>
+                <li><a href="{% url 'login' %}">Логін</a></li>
             {% endif %}
         </ul>
     </div>
 </nav>
 <!-- NAV_END -->
+
 <div class="container" style="margin-top: 15px">
     <div class="row">
         <div class="col s12">

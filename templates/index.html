@@ -121,17 +121,21 @@
 <div class="container">
     <div class="row">
         <div class="col offset-l4 l4">
-            <div class="card-panel">
-                <div class="panel-title" style="margin: -20px;">
-                    <h3 style="display: inline-block">Новини</h3>
-                    {% if request.user.is_superuser %}
+            {% if request.user.is_superuser %}
+                <div class="card-panel">
+                    <div class="panel-title" style="margin: -20px;">
+                        <h3 style="display: inline-block">Новини</h3>
                         <a href="{% url 'new_article' %}" class="btn-floating btn-large waves-effect waves-light red"
                            style="margin: -20px;position: relative;top: -11px;left: 24px;">
                             <i class="material-icons">add</i>
                         </a>
-                    {% endif %}
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="panel-title" style="margin: 20px;">
+                    <h3 style="display: inline-block">Новини</h3>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -157,7 +161,9 @@
                     </div>
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4">
-                            <h4 style="display: inline-block">{{ article.title }}</h4>
+                            <h4 style="display: inline-block">
+                                {{ article.title }}
+                            </h4>
                             <p style="display: inline-block"> {{ article.date }}</p>
                             <i class="material-icons right">close</i>
                         </span>
