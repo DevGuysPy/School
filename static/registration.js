@@ -1,16 +1,16 @@
 $(document).ready(function() {
 
     $(".choice").change(function () {
-        $('.user-form').hide();
+        $('.user-form').hide('clip');
         switch ($(this).val()) {
             case "student":
-                $('.student-form').show();
+                $('.student-form').show('clip');
                 break;
             case 'teacher':
-                $('.teacher-form').show();
+                $('.teacher-form').show('clip');
                 break;
             case 'other':
-                $('.other-form').show();
+                $('.other-form').show('clip');
                 break;
         }
     });

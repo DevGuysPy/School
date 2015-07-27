@@ -12,7 +12,7 @@ from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm, Us
 
 from decimal import Decimal
 
-from articles.models import Article
+from articles.models import Article, Banner
 
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -96,6 +96,7 @@ def index(request):
             groups = search_groups(query)
 
     ctx = {
+        'banners': Banner.objects.all(),
         'articles': reversed(Article.objects.all()),
         'rooms': rooms,
         'teachers': teachers,
