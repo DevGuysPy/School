@@ -14,3 +14,10 @@ class Article(models.Model):
 
     class Meta:
         db_table = 'articles'
+
+
+class Banner(models.Model):
+    photo = models.ImageField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'banner'

@@ -44,7 +44,14 @@
         <h3 class="right-align">Lorem</h3> -->
     </div>
     <div class="parallax">
-        <img class="responsive-img" src="https://camfrogblogdotcom.files.wordpress.com/2014/06/beta.jpg">
+        {% for b in banners%}
+    {#         Height   375px            #}
+{#            {% if b.photo %}#}
+            <img class="responsive-img" src="/media/{{ b.photo }}">
+{#            {% else %}#}
+{#                <img src="">#}
+{#            {% endif %}#}
+        {% endfor %}
     </div>
 </div>
 <!-- PARALLAX_END -->
@@ -114,9 +121,9 @@
 <!-- SEARCH_END-->
 
 <!-- NEWS_START -->
-<div class="section">
+<div class="container">
     <div class="row">
-        <div class="col offset-l2 l8 s12">
+        <div class="col offset-l4 l4">
             <div class="card-panel">
                 <div class="panel-title" style="margin: -20px;">
                     <h3 style="display: inline-block">Новини</h3>
@@ -144,11 +151,18 @@
                         {% endif %}
                     </div>
                     <div class="card-content">
-                        <span class="card-title activator grey-text text-darken-4"><h4 style="display: inline-block">{{ article.title }}</h4> <p class="flow-text" style="display: inline-block"> by {{ article.author }}</p><i class="material-icons right">more_vert</i></span>
+                        <span class="card-title activator grey-text text-darken-4">
+                            <h4 style="display: inline-block">{{ article.title }}</h4>
+                            <p class="flow-text" style="display: inline-block"> by {{ article.author }}</p>
+                            <i class="material-icons right">more_vert</i></span>
                         <p><a href='articles/{{article.id}}/'>Читати</a></p>
                     </div>
                     <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4"><h4 style="display: inline-block">{{ article.title }}   </h4><p style="display: inline-block"> {{ article.date }}</p><i class="material-icons right">close</i></span>
+                        <span class="card-title grey-text text-darken-4">
+                            <h4 style="display: inline-block">{{ article.title }}</h4>
+                            <p style="display: inline-block"> {{ article.date }}</p>
+                            <i class="material-icons right">close</i>
+                        </span>
                         <p class="flow-text" style="display: inline-block">{{ article.text }}</p>
                     </div>
                 </div>

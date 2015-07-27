@@ -14,25 +14,35 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <nav class="nav_bg">
-            <div class="nav-wrapper">
-              <a href="{% url 'index' %}" class="brand-logo nav_main_pad">Головна</a>
-              <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{% url 'all_student' %}">Учні</a></li>
-                <li><a href="{% url 'all_teachers' %}">Вчителі</a></li>
-                <li><a href="{% url 'all_groups' %}">Класи</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="/logout/"><strong>Вийти</strong></a></li>
-                {% else %}
-                    <li><a href="/registration/"><strong>Реєстрація</strong></a></li>
-                    <li><a href="/login/"><strong>Логін</strong></a></li>
-                {% endif %}
-              </ul>
-            </div>
-        </nav>
+
+<!-- NAV_START -->
+<nav>
+    <div class="nav-wrapper container">
+        <a href="{% url 'index' %}" class="brand-logo">Logo</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/logout/">Вийти</a></li>
+            {% else %}
+                <li><a href="/registration/">Реєстрація</a></li>
+                <li><a href="/login/">Логін</a></li>
+            {% endif %}
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/logout/">Вийти</a></li>
+            {% else %}
+                <li><a href="/registration/">Реєстрація</a></li>
+                <li><a href="/login/">Логін</a></li>
+            {% endif %}
+        </ul>
     </div>
+</nav>
+<!-- NAV_END -->
+
+<div class="container">
     {% if user.is_authenticated %}
         <form method="POST" action="">
             {% csrf_token %}
