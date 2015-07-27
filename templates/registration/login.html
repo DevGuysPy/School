@@ -9,25 +9,27 @@
 </head>
 <body>
 <div class="section">
-    <div class="row">
-        <div class="col offset-l4 l4 s12 offset-m3 m6">
-            <div class="card-panel">
-                <div class="panel-title">
-                    <h3>Логін</h3>
-                </div>
-                <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
-                    {% csrf_token %}
-                    {{ form.username.label_tag }}
-                    {{ form.username }}
-                    {{ form.password.label_tag }}
-                    {{ form.password }}
-                    <div class="center">
-                        <button value="Sign In" class="form-submit btn waves-effect waves-light" style="margin-top: 10px">Login</button>
-                    </div>
-                </form>
+<div class="row">
+    <div class="col offset-l4 l4 s12 offset-m3 m6">
+        <div class="card-panel">
+            <div class="panel-title">
+                <h3>Логін</h3>
             </div>
+            <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                {% csrf_token %}
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                <div class="center">
+                    <button value="Sign In" class="form-submit btn waves-effect waves-light" style="margin-top: 10px">
+                        Login
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
