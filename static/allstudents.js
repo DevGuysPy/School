@@ -11,8 +11,10 @@ $(document).ready(function(){
             if (response.status == 'ok') {
                 $('.media').hide();
                 for (var student in response.students_with_marks) {
-                    $('#' + response.students_with_marks[student]['id']).show();
-                    $('#' + response.students_with_marks[student]['id'] + ' .mark-field').html('Average mark: ' + response.students_with_marks[student]['mark']).show()
+                    var resultDiv = $('#' + response.students_with_marks[student]['id']);
+                    resultDiv.show();
+                    var markDiv = $('#' + response.students_with_marks[student]['id'] + ' .mark-field');
+                    markDiv.html('Average mark: ' + response.students_with_marks[student]['mark']).show();
                 }
             } else {
                 for(var key in response.main) {
