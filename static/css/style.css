@@ -1,13 +1,13 @@
-     213 lines (190 sloc)  3.295 kB
-.search {
-    width: 300px;
-    height: 40px;
-    padding-top: 6px;
-    padding-left: 35px;
-    padding-right: 12px;
-    padding-bottom: 6px;
-    outline: none;
-}
+213 lines (190 sloc)  3.295 kB
+                            .search {
+                                width: 300px;
+                                height: 40px;
+                                padding-top: 6px;
+                                padding-left: 35px;
+                                padding-right: 12px;
+                                padding-bottom: 6px;
+                                outline: none;
+                            }
 .position-for-icon{
     position: relative;
     left:-293px;
@@ -49,9 +49,6 @@
 .margin-button {
     position:
 }
-
-
-
 .navbar-buttons {
     height: 53px;
     width: 132px;
@@ -63,9 +60,6 @@
     font-family: Campton Demo;
     font-size: 12pt;
     outline: none;
-
-
-
 }
 .navbar-buttons:hover {
     background-color: #ff5454;
@@ -162,11 +156,11 @@
 }
 
 .radius {
-  border: 1px solid #000000;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
+    border: 1px solid #000000;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
 label {
     font-weight: normal;
@@ -204,8 +198,8 @@ label {
 
 }
 /*.margin_btn_reg{*/
-    /*margin-left: 51px;*/
-    /*margin-top: 20px;*/
+/*margin-left: 51px;*/
+/*margin-top: 20px;*/
 /*}*/
 .panel-title{
     text-align: center;
@@ -224,23 +218,23 @@ label {
     height: 379px;
 }
 .parallax-container {
-	height: 375px;
+    height: 375px;
 }
 .search-pos{
-	margin-top: -52px;
-	padding: 0;
+    margin-top: -52px;
+    padding: 0;
 }
 [type="checkbox"] + label{
-	margin: 19px;
+    margin: 19px;
 }
 .search-pos > nav {
-	box-shadow: none !important;
+    box-shadow: none !important;
 }
 .search-output{
     padding: 0;
 }
 /*.search-output > div {*/
-    /*display: none;*/
+/*display: none;*/
 /*}*/
 .mrg-top-15 {
     margin-top: 15px!important;
@@ -282,20 +276,20 @@ label {
 }
 #search{
     width: 100%;
-  box-sizing: border-box;
-  padding-right: 110px;
+    box-sizing: border-box;
+    padding-right: 110px;
 }
 .search-btn{
     width: 100px;
-      text-transform: uppercase;
-  background-color: #CA5C60;
-  padding: 0;
-  line-height: 64px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin: 0;
-  border: 0;
+    text-transform: uppercase;
+    background-color: #CA5C60;
+    padding: 0;
+    line-height: 64px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+    border: 0;
     -webkit-transition: background-color 0.3s;
     transition: color 0.3s;
     -webkit-transition: color 0.3s;
@@ -319,4 +313,7 @@ label {
     .input-field i {
         margin-top: 15px;
     }
+}
+.tabs .tab a:hover {
+    color: #ee6e73;
 }

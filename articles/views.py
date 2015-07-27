@@ -10,9 +10,10 @@ def article(request, article_id):
 
 def new_article(request):
     if request.method == "POST":
+        new_article_photo = request.POST['photo']
         new_article_title = request.POST['title']
         new_article_text = request.POST['text']
-        article = Article.objects.create(title=new_article_title, \
+        article = Article.objects.create(photo=new_article_photo, title=new_article_title,
                                          text=new_article_text, author=request.user)
         return redirect('article_detail', article_id=article.id)
     return render(request, 'new_article.html')
