@@ -30,9 +30,10 @@
         <a href="{% url 'index' %}" >Home</a>
         <hr>
         <h1 class="text-center">Our students  - {{ students_count }}</h1>
-        <hr>
+        
         {% for s in student %}
         <div class="media" id="{{s.id}}">
+        <hr>
               <div class="media-left">
                     <a href='/student/{{s.id}}/'>
                         {% if s.photo %}
@@ -47,8 +48,9 @@
                 <h5 class = 'display'>Group:   </h5>{{ s.group }}
                 <div class="mark-field"></div>
             </div>
+            <hr>
         </div>
-        <hr>
+        
         {% endfor %}
     </div>
 

@@ -12,7 +12,7 @@ $(document).ready(function(){
                 $('.media').hide();
                 for (var student in response.students_with_marks) {
                     $('#' + response.students_with_marks[student]['id']).show();
-                    $('#' + response.students_with_marks[student]['id'] + ' .mark-field').html('Mark: ' + response.students_with_marks[student]['mark'])
+                    $('#' + response.students_with_marks[student]['id'] + ' .mark-field').html('Average mark: ' + response.students_with_marks[student]['mark']).show()
                 }
             } else {
                 for(var key in response.main) {

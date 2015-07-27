@@ -309,12 +309,16 @@ def all_students(request):
             for s in all_students:
                 student_name = s.name + ' ' + s.surname
                 student_id = s.id
-                average_mark = Decimal(float(StudentActivity.objects.filter \
+                students_marks = StudentActivity.objects.filter \
                     (student_id=student_id).aggregate(Avg('mark__number'))\
-                        .values()[0]))
-                avg = round(average_mark,2)
+                        .values()[0]
+                if students_marks:
+                    x = Decimal(float(students_marks))
+                    avg = round(x,2)
+                else:
+                    avg = 0
                 if query <= avg:
-                   students_with_marks[student_name] = {'mark': avg, 'id': student_id}
+                    students_with_marks[student_name] = {'mark': avg, 'id': student_id}
             return JsonResponse({
                 'students_with_marks' : students_with_marks,
                 'status': 'ok'
