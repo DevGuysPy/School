@@ -9,7 +9,9 @@ from django.db.models import Avg
 from django.http import JsonResponse
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark, StudentActivity)
-from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm, UserForm, UserForm2, FilterStudentsByMarks
+from .forms import (TeacherForm, LessonForm, StudentForm, MarkForm,
+                    GroupForm, UserForm, UserForm2, 
+                    FilterStudentsByMarks)
 
 from decimal import Decimal
 
