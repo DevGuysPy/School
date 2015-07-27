@@ -21,8 +21,8 @@ $(document).ready(function(){
                 for(var key in response.main) {
                     var errorDiv = $(".error." + key);
                     errorDiv.html(response.main[key][0])
-                    }
                 }
+            }
         }).fail(function(response){
             alert('Будьте ласкаві, введіть оцінку!');
         });

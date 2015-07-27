@@ -18,14 +18,14 @@
     {% endif %}
 
     <div class = 'container'>
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <p>Студенти з загальною середньою оцінкою вище</p><input type="number" name="avg_mark">
-            <div class="error avg_mark"></div>
-        </div>
-        <input type="submit" value="Search" class="form-submit">
-    </form>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <p>Студенти з загальною середньою оцінкою вище</p><input type="number" name="avg_mark">
+                <div class="error avg_mark"></div>
+            </div>
+            <input type="submit" value="Search" class="form-submit">
+        </form>
         <button id="show-all-students">Show all</button>
         <a href="{% url 'index' %}" >Home</a>
         <hr>
