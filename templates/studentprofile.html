@@ -3,102 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Teacher</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-
-    {% if user.is_authenticated %}
-        <li><a href="/logout/"><strong>Log out</strong></a></li>
-    {% else %}
-        <li><a href="/registration/"><strong>Registration</strong></a></li>
-        <li><a href="/login/"><strong>Sign up</strong></a></li>
-    {% endif %}
-
-    <div class='container'>
-        <a href="{% url 'index' %}"  >Home</a>
-        <div  class= 'row '>
-            <div class='col-xs-3'>
-                {% if student.photo %}
-                    <div class="xs-ava" style="background-image: url('/media/{{ student.photo }}');"></div>
-                {% else %}
-                    <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
-                {% endif %}
-            </div>
-            <div class='col-xs-9'>
-                <h1>{{ student.name}} {{ student.surname}} </h1>
-            </div>
-        </div>
-        <hr>
-        <h2>Info</h2>
-        <hr>
-        <div class= 'row'>
-            <h3>Group:</h3>
-            <p>{{student.group}}</p>
-        </div>
-        <div class= 'row'>
-            <h3>Birthdate:</h3>
-            <p>{{ student.birthdate}}</p>
-        </div>
-        <div class= 'row'>
-            <h3>More about person</h3>
-            <p>{{ student.info}}</p>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-xs-2">
-                <h3> Time</h3>
-            </div>
-            <div class="col-xs-2">
-                <h3> Discipline</h3>
-            </div>
-            <div class="col-xs-2">
-                <h3>Reason</h3>
-            </div>
-            <div class="col-xs-2">
-                <h3>Mark</h3>
-            </div>
-        </div>
-        {% for activity in activities %}
-            <div class="row">
-                <div class="col-xs-2">
-                    {{ activity.lesson.start}}
-                </div>
-                <div class="col-xs-2">
-                    {{ activity.lesson.discipline}}
-                </div>
-                <div class="col-xs-2">
-                    {{ activity.mark.reason}}
-                </div>
-                <div class="col-xs-2">
-                    {{ activity.mark.number}}
-                </div>
-            </div>
-        {%endfor%}
-        <hr>
-        <h3>Add mark</h3>
-        <form method="POST" action="addmark/">
-            {% csrf_token %}
-            <select name="lesson">
-                {%  for l in lesson %}
-                    <option value="{{ l.id}}">
-                        {% if l.id == lesson.value.id %}
-                            selected="selected"
-                        {% endif %}
-                        {{l.discipline|capfirst}} {{l.start|capfirst}} {{l.id|capfirst}}
-                    </option>
-                {% endfor %}
-            </select>
-
-            <input type='text' placeholder="Enter text" name="reason">
-            <input type='text' placeholder="Enter text" name="number">
-            <input type='submit' class='button margin-for-btn' value = 'Add'>
-        </form>
-        General everage mark: {{ avgmark }}<br>
-        {% for key, value in all_discipline_marks.items %} 
-            <li>{{ key }} - {{ value }}</li>
-        {% endfor %}
-        <h4>To edit this page, please click <a href="{% url 'student_detail_edit' student_id=student.id %}"><span>here</span></a></h4>
+<!-- NAV_START -->
+<nav>
+    <div class="nav-wrapper container">
+        <a href="{% url 'index' %}" class="brand-logo">Logo</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
+            {% else %}
+                <li><a href="{% url 'registration' %}">Реєстрація</a></li>
+                <li><a href="{% url 'login' %}">Логін</a></li>
+            {% endif %}
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
+            {% else %}
+                <li><a href="{% url 'registration' %}">Реєстрація</a></li>
+                <li><a href="{% url 'login' %}">Логін</a></li>
+            {% endif %}
+        </ul>
     </div>
+</nav>
+<!-- NAV_END -->
+<div class="container-fluid mrg-top-15">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card">
+                <div class="card-image mrg-top-15">
+                    <div class="row">
+                        <div class="col s12">
+                            {% if student.photo %}
+                                <div class="xs-ava circle z-depth-3" style="background-image: url('/media/{{ student.photo }}')"></div>
+                            {% else %}
+                                <div class="xs-ava circle z-depth-3" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="row" style="text-align: center">
+                        <h4>{{ student.surname }} {{ student.name }}</h4>
+                        <p class="grade"> Середній бал : {{ avgmark }}</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row" style="text-align: center">
+                        <h5>Дата народження : {{ student.birthdate }}</h5>
+                        <h5>Клас: {{ student.group }}</h5>
+                        <h5>Середні оцінки : </h5>
+                        <table class="centered" >
+                            <thead>
+                            <tr>
+                                <th data-field="id">Назва предмету</th>
+                                <th data-field="name" style="width: 50%">Оцінка</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for key, value in all_discipline_marks.items %}
+                                <tr>
+                                    <td>{{ key }}</td>
+                                    <td>{{ value }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <h5>Інформація про учня : </h5>
+                    </div>
+                    <div class="row">
+                        <p>{{ student.info }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+<script>
+    $(".button-collapse").sideNav();
+</script>
 </body>
 </html>

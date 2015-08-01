@@ -32,6 +32,7 @@ class Discipline(models.Model):
 class Teacher(models.Model):
     # room = models.ForeignKey(Room)
     name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=25)
     surname = models.CharField(max_length=50)
     birthdate = models.DateField(null=True)
     info = models.TextField(null=True)
@@ -39,6 +40,7 @@ class Teacher(models.Model):
     photo = models.ImageField(blank=True, null=True)
     group = models.OneToOneField('Group', null=True, blank=True)
     user = models.OneToOneField(User, null=True)
+    grade = models.CharField(max_length=25, null=True, blank=True)
 
     class Meta:
         db_table = 'teacher'
@@ -67,6 +69,7 @@ class Group(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=25)
     surname = models.CharField(max_length=50)
     birthdate = models.DateField(null=True)
     SEX = (

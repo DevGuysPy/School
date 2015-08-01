@@ -3,47 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>Teacher</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <li><a href="/logout/"><strong>Log out</strong></a></li>
-    {% else %}
-        <li><a href="/registration/"><strong>Registration</strong></a></li>
-        <li><a href="/login/"><strong>Sign up</strong></a></li>
-    {% endif %}
-    
-    <div class='container'>
-        <a href="{% url 'index' %}"  >Home</a>
-        <div  class= 'row '>
-            <div class='col-xs-3'>
-                {% if teacher.photo %}
-                    <div class="xs-ava" style="background-image: url('/media/{{ teacher.photo }}');"></div>
-                {% else %}
-                    <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
-                {% endif %}
-            </div>
-            <div class='col-xs-9'>
-                <h1> {{ teacher.surname}} {{ teacher.name}}  </h1>
-            </div>
-        </div>
-        <hr>
-        <h2>Info</h2>
-        <hr>
-        <div class= 'row'>
-            <h3>Discipline:</h3>
-            <p>{{teacher.discipline}}</p>
-        </div>
-        <div class= 'row'>
-            <h3>Birthdate:</h3>
-            <p>{{ teacher.birthdate}}</p>
-        </div>
-        <div class= 'row'>
-            <h3>More about person</h3>
-            <p>{{ teacher.info}}</p>
-        </div>
-        <h4>To edit this page, please click <a href="{% url 'teacher_detail_edit' teacher_id=teacher.id %}"><span>here</span></a></h4>
+<!-- NAV_START -->
+<nav>
+    <div class="nav-wrapper container">
+        <a href="{% url 'index' %}" class="brand-logo">Logo</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
+            {% else %}
+                <li><a href="{% url 'registration' %}">Реєстрація</a></li>
+                <li><a href="{% url 'login' %}">Логін</a></li>
+            {% endif %}
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
+            {% else %}
+                <li><a href="{% url 'registration' %}">Реєстрація</a></li>
+                <li><a href="{% url 'login' %}">Логін</a></li>
+            {% endif %}
+        </ul>
     </div>
+</nav>
+<!-- NAV_END -->
+<div class="container-fluid mrg-top-15">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card">
+                <div class="card-image mrg-top-15">
+                    <div class="row">
+                        <div class="col s12">
+                            {% if teacher.photo %}
+                                <div class="xs-ava circle z-depth-3" style="background-image: url('/media/{{ teacher.photo }}')"></div>
+                            {% else %}
+                                <div class="xs-ava circle z-depth-3" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="row" style="text-align: center">
+                        <h4>{{ teacher.surname }} {{ teacher.name }} {{ teacher.middle_name }} </h4>
+                        <p class="grade">{{ teacher.grade }}</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row"  style="text-align: center">
+                        <h5>Дата народження : {{ teacher.birthdate }}</h5>
+                        <h5>Предмет : {{ teacher.discipline }}</h5>
+                        {% if teacher.group %}
+                            <h5>Класний керівник : {{ teacher.group }} класу </h5>
+                        {% endif %}
+                        <h5>Інформація про вчителя : </h5>
+                    </div>
+                    <div class="row">
+                        <p>{{ teacher.info }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+<script>
+    $(".button-collapse").sideNav();
+</script>
 </body>
 </html>
