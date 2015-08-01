@@ -2,53 +2,100 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Group</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
+    <title>Teacher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <li><a href="/logout/"><strong>Log out</strong></a></li>
-    {% else %}
-        <li><a href="/registration/"><strong>Registration</strong></a></li>
-        <li><a href="/login/"><strong>Sign up</strong></a></li>
-    {% endif %}
-
-    <div class='container'>
-        <a href="{% url 'index' %}"  >Home</a>
-        <div  class= 'row '>
-            <div class='col-xs-3'>
-                {% if group.photo %}
-                    <div class="xs-ava" style="background-image: url('/media/{{ group.photo }}');"></div>
-                {% else %}
-                    <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
-                {% endif %}
-            </div>
-            <div class='col-xs-9'>
-                <h1>{{ group.name}} </h1>
-            </div>
-        </div>
-        <hr>
-        <h2>Info</h2>
-        <hr>
-        <div class= 'row'>
-            <h3>Director:</h3>
-            <p>{{group.teacher}}</p>
-        </div>
-        <div class= 'row'>
-            <h3>Members:</h3>
-            Кількість учнів - {{ students_count }}<br>
-            {% for s in student %}
-                <a href='/student/{{s.id}}/'>{{s.surname}} {{s.name}}</a><br>
-            {% endfor %}
-        </div>
-        <div class= 'row'>
-            <h3>More about group</h3>
-            <p>{{ group.info}}</p>
-        </div>
-        <h4>To edit this page, please click <a href="{% url 'group_detail_edit' group_id=group.id %}"><span>here</span></a></h4>
+<!-- NAV_START -->
+<nav>
+    <div class="nav-wrapper container">
+        <a href="{% url 'index' %}" class="brand-logo">Logo</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
+            {% else %}
+                <li><a href="{% url 'registration' %}">Реєстрація</a></li>
+                <li><a href="{% url 'login' %}">Логін</a></li>
+            {% endif %}
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
+            {% else %}
+                <li><a href="{% url 'registration' %}">Реєстрація</a></li>
+                <li><a href="{% url 'login' %}">Логін</a></li>
+            {% endif %}
+        </ul>
     </div>
+</nav>
+<!-- NAV_END -->
+<div class="container-fluid mrg-top-15">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card">
+                <div class="card-image mrg-top-15">
+                    <div class="row">
+                        <div class="col s12">
+                            {% if group.photo %}
+                                <div class="xs-ava-group z-depth-3" style="background-image: url('/media/{{ group.photo }}')"></div>
+                            {% else %}
+                                <div class="xs-ava-group circle z-depth-3" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
+                            {% endif %}
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="divider"></div>
+                <div class="row" style="text-align: center">
+                    <h5>Назва класу : {{ group.name }}</h5>
+                    <h5>Класний керівник : {{ group.master.surname }} {{ group.master.name }} {{ group.master.middle_name }}</h5>
+                    <h5>Кількість учнів: {{ student.count }}</h5>
+                    <h5>Інформація про клас : </h5>
+                </div>
+                <div class="row">
+                    <p>{{  group.info }}</p>
+                </div>
+                <div id="demo" style="text-align: center">
+                    <h5>Список учнів : </h5>
+                    <div class="table-responsive-vertical shadow-z-1">
+                        <table id="table" class="table table-mc-light-blue centered">
+                            <thead>
+                            <tr>
+                                <th>Прізвище</th>
+                                <th>Ім’я</th>
+                                <th>По-батькові</th>
+                                <th>Профіль учня</th>
+                            </tr>
+                            <tbody>
+                            {% for s in student %}
+                                <tr>
+                                    <td data-title="Прізвище">{{ s.surname }}</td>
+                                    <td data-title="Ім’я">{{ s.name }}</td>
+                                    <td data-title="По-батькові">{{ s.middle_name }}</td>
+                                    <td data-title="Профіль учня"> <a href='/student/{{s.id}}/'>Посилання</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+<script>
+    $(".button-collapse").sideNav();
+</script>
 </body>
 </html>
