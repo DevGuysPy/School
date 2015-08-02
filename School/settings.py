@@ -111,9 +111,11 @@ STATICFILES_DIRS = (
 HEROKU = os.environ.get('HEROKU', False)
 if HEROKU:
     SERVE_STATIC = True
+    SERVE_MEDIA = False
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 else:
     SERVE_STATIC = False
+    SERVE_MEDIA = True
 
 
 MEDIA_URL = '/media/'
