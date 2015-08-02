@@ -6,3 +6,4 @@ django-storages==1.1.8
 psycopg2==2.6.1
 s3==3.0.0
 pytz==2015.4
+boto==2.38.0
