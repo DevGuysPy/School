@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col s12">
                             {% if student.photo %}
-                                <div class="xs-ava circle z-depth-3" style="background-image: url('/media/{{ student.photo }}')"></div>
+                                <div class="xs-ava circle z-depth-3" style="background-image: url('{{ MEDIA_URL }}{{ student.photo }}')"></div>
                             {% else %}
                                 <div class="xs-ava circle z-depth-3" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
                             {% endif %}

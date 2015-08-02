@@ -21,7 +21,7 @@
             <div  class= 'row '>
                 <div class='col-xs-3'>
                     {% if form.photo.value %}
-                        <div class="xs-ava" style="background-image: url('/media/{{ form.photo.value }}');"></div>
+                        <div class="xs-ava" style="background-image: url('{{ MEDIA_URL }}{{ form.photo.value }}');"></div>
                     {% else %}
                         <div class="xs-ava" style="background-image: url('http://www.salesmanago.pl/libs/unify/assets/img/testimonials/user.jpg;jsessionid=0E5F9F48BF3B7231C26C68CF7AD678EC');"></div>
                     {% endif %}

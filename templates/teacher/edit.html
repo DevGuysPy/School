@@ -15,7 +15,7 @@
         <div  class= 'row'>
             <div class='col-xs-3'>
                 {% if form.photo.value %}
-                    <div class="xs-ava" style="background-image: url('/media/{{ form.photo.value }}');"></div>
+                    <div class="xs-ava" style="background-image: url('{{ MEDIA_URL }}{{ form.photo.value }}');"></div>
                 {% else %}
                     <div class="xs-ava" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
                 {% endif %}

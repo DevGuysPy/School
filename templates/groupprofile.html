@@ -43,9 +43,11 @@
                     <div class="row">
                         <div class="col s12">
                             {% if group.photo %}
-                                <div class="xs-ava-group z-depth-3" style="background-image: url('/media/{{ group.photo }}')"></div>
+                                <div class="xs-ava-group z-depth-3"
+                                     style="background-image: url('{{ MEDIA_URL }}{{ group.photo }}')"></div>
                             {% else %}
-                                <div class="xs-ava-group z-depth-3" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
+                                <div class="xs-ava-group z-depth-3"
+                                     style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png');"></div>
                             {% endif %}
 
                         </div>

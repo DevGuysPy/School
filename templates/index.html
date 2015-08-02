@@ -47,7 +47,7 @@
 
         {% for b in banners%}
     {#    Height   375px   Це для зміни банера через адмінку      #}
-            <img class="responsive-img" src="/media/{{ b.photo }}">
+            <img class="responsive-img" src="{{ MEDIA_URL }}{{ b.photo }}">
         {% endfor %}
     </div>
 </div>
@@ -147,7 +147,7 @@
                 <div class="card">
                     <div class="card-image waves-effect waves-block waves-light">
                         {% if article.photo %}
-                            <img class="activator responsive-img" src="/media/{{ article.photo }}">
+                            <img class="activator responsive-img" src="{{ MEDIA_URL }}{{ article.photo }}">
                         {% else %}
                             <img class="activator responsive-img" src="http://placehold.it/1350x1150">
                         {% endif %}

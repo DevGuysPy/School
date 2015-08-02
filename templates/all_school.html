@@ -58,7 +58,8 @@
                 {% for s in student %}
                     <a href="/student/{{ s.id }}/" class="collection-item avatar">
                         {% if s.photo %}
-                            <div class="xs-ava1 circle" style="background-image: url('/media/{{ s.photo }}');"></div>
+                            <div class="xs-ava1 circle"
+                                 style="background-image: url('{{ MEDIA_URL }}{{ s.photo }}');"></div>
                         {% else %}
                             <div class="xs-ava1 circle" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
                         {% endif %}
@@ -75,7 +76,8 @@
                 {% for teacher in teachers %}
                     <a href="/teacher/{{ teacher.id }}/" class="collection-item avatar">
                         {% if teacher.photo %}
-                            <div class="xs-ava1 circle" style="background-image: url('/media/{{ teacher.photo }}');"></div>
+                            <div class="xs-ava1 circle"
+                                 style="background-image: url('{{ MEDIA_URL }}{{ teacher.photo }}');"></div>
                         {% else %}
                             <div class="xs-ava1 circle" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
                         {% endif %}
@@ -94,9 +96,11 @@
                 {% for s in groups %}
                     <a href="/group/{{ s.id }}/" class="collection-item avatar">
                         {% if s.photo %}
-                            <div class="xs-ava1 circle" style="background-image: url('/media/{{ s.photo }}');"></div>
+                            <div class="xs-ava1 circle"
+                                 style="background-image: url('{{ MEDIA_URL }}{{ s.photo }}');"></div>
                         {% else %}
-                            <div class="xs-ava1 circle" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
+                            <div class="xs-ava1 circle"
+                                 style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
                         {% endif %}
                         <span class="title">{{ s.name }}</span>
                         <p>Кількість учнів : {{ groups_count }}</p>
