@@ -53,7 +53,9 @@
                 <div class="card-content">
                     <div class="row" style="text-align: center">
                         <h4>{{ teacher.surname }} {{ teacher.name }} {{ teacher.middle_name }} </h4>
-                        <p class="grade">{{ teacher.grade }}</p>
+                        {% if teacher.grade %}
+                            <p class="grade">{{ teacher.grade }}</p>
+                        {% endif %}
                     </div>
                     <div class="divider"></div>
                     <div class="row"  style="text-align: center">

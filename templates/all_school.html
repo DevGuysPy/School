@@ -80,7 +80,9 @@
                             <div class="xs-ava1 circle" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
                         {% endif %}
                         <span class="title">{{ teacher.name }} {{ teacher.surname }}</span>
-                        <p>Клас : {{ teacher.group }}</p>
+                        {% if teacher.group %}
+                            <p>Клас : {{ teacher.group }}</p>
+                        {% endif %}
                         <p>Урок : {{ teacher.discipline }}</p>
                     </a>
                 {% endfor %}
