@@ -202,7 +202,7 @@ def lesson_detail(request, lesson_id):
         reason = request.POST['reason']
         number = request.POST['number']
         mark = Mark.objects.create(number=number, reason=reason)
-        StudentActivity.objects.create(lesson_id=lesson.id, student=student,\
+        StudentActivity.objects.create(lesson_id=lesson.id, student_id=student,\
             mark_id=mark.id)
         return redirect('lesson_detail', lesson_id=lesson_id)
     ctx = {
