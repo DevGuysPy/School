@@ -3,16 +3,19 @@ from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 
 from django.db.models import Avg
 from django.http import JsonResponse
 from .models import (Teacher, Lesson, Room, Group, Comments,
                      Discipline, Student, Mark, StudentActivity)
-from .forms import TeacherForm, LessonForm, StudentForm, MarkForm, GroupForm, UserForm, UserForm2
+from .forms import (TeacherForm, LessonForm, StudentForm, MarkForm,
+                    GroupForm, UserForm, UserForm2,
+                    FilterStudentsByMarks)
 
 from decimal import Decimal
 
-from articles.models import Article, Banner
+from articles.models import Article
 
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -34,7 +37,7 @@ def room_detail(request, room_id):
     ctx = {
         'week': days_w_lessons
     }
-    
+
     return render(request, 'room.html', ctx)
 
 
@@ -96,7 +99,6 @@ def index(request):
             groups = search_groups(query)
 
     ctx = {
-        'banners': Banner.objects.all(),
         'articles': reversed(Article.objects.all()),
         'rooms': rooms,
         'teachers': teachers,
@@ -171,10 +173,10 @@ def add_comment(request, teacher_id):
     if request.method == "POST":
         new_comment_text = request.POST['comment_text']
         Comments.objects.create(comment_text=new_comment_text, \
-            comment_teacher_id=teacher_id)
-        return redirect('teacher_detail', teacher_id=teacher.id) 
+                                comment_teacher_id=teacher_id)
+        return redirect('teacher_detail', teacher_id=teacher.id)
 
-    return render(request, 'teacherprofile.html') 
+    return render(request, 'teacherprofile.html')
 
 
 def lesson_detail_edit(request, lesson_id):
@@ -200,14 +202,14 @@ def lesson_detail(request, lesson_id):
         reason = request.POST['reason']
         number = request.POST['number']
         mark = Mark.objects.create(number=number, reason=reason)
-        StudentActivity.objects.create(lesson_id=lesson.id, student=student,\
-            mark_id=mark.id)
+        StudentActivity.objects.create(lesson_id=lesson.id, student_id=student, \
+                                       mark_id=mark.id)
         return redirect('lesson_detail', lesson_id=lesson_id)
     ctx = {
         'lesson': lesson,
         'activities': activities,
         'student': student,
-        
+
     }
 
     return render (request, 'lesson.html', ctx)
@@ -237,23 +239,23 @@ def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
     activities = StudentActivity.objects.filter(student_id=student_id)
     lessons = Lesson.objects.all()
-    all_discipline_marks = {} 
-
+    all_discipline_marks = {}
+    general_average_mark = countavgmark(activities)
     for l in lessons:
         discipline_lessons = l.discipline
         activities_for_marksd = \
-            StudentActivity.objects.filter(lesson__discipline=discipline_lessons,\
-                student_id=student_id)
+            StudentActivity.objects.filter(lesson__discipline=discipline_lessons, \
+                                           student_id=student_id)
         all_discipline_marks[discipline_lessons.name] = \
-        countavgmark(activities_for_marksd)
+            countavgmark(activities_for_marksd)
 
     if request.method == "POST":
         number = request.POST['number']
         reason = request.POST['reason']
         lesson = request.POST['lesson']
         mark = Mark.objects.create(number=number, reason=reason)
-        StudentActivity.objects.create(student_id=student.id, lesson_id=lesson,\
-            mark_id=mark.id)
+        StudentActivity.objects.create(student_id=student.id, lesson_id=lesson, \
+                                       mark_id=mark.id)
 
         return redirect('student_detail', student_id=student_id)
 
@@ -261,7 +263,7 @@ def student_detail(request, student_id):
         'student': student,
         'activities': activities,
         'lesson': lessons,
-        'avgmark': countavgmark(activities),
+        'avgmark': general_average_mark,
         'all_discipline_marks': all_discipline_marks,
     }
 
@@ -272,10 +274,10 @@ def student_detail_edit(request, student_id=1):
     student = Student.objects.get(id=student_id)
     activities = StudentActivity.objects.filter(student_id=student_id)
     form = StudentForm(request.POST or None, request.FILES or None,
-                        instance=student)
+                       instance=student)
     form_mark = MarkForm(request.POST or None, request.FILES or None,
-                        instance=student)
-                        
+                         instance=student)
+
     groups = Group.objects.all()
     lessons = Lesson.objects.all()
 
@@ -292,9 +294,8 @@ def student_detail_edit(request, student_id=1):
 
     if form.is_valid():
         form.save()
-    
-    return render(request, 'student/edit.html', ctx)
 
+    return render(request, 'student/edit.html', ctx)
 
 def all_school(request):
     students = Student.objects.all()
@@ -303,6 +304,37 @@ def all_school(request):
     teachers_count = len(teachers)
     students_count = len(students)
     groups_count = len(groups)
+
+    form = FilterStudentsByMarks(request.POST or None)
+    students_with_marks = {}
+
+    if request.method == 'POST':
+        query = float(request.POST['avg_mark'])
+        if form.is_valid():
+            all_students = Student.objects.all()
+            for s in all_students:
+                student_name = s.name + ' ' + s.surname
+                student_id = s.id
+                students_marks = StudentActivity.objects.filter \
+                    (student_id=student_id).aggregate(Avg('mark__number')) \
+                    .values()[0]
+                if students_marks:
+                    x = Decimal(float(students_marks))
+                    avg = round(x,2)
+                else:
+                    avg = 0
+                if query <= avg:
+                    students_with_marks[student_name] = {'mark': avg, 'id': student_id}
+            return JsonResponse({
+                'students_with_marks' : students_with_marks,
+                'status': 'ok'
+            })
+        else:
+            return JsonResponse({
+                'status': 'error',
+                'main': form.errors
+            })
+
 
     ctx = {
         'student': students,
@@ -366,7 +398,7 @@ def registration(request):
                 }
                 email_message = render_to_string('email.html', ctx_email)
                 send_mail('TeacherRegistration', 'my', settings.EMAIL_BACKEND,
-                ['jyvylo@mail.ru'], fail_silently=False, html_message=email_message)
+                          ['jyvylo@mail.ru'], fail_silently=False, html_message=email_message)
                 return JsonResponse({
                     'status': 'ok',
                 })
@@ -374,7 +406,7 @@ def registration(request):
                 return JsonResponse ({
                     'status': 'error',
                     'message': form_user2.errors,
-            })
+                })
         if account_type == 'other':
             if form_user.is_valid():
                 user = form_user.save()

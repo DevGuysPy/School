@@ -42,13 +42,14 @@ urlpatterns = [
     url(r'^lesson/(?P<lesson_id>\d+)/edit/$', lesson_detail_edit, name='lesson_detail_edit'),
     url(r'^lesson/(?P<lesson_id>\d+)/addmark/$', lesson_detail, name='add_mark2'),
     url(r'^rooms/(?P<room_id>\d+)/$', room_detail, name='room_detail'),
-    url(r'^all_school/$', all_school, name='all_school'),
+    url(r'^all-school/$', all_school, name='all_school'),
     url(r'^registration/$', registration, name="registration"),
     url(r'^registration/verification/(?P<user_id>\d+)/$', verification, name="verification"),
     url(r'^logout/$', 'django.contrib.auth.views.logout',
          {'next_page': '/'}, name='logout'),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^articles/', include('articles.urls')),
+    url(r'^', include('chat.urls')),
 ]
 
 if settings.SERVE_STATIC:

@@ -17,6 +17,7 @@
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="{% url 'all_school' %}">Учні</a></li>
+            <li><a href="{% url 'chat' %}">Чат</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}

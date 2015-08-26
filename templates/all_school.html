@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
         <a href="{% url 'index' %}" class="brand-logo">Logo</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            <li><a href="{% url 'all_school' %}">Школа</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}
@@ -25,7 +26,7 @@
             {% endif %}
         </ul>
         <ul class="side-nav" id="mobile-demo">
-            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            <li><a href="{% url 'all_school' %}">Школа</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}
@@ -36,6 +37,7 @@
     </div>
 </nav>
 <!-- NAV_END -->
+
 
 <div class="container" style="margin-top: 15px">
     <div class="row">
@@ -53,20 +55,34 @@
                 <li class="tab col s3"><a href="#">Класи</a></li>
             </ul>
         </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <p>Студенти з загальною середньою оцінкою вище</p><input type="number" name="avg_mark">
+                <div class="error avg_mark"></div>
+            </div>
+            <input type="submit" value="Search" class="form-submit">
+        </form>
+        <button id="show-all-students">Show all</button>
+
         <div id="test1" class="col s12 m12 l4 mrg-top-15">
             <div class="collection">
                 {% for s in student %}
-                    <a href="/student/{{ s.id }}/" class="collection-item avatar">
-                        {% if s.photo %}
-                            <div class="xs-ava1 circle"
-                                 style="background-image: url('{{ MEDIA_URL }}{{ s.photo }}');"></div>
-                        {% else %}
-                            <div class="xs-ava1 circle" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
-                        {% endif %}
-                        <span class="title">{{ s.name }} {{ s.surname }}</span>
-                        <p>{{ s.group }}
-                        </p>
-                    </a>
+                    <div class="media" id="{{s.id}}">
+                        <a href="/student/{{ s.id }}/" class="collection-item avatar">
+                            {% if s.photo %}
+                                <div class="xs-ava1 circle"
+                                     style="background-image: url('{{ MEDIA_URL }}{{ s.photo }}');"></div>
+                            {% else %}
+                                <div class="xs-ava1 circle" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
+                            {% endif %}
+                            <span class="title">{{ s.name }} {{ s.surname }}</span>
+                            <p>{{ s.group }}
+                            <div class="mark-field"></div>
+                            </p>
+                        </a>
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -124,5 +140,6 @@
 <script>
     $(".button-collapse").sideNav();
 </script>
+<script src="{% static 'allstudents.js' %}"></script>
 </body>
 </html>
