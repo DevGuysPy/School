@@ -2,7 +2,6 @@ $(document).ready(function(){
     $('.form-submit').click(function(event){
         event.preventDefault();
         $('.error').html('');
-        $(".searchedstudents").html('');
         $.ajax({
             method: "POST",
             url: '/all-school/',
@@ -15,7 +14,7 @@ $(document).ready(function(){
                     var resultDiv = $('#' + requestResponse['id']);
                     resultDiv.show();
                     var markDiv = resultDiv.find('.mark-field');
-                    markDiv.html('Average mark: ' + requestResponse['mark']).show();
+                    markDiv.html('Середня оцінка: ' + requestResponse['mark']).show();
                 }
             } else {
                 for(var key in response.main) {
@@ -29,5 +28,6 @@ $(document).ready(function(){
     });
     $('#show-all-students').click(function() {
         $('.media').show();
+        $('.mark-field').hide();
     });
 });

@@ -301,6 +301,11 @@ def all_school(request):
     students = Student.objects.all()
     teachers = Teacher.objects.all()
     groups = Group.objects.all()
+    counted_students_in_groups = []
+    for m in groups:
+        students_in_groups = len(Student.objects.filter(group_id=m.id))
+        counted_students_in_groups.append(students_in_groups)
+    result = zip(groups, counted_students_in_groups)
     teachers_count = len(teachers)
     students_count = len(students)
     groups_count = len(groups)
@@ -343,6 +348,8 @@ def all_school(request):
         'teachers_count': teachers_count,
         'groups': groups,
         'groups_count': groups_count,
+        'counted_students_in_groups': counted_students_in_groups,
+        'result': result,
     }
 
     return render (request, 'all_school.html', ctx)
