@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'School',
     'articles',
-    'chat',
+    'talk',
 )
 
 MIDDLEWARE_CLASSES = (
