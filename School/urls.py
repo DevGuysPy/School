@@ -49,7 +49,7 @@ urlpatterns = [
          {'next_page': '/'}, name='logout'),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^articles/', include('articles.urls')),
-    url(r'^', include('chat.urls')),
+    url(r'^chat/', include('talk.urls')),
 ]
 
 if settings.SERVE_STATIC:

@@ -1,22 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Головна</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
+<!doctype html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Чат</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2/trianglify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <!-- Foundation & FontAwesome -->
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+
+<body>
 <!-- NAV_START -->
 <nav>
     <div class="nav-wrapper container">
         <a href="{% url 'index' %}" class="brand-logo">Logo</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            <li><a href="{% url 'all_school' %}">Школа</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}
@@ -25,7 +27,7 @@
             {% endif %}
         </ul>
         <ul class="side-nav" id="mobile-demo">
-            <li><a href="{% url 'all_school' %}">Учні</a></li>
+            <li><a href="{% url 'all_school' %}">Школа</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}
@@ -35,42 +37,14 @@
         </ul>
     </div>
 </nav>
-<!-- NAV_END -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col s12">
-            <div class="card-panel" style="height: 700px">
-                <div id="target" style="overflow-x: hidden;overflow-y:scroll;height: 660px;">
-                    {% for message in messages %}
-                        <div class="row" style="margin-bottom: 0">
-                            <small style="color: #CCCCCC">[{{ message.date }}]</small>
-                            {{ message.author.student.name }} {{ message.author.student.surname }} : {{ message.text }}
-                        </div>
 
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% if user.is_authenticated %}
-        <form method="post">
-            {% csrf_token %}
-            <div class="row">
-                <textarea name="text" class="materialize-textarea" length="300" maxlength="300"></textarea>
-            </div>
-            <div class="row">
-                <input type="submit" class="button" value="Send" />
-            </div>
-        </form>
-    {% endif %}
-</div>
-
+{% block content %}
+{% endblock %}
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 <script>
-    $( "#other" ).click(function() {
-        $( "#target" ).scroll();
+    $(document).ready(function(){
+        $('.parallax').parallax();
     });
 </script>
 <script>

@@ -12,7 +12,7 @@ class LessonForm(ModelForm):
 class StudentForm(ModelForm):
     class Meta:
         model = Student
-        fields = ('name', 'surname', 'group', 'sex')
+        fields = ('name', 'surname', 'middle_name', 'group', 'sex', 'birthdate')
 
 
 class TeacherForm(ModelForm):
