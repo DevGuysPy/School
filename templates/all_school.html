@@ -58,33 +58,56 @@
 
         
 
+        
+        
+
         <div id="test1" class="col s12 m12 l4 mrg-top-15">
-            <ul class="collapsible" data-collapsible="expandable">
-            <li>
-              <div class="collapsible-header"><i class="material-icons">language</i>Зальна середня оцінка</div>
-              <div class="collapsible-body">
-              <form method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <div class="input-field padg-for-input" style="height: 46px">
-                        <input id="input_text" type="text" name="avg_mark" class="padg-for-input" style="border-bottom-width: 0px;" placeholder='Введіть оцінку'>
-                        <label for="input_text"><div class="error avg_mark"></div></label>
-                    </div>
-                    <center><a type="submit" class="waves-effect Default btn-flat form-submit search-button-sizes">Пошук</a></center>
-                </div>
-            </form>
-            <a type="submit" id="show-all-students" class="waves-effect Default btn-flat search-button-sizes">Відміна</a>
+            <!-- Modal Trigger -->
+          <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+          <!-- Modal Structure -->
+          <div id="modal1" class="modal">
+            <div class="modal-content">
+            <form method="POST">
+                    {% csrf_token %}
+                    <ul class="collection">
+                        <li class="collection-item avatar" style=" padding-bottom: 15px;">
+                          <i class="material-icons circle red">play_arrow</i>
+                          <span class="title">Title</span>
+                            <div class="form-group">
+                                <div class="input-field padg-for-input" style="height: 46px">
+                                    <input id="input_text" type="text" name="avg_mark" class="padg-for-input" style="border-bottom-width: 0px;" placeholder='Введіть оцінку'>
+                                    <label for="input_text"><div class="error avg_mark"></div></label>
+                                </div>        
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- <ul class="collection">
+                        <li class="collection-item avatar">
+                          <i class="material-icons circle red">play_arrow</i>
+                          <span class="title">Title</span>
+                            <div class="form-group">
+                                <div class="input-field for-option" style="margin-top: 0px;">
+                                <select name="group">
+                                  <option value="" disabled selected>    Choose your option</option>
+                                  {% for g in groups %}
+                                  <option value="1">   {{ g.name }}</option>
+                                  {% endfor %}
+                                </select>
+                            </div>       
+                            </div>
+                        </li>
+                    </ul> -->
+
+                    
+            </form>   
             </div>
-            </li>
-            <li>
-              <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-              <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-            </li>
-            <li>
-              <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-              <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-            </li>
-          </ul>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Закрити</a>
+                <a type="submit" id="show-all-students" class="waves-effect Default btn-flat search-button-sizes">Відміна</a>
+                <a type="submit" class="waves-effect Default btn-flat form-submit search-button-sizes">Пошук</a>
+            </div>
+          </div>
             
             
             <div class="collection">
@@ -98,7 +121,7 @@
                                 <div class="xs-ava1 circle" style="background-image: url('http://tatet.ua/themes/fenix/img/default-user.png')"></div>
                             {% endif %}
                             <span class="title">{{ s.name }} {{ s.surname }}</span>
-                            <p>{{ s.group }}
+                            <p><div class="group-field {{ s.group }}">{{ s.group }}</div>
                             <div class="mark-field"></div>
                             </p>
                         </a>
@@ -150,6 +173,16 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function(){
+    $('.modal-trigger').leanModal();
+  });
+</script>
+<script>
+    $(document).ready(function() {
+    $('select').material_select();
+  });
+</script>
 <script>
     $(document).ready(function() {
     $('input#input_text').characterCounter();

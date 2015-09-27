@@ -342,12 +342,18 @@ label {
     margin-right: auto
 }
 .search-button-sizes{
-    padding-left: 110px ;
-    padding-right: 105px;
     border-radius: 0;
 }
 .padg-for-input{
     padding-left:10px;
     padding-right:10px;
     border-bottom: 0px;
+}
+.for-option{
+    margin-bottom: 0px;
+    border-bottom-width: 0px;
+}
+.select-wrapper input.select-dropdown{
+    border-bottom: none!important;
+    margin-bottom: 0px;
 }

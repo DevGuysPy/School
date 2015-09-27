@@ -2,6 +2,7 @@ import datetime
 from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 
@@ -179,17 +180,17 @@ def add_comment(request, teacher_id):
     return render(request, 'teacherprofile.html')
 
 
-def lesson_detail_edit(request, lesson_id):
-    lesson = Lesson.objects.get(id=lesson_id)
-    form = LessonForm(request.POST or None, instance=lesson)
-    ctx = {
-        'lesson': lesson,
-        'form': form
-    }
-    if form.is_valid():
-        form.save()
+# def lesson_detail_edit(request, lesson_id):
+#     lesson = Lesson.objects.get(id=lesson_id)
+#     form = LessonForm(request.POST or None, instance=lesson)
+#     ctx = {
+#         'lesson': lesson,
+#         'form': form
+#     }
+#     if form.is_valid():
+#         form.save()
 
-    return render (request, 'lesson/edit.html', ctx)
+#     return render (request, 'lesson/edit.html', ctx)
 
 
 def lesson_detail(request, lesson_id):
@@ -249,15 +250,24 @@ def student_detail(request, student_id):
         all_discipline_marks[discipline_lessons.name] = \
             countavgmark(activities_for_marksd)
 
-    if request.method == "POST":
-        number = request.POST['number']
-        reason = request.POST['reason']
-        lesson = request.POST['lesson']
-        mark = Mark.objects.create(number=number, reason=reason)
-        StudentActivity.objects.create(student_id=student.id, lesson_id=lesson, \
-                                       mark_id=mark.id)
 
-        return redirect('student_detail', student_id=student_id)
+
+
+    # if request.method == "POST":
+        # new_info = request.POST['editText']
+        # student.info = new_info
+        # student.save()
+        # return JsonResponse({
+        #     'new_info' : new_info,
+        #     'status': 'ok'
+        # })
+        # reason = request.POST['reason']
+        # lesson = request.POST['lesson']
+        # mark = Mark.objects.create(number=number, reason=reason)
+        # StudentActivity.objects.create(student_id=student.id, lesson_id=lesson, \
+                                       # mark_id=mark.id)
+
+        # return redirect('student_detail', student_id=student_id)
 
     ctx = {
         'student': student,
@@ -270,49 +280,67 @@ def student_detail(request, student_id):
     return render(request, 'studentprofile.html', ctx)
 
 
-def student_detail_edit(request, student_id=1):
-    student = Student.objects.get(id=student_id)
-    activities = StudentActivity.objects.filter(student_id=student_id)
-    form = StudentForm(request.POST or None, request.FILES or None,
-                       instance=student)
-    form_mark = MarkForm(request.POST or None, request.FILES or None,
-                         instance=student)
 
-    groups = Group.objects.all()
-    lessons = Lesson.objects.all()
+def student_detail_update(request, student_id):
+    if request.method == "POST":
+        student = Student.objects.get(id=request.POST['id'])
+        print student.id
+        new_info = request.POST['newInfo']
+        student.info = new_info
+        student.save()
+        return JsonResponse({
+            'new_info' : new_info,
+            'status': 'ok'
+        })
 
-    ctx = {
-        'student': student,
-        'form': form,
-        'groups': groups,
-        'activities': activities,
-        'form_mark': form_mark,
-        'lessons': lessons,
-    }
-    if form_mark.is_valid():
-        form_mark.save()
+# def student_detail_edit(request, student_id=1):
+#     student = Student.objects.get(id=student_id)
+#     activities = StudentActivity.objects.filter(student_id=student_id)
+#     form = StudentForm(request.POST or None, request.FILES or None,
+#                        instance=student)
+#     form_mark = MarkForm(request.POST or None, request.FILES or None,
+#                          instance=student)
 
-    if form.is_valid():
-        form.save()
+#     groups = Group.objects.all()
+#     lessons = Lesson.objects.all()
 
-    return render(request, 'student/edit.html', ctx)
+#     ctx = {
+#         'student': student,
+#         'form': form,
+#         'groups': groups,
+#         'activities': activities,
+#         'form_mark': form_mark,
+#         'lessons': lessons,
+#     }
+#     if form_mark.is_valid():
+#         form_mark.save()
+
+#     if form.is_valid():
+#         form.save()
+
+#     return render(request, 'student/edit.html', ctx)
+
+
 
 def all_school(request):
     students = Student.objects.all()
     teachers = Teacher.objects.all()
     groups = Group.objects.all()
+
+
+
     counted_students_in_groups = []
     for m in groups:
         students_in_groups = len(Student.objects.filter(group_id=m.id))
         counted_students_in_groups.append(students_in_groups)
     result = zip(groups, counted_students_in_groups)
+
     teachers_count = len(teachers)
     students_count = len(students)
     groups_count = len(groups)
 
     form = FilterStudentsByMarks(request.POST or None)
     students_with_marks = {}
-
     if request.method == 'POST':
         query = float(request.POST['avg_mark'])
         if form.is_valid():
@@ -339,6 +367,27 @@ def all_school(request):
                 'status': 'error',
                 'main': form.errors
             })
+
+
+
+
+    # students_in_group = {}
+    # if request.method == "POST":
+    #     grupa = request.POST['group']
+    #     if form.is_valid():
+    #         for j in students:
+    #             students_with_query_group = Student.objects.filter(group__name=grupa)
+    #             students_in_group[grupa] = students_with_query_group
+    #         return JsonResponse({
+    #             'students_in_group' : students_in_group,
+    #             'status': 'ok'
+    #         })
+    #     else:
+    #         return JsonResponse({
+    #             'status': 'error',
+    #             'main': form.errors
+    #         })  
+    # print(students_in_group)
 
 
     ctx = {
